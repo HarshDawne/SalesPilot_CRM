@@ -1,0 +1,69 @@
+﻿
+> crm-app@0.1.0 lint
+> eslint
+
+
+D:\CRM\src\app\api\bookings\route.ts
+  27:15  warning  'body' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  31:14  warning  'error' is defined but never used          @typescript-eslint/no-unused-vars
+
+D:\CRM\src\app\api\debug\route.ts
+  15:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\CRM\src\app\api\leads\[id]\activities\route.ts
+  44:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\CRM\src\app\api\leads\[id]\bookings\route.ts
+  54:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\CRM\src\app\api\leads\[id]\route.ts
+  41:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\CRM\src\app\api\leads\[id]\status\route.ts
+  45:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\CRM\src\app\calendar\page.tsx
+   5:22  warning  'CalendarIcon' is defined but never used      @typescript-eslint/no-unused-vars
+   5:36  warning  'MapPin' is defined but never used            @typescript-eslint/no-unused-vars
+   5:44  warning  'Clock' is defined but never used             @typescript-eslint/no-unused-vars
+   5:51  warning  'User' is defined but never used              @typescript-eslint/no-unused-vars
+  14:12  warning  'loading' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\CRM\src\app\debug\page.tsx
+  7:38  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\CRM\src\app\leads\[id]\page.tsx
+   25:8   warning  React Hook useEffect has a missing dependency: 'fetchLeadDetails'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  190:38  error    'MapPin' is not defined                                                                                              react/jsx-no-undef
+
+D:\CRM\src\app\settings\page.tsx
+  3:22  warning  'Shield' is defined but never used      @typescript-eslint/no-unused-vars
+  3:30  warning  'Smartphone' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\CRM\src\components\ActivityComposer.tsx
+  5:32  warning  'Calendar' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\CRM\src\components\ActivityTimeline.tsx
+  62:37  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  62:67  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+D:\CRM\src\components\BookingModal.tsx
+   5:10  warning  'cn' is defined but never used            @typescript-eslint/no-unused-vars
+  11:36  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\CRM\src\components\LeadList.tsx
+  3:18  warning  'Filter' is defined but never used          @typescript-eslint/no-unused-vars
+  3:33  warning  'MoreHorizontal' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\CRM\src\lib\db.ts
+  50:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\CRM\test_api.js
+  1:15  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+D:\CRM\test_db.js
+  1:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+Γ£û 28 problems (9 errors, 19 warnings)
+

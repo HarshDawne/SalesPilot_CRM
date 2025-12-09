@@ -1,0 +1,98 @@
+# Product Requirement Document (PRD) – Property Management OS
+
+## 1. Overview
+The **Property Management OS** is a self‑contained feature module that enables real‑estate teams to manage properties, towers, units, documents, media, pricing, and activity logs entirely within the existing CRM platform. It must provide a premium, modern UI that feels premium, be fully interactive on the client side, and operate with realistic mock data (or real API in production). The module should be installable as a plug‑in, with no hard dependencies on other CRM modules.
+
+## 2. Goals & Success Metrics
+- **Functional completeness** – All core entities (Project, Tower, Unit, Document, Media, Pricing, Activity Log) are viewable, searchable, and editable.
+- **User experience** – UI follows premium design guidelines (dark sidebar, glassmorphism, smooth micro‑animations). NPS > 8 from internal testers.
+- **Performance** – Initial page load < 2 s, UI interactions < 150 ms.
+- **Reliability** – No console errors, unit tests > 80 % coverage.
+
+## 3. Feature List & UI Details
+### 3.1 Dashboard Overview
+- **Layout**: 240 px dark sidebar (Project list, navigation). Main content area shows KPI cards (Occupancy, Revenue, Maintenance tickets).
+- **UI Elements**:
+  - Card component with subtle shadow, gradient background, hover lift.
+  - Quick‑filter dropdown for date range.
+- **Workflow**: User selects a project → KPI cards update via mock‑data service.
+
+### 3.2 Towers & Units Page
+- **Tabs**: "Towers & Units" tab contains two sections.
+- **Tower Cards**:
+  - Image thumbnail, tower name, unit count badge, edit/delete icons.
+  - Hover shows action overlay (Add Unit, View Details).
+- **Unit Cards** (grid, responsive):
+  - Unit number, floor, status badge (Available/Reserved/Booked).
+  - Action buttons: **Reserve**, **Book**, **Release**, **Unlock 3D**.
+  - Clicking **Unlock 3D** opens a modal with a 3D render preview.
+- **Workflow**:
+  1. User clicks a tower → expands to show its units.
+  2. User clicks **Reserve** → status changes, activity log entry created.
+  3. **Book** opens a booking form modal.
+  4. **Release** reverts status to Available.
+
+### 3.3 Unit Details Modal
+- **Header**: Unit number, floor, status chip.
+- **Tabs inside modal**: "Info", "Documents", "Media", "Pricing".
+- **Info Tab**: Text fields (size, bedrooms, bathrooms, description).
+- **Documents Tab**: List of uploaded PDFs with preview thumbnails, upload button.
+- **Media Tab**: Image carousel, video player, "Add Media" button.
+- **Pricing Tab**: Editable price fields, calculated rent, tax breakdown.
+- **Save/Cancel** actions at bottom.
+
+### 3.4 Activity Log
+- **Timeline view** (vertical list) with icons for actions (Reserve, Book, Document Upload, etc.).
+- **Filters**: By action type, date range.
+- **Each entry** shows user, timestamp, short description, and a link to the related unit.
+- **Workflow**: Every UI action (reserve, book, upload) triggers an entry via the mock‑service.
+
+### 3.5 Documents Management
+- **Page**: Table view with columns (Name, Type, Uploaded By, Date).
+- **Actions**: View, Download, Delete, Replace.
+- **Upload flow**: Drag‑and‑drop area + file picker, progress bar, validation (PDF only, <5 MB).
+
+### 3.6 Media Gallery
+- **Grid** of thumbnails (images, videos).
+- **Lightbox** on click with zoom and next/prev navigation.
+- **Upload**: Multi‑file selector, automatic compression preview.
+
+### 3.7 Pricing Engine
+- **Form**: Base price, discounts, taxes, currency selector.
+- **Live preview**: Calculates total rent, displays breakdown.
+- **Save** updates mock‑data and triggers activity log entry.
+
+## 4. End‑to‑End Workflow Example
+1. **Select Project** from sidebar → Dashboard updates KPI cards.
+2. Navigate to **Towers & Units** tab.
+3. Expand a **Tower** card → unit grid appears.
+4. Click **Reserve** on a unit → status badge turns orange, activity log entry appears.
+5. Click **Unlock 3D** → 3D modal opens, user can rotate view.
+6. Open **Unit Details** → switch to **Pricing** tab, adjust price, click **Save** → price updates, activity log records "Pricing updated".
+7. Upload a **Document** via Documents tab → file appears in list, activity log records "Document uploaded".
+8. Return to **Activity Log** page → filter by "Reserve" to see recent reservations.
+
+## 5. Non‑Functional Requirements
+- **Responsive**: Works on desktop (min‑width 1024 px) and tablets (768‑1023 px). Mobile view collapses sidebar into a hamburger menu.
+- **Accessibility**: WCAG AA – proper ARIA labels, focus order, color contrast.
+- **Security**: Front‑end only; all actions are simulated via mock service. In production, calls will be authenticated via JWT.
+- **Internationalization**: All static strings extracted to i18n JSON files.
+
+## 6. Acceptance Criteria (sample)
+- [ ] All UI components render without console errors.
+- [ ] Reserving a unit updates status and creates an activity log entry.
+- [ ] Document upload validates file type and size, shows progress, and appears in the table.
+- [ ] 3D render modal loads a placeholder model and can be closed.
+- [ ] Activity Log filters correctly by action type and date range.
+- [ ] UI matches design tokens (colors, typography, spacing) defined in `design-system.ts`.
+- [ ] Unit tests cover at least 80 % of the new components.
+
+## 7. Glossary
+- **Project** – Top‑level property grouping.
+- **Tower** – Building within a project.
+- **Unit** – Individual apartment/office.
+- **3D Render** – Interactive model of a unit.
+- **Mock Service** – In‑memory data layer used for development.
+
+---
+*Document generated on 2025‑12‑05.*
