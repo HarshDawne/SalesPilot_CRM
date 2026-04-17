@@ -58,7 +58,8 @@ export default function BookVisitModal({ isOpen, onClose, onSuccess, selectedDat
     const fetchProperties = async (projectId: string) => {
         try {
             const res = await fetch(`/api/properties?projectId=${projectId}`);
-            setProperties(await res.json());
+            const data = await res.json();
+            setProperties(data.data || []);
         } catch (error) {
             console.error('Error fetching properties:', error);
         }

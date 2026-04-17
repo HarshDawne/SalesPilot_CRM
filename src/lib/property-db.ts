@@ -4,10 +4,11 @@
  */
 
 import { firebasePropertyDb } from './firebase-property-db';
-import type { Property, Tower, Unit, UnitStatus, PropertyInventoryStats, PropertyDocument } from '@/types/property';
+import type { Property, Tower, Unit, UnitStatus, PropertyInventoryStats, PropertyDocument } from '../types/property';
 import { v4 as uuidv4 } from 'uuid';
 import fs from 'fs';
 import path from 'path';
+import { db } from './db';
 
 // Helper to read documents from db.json (since documents aren't in the main db interface yet)
 function getDocumentsFromFile(): PropertyDocument[] {
@@ -128,8 +129,8 @@ export const towerService = {
     },
 
     // Get towers by property
-    async getByProperty(propertyId: string): Promise<Tower[]> {
-        return await firebasePropertyDb.getTowersByProperty(propertyId);
+    async getByProperty(propertyId: string, sectionType?: string): Promise<Tower[]> {
+        return await firebasePropertyDb.getTowersByProperty(propertyId, sectionType);
     },
 
     // Create tower
@@ -188,13 +189,13 @@ export const unitService = {
     },
 
     // Get units by property
-    async getByProperty(propertyId: string): Promise<Unit[]> {
-        return await firebasePropertyDb.getUnitsByProperty(propertyId);
+    async getByProperty(propertyId: string, sectionType?: string): Promise<Unit[]> {
+        return await firebasePropertyDb.getUnitsByProperty(propertyId, sectionType);
     },
 
     // Get units by tower
-    async getByTower(towerId: string): Promise<Unit[]> {
-        return await firebasePropertyDb.getUnitsByTower(towerId);
+    async getByTower(towerId: string, sectionType?: string): Promise<Unit[]> {
+        return await firebasePropertyDb.getUnitsByTower(towerId, sectionType);
     },
 
     // Get units by status
@@ -265,6 +266,7 @@ export const unitService = {
         const units = await firebasePropertyDb.getUnitsByProperty(propertyId);
 
         return {
+            propertyId,
             totalUnits: units.length,
             available: units.filter(u => u.status === 'AVAILABLE').length,
             reserved: units.filter(u => u.status === 'RESERVED').length,
@@ -274,19 +276,38 @@ export const unitService = {
             occupancyRate: units.length > 0 ? (units.filter(u => u.status === 'BOOKED').length / units.length) * 100 : 0,
         };
     },
+
+    // Release reservation
+    async releaseReservation(unitId: string): Promise<Unit | null> {
+        const unit = await firebasePropertyDb.getUnitById(unitId);
+        if (!unit) return null;
+
+        const updated = await firebasePropertyDb.updateUnit(unitId, {
+            status: 'AVAILABLE' as UnitStatus,
+            reservation: undefined,
+            updatedAt: new Date().toISOString(),
+        });
+
+        if (updated) {
+            await towerService.updateInventory(unit.towerId);
+            await propertyService.updateInventory(unit.propertyId);
+        }
+
+        return updated;
+    },
 };
 
 // ============================================================================
 // UTILITY FUNCTIONS
 // ============================================================================
 
-export function getPropertyWithDetails(propertyId: string) {
-    const property = propertyService.getById(propertyId);
+export async function getPropertyWithDetails(propertyId: string, sectionType?: string) {
+    const property = await propertyService.getById(propertyId);
     if (!property) return null;
 
-    const towers = towerService.getByProperty(propertyId);
-    const units = unitService.getByProperty(propertyId);
-    const stats = unitService.getInventoryStats(propertyId);
+    const towers = await towerService.getByProperty(propertyId, sectionType);
+    const units = await unitService.getByProperty(propertyId, sectionType);
+    const stats = await unitService.getInventoryStats(propertyId);
 
     return {
         property,
@@ -296,11 +317,11 @@ export function getPropertyWithDetails(propertyId: string) {
     };
 }
 
-export function getTowerWithUnits(towerId: string) {
-    const tower = towerService.getById(towerId);
+export async function getTowerWithUnits(towerId: string, sectionType?: string) {
+    const tower = await towerService.getById(towerId);
     if (!tower) return null;
 
-    const units = unitService.getByTower(towerId);
+    const units = await unitService.getByTower(towerId, sectionType);
 
     return {
         tower,

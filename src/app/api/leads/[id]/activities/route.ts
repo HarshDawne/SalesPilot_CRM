@@ -4,9 +4,10 @@ import { v4 as uuidv4 } from 'uuid';
 
 export async function POST(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params;
         const body = await request.json();
 
         if (!body.type || !body.summary) {
@@ -16,7 +17,7 @@ export async function POST(
             );
         }
 
-        const lead = db.leads.findById(params.id);
+        const lead = db.leads.findById(id);
         if (!lead) {
             return NextResponse.json(
                 { error: 'Lead not found' },
@@ -26,7 +27,7 @@ export async function POST(
 
         const newActivity: Activity = {
             id: uuidv4(),
-            leadId: params.id,
+            leadId: id,
             type: body.type,
             summary: body.summary,
             createdAt: new Date().toISOString(),
@@ -37,7 +38,7 @@ export async function POST(
 
         // Update last contacted if it's an interaction
         if (['ai_call', 'whatsapp', 'manual_call'].includes(body.type)) {
-            db.leads.update(params.id, { lastContactedAt: new Date().toISOString() });
+            db.leads.update(id, { lastContactedAt: new Date().toISOString() });
         }
 
         return NextResponse.json(createdActivity, { status: 201 });

@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
  */
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     const { id } = await params;
 
@@ -23,7 +23,7 @@ export async function GET(
  */
 export async function POST(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     // RBAC: Only admin/manager can set availability
     const authError = await requireRole(request, ['admin', 'manager']);

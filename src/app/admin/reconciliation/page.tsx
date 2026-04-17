@@ -23,9 +23,9 @@ export default function ReconciliationPage() {
             const res = await fetch('/api/leads');
             const leads = await res.json();
 
-            const ALLOWED_STAGES = [
-                'New', 'AI_Calling', 'Qualified', 'Visit_Booked',
-                'Visit_Completed', 'Negotiation', 'Booking_Done', 'Disqualified'
+            const ALLOWED_STAGES: string[] = [
+                "New", "AI_Calling", "Qualified", "Visit_Booked",
+                "Visit_Completed", "Negotiation", "Booking_Done", "Disqualified"
             ];
 
             const invalid = leads.filter((l: any) => !ALLOWED_STAGES.includes(l.currentStage));
@@ -88,6 +88,10 @@ export default function ReconciliationPage() {
                 <TransitionModal
                     lead={selectedLead}
                     isOpen={isModalOpen}
+                    allowedStages={[
+                        "New", "AI_Calling", "Qualified", "Visit_Booked",
+                        "Visit_Completed", "Negotiation", "Booking_Done", "Disqualified"
+                    ]}
                     onClose={() => setIsModalOpen(false)}
                     onSuccess={() => {
                         fetchInvalidLeads();

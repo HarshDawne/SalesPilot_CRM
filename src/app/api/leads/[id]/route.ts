@@ -3,9 +3,10 @@ import { db } from '@/lib/db';
 
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
-    const lead = db.leads.findById(params.id);
+    const { id } = await params;
+    const lead = db.leads.findById(id);
 
     if (!lead) {
         return NextResponse.json(
@@ -14,7 +15,7 @@ export async function GET(
         );
     }
 
-    const activities = db.activities.findByLeadId(params.id);
+    const activities = db.activities.findByLeadId(id);
 
     return NextResponse.json({
         ...lead,
@@ -24,11 +25,12 @@ export async function GET(
 
 export async function PUT(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
+    const { id } = await params;
     try {
         const body = await request.json();
-        const updatedLead = db.leads.update(params.id, body);
+        const updatedLead = db.leads.update(id, body);
 
         if (!updatedLead) {
             return NextResponse.json(

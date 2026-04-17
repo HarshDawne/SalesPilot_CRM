@@ -1,17 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { unitService } from '@/lib/property-db';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const { id } = params;
+        const { id } = await params;
         const { searchParams } = new URL(request.url);
         const status = searchParams.get('status');
         const type = searchParams.get('type');
+        const sectionType = searchParams.get('sectionType');
 
-        let units = unitService.getByProperty(id);
+        let units = await unitService.getByProperty(id, sectionType || undefined);
 
         if (status) {
             units = units.filter(u => u.status === status);

@@ -5,9 +5,10 @@ import { realtimeEvents } from "@/lib/realtime";
 
 export async function POST(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params;
         const body = await request.json();
         const { status, reason } = body;
 
@@ -18,7 +19,7 @@ export async function POST(
             );
         }
 
-        const lead = db.leads.findById(params.id);
+        const lead = db.leads.findById(id);
         if (!lead) {
             return NextResponse.json(
                 { error: 'Lead not found' },
@@ -26,18 +27,18 @@ export async function POST(
             );
         }
 
-        const oldStatus = lead.status;
+        const oldStatus = lead.status || '';
 
         // Update lead status
-        db.leads.update(params.id, { status });
+        db.leads.update(id, { status });
 
         // Emit real-time event
-        realtimeEvents.emitLeadStatusChanged(params.id, oldStatus, status);
+        realtimeEvents.emitLeadStatusChanged(id, oldStatus, status);
 
         // Log status change activity
         const activity: Activity = {
             id: uuidv4(),
-            leadId: params.id,
+            leadId: id,
             type: 'status_change',
             summary: `Status changed: ${oldStatus} → ${status}`,
             createdAt: new Date().toISOString(),

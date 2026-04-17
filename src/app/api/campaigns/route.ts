@@ -26,58 +26,101 @@ function writeCampaigns(data: any) {
     fs.writeFileSync(CAMPAIGNS_FILE, JSON.stringify(data, null, 2));
 }
 
-// GET /api/campaigns
+// GET /api/campaigns - List all campaigns
 export async function GET(request: NextRequest) {
     try {
-        const data = readCampaigns();
-        return NextResponse.json(data);
+        const { CampaignService } = await import('@/modules/communication/services/campaign.service');
+        const { SecurityUtils } = await import('@/modules/communication/utils/security.utils');
+
+        const ip = request.headers.get('x-forwarded-for') || 'unknown';
+
+        SecurityUtils.logApiUsage({
+            endpoint: '/api/campaigns',
+            method: 'GET',
+            ip,
+            statusCode: 200,
+        });
+
+        const { searchParams } = new URL(request.url);
+        const status = searchParams.get('status');
+        const type = searchParams.get('type');
+
+        const campaigns = await CampaignService.getAll({
+            status: status as any,
+            type: type as any,
+        });
+
+        return NextResponse.json({ campaigns });
     } catch (error) {
-        console.error('Error reading campaigns:', error);
-        return NextResponse.json({ campaigns: [] });
+        console.error('[API] Error fetching campaigns:', error);
+        return NextResponse.json(
+            { error: 'Failed to fetch campaigns' },
+            { status: 500 }
+        );
     }
 }
 
-// POST /api/campaigns
+// POST /api/campaigns - Create new campaign
 export async function POST(request: NextRequest) {
     try {
+        const { CampaignService } = await import('@/modules/communication/services/campaign.service');
+        const { SecurityUtils } = await import('@/modules/communication/utils/security.utils');
+
+        const ip = request.headers.get('x-forwarded-for') || 'unknown';
+
         const body = await request.json();
-        const data = readCampaigns();
 
-        const newCampaign = {
-            campaignId: `camp_${Date.now()}`,
-            name: body.name,
-            status: 'QUEUED',
-            targetLeadCount: body.targetLeadCount || 0,
-            processed: 0,
-            filterSpec: body.filterSpec || {},
-            callingWindow: body.callingWindow || {},
-            attemptPolicy: body.attemptPolicy || {},
-            scriptId: body.scriptId || '',
-            visitAutoBooking: body.visitAutoBooking || false,
-            visitSettings: body.visitSettings || {},
-            fallbackChannels: body.fallbackChannels || [],
-            metrics: {
-                attempts: 0,
-                connected: 0,
-                qualified: 0,
-                visitsBooked: 0
+        const {
+            name,
+            type,
+            propertyIds,
+            leadIds,
+            rules,
+            scriptId,
+        } = body;
+
+        // Validate required fields
+        if (!name || !type || !leadIds || leadIds.length === 0) {
+            return NextResponse.json(
+                { error: 'Missing required fields: name, type, leadIds' },
+                { status: 400 }
+            );
+        }
+
+        const campaign = await CampaignService.create({
+            name,
+            type,
+            propertyIds: propertyIds || [],
+            leadIds,
+            rules: rules || {
+                maxRetries: 3,
+                retryDelayMinutes: 30,
+                followUpEnabled: true,
+                followUpDelayMinutes: 5,
+                workingHoursOnly: false,
+                workingHours: {
+                    start: '09:00',
+                    end: '18:00',
+                    timezone: 'Asia/Kolkata',
+                },
             },
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-        };
+            scriptId,
+        });
 
-        data.campaigns.push(newCampaign);
-        writeCampaigns(data);
+        SecurityUtils.logApiUsage({
+            endpoint: '/api/campaigns',
+            method: 'POST',
+            ip,
+            statusCode: 201,
+        });
 
-        // Start campaign simulation in background
-        setTimeout(() => {
-            startCampaignSimulation(newCampaign.campaignId);
-        }, 1000);
-
-        return NextResponse.json(newCampaign, { status: 201 });
+        return NextResponse.json({ campaign }, { status: 201 });
     } catch (error) {
-        console.error('Error creating campaign:', error);
-        return NextResponse.json({ error: 'Failed to create campaign' }, { status: 500 });
+        console.error('[API] Error creating campaign:', error);
+        return NextResponse.json(
+            { error: 'Failed to create campaign' },
+            { status: 500 }
+        );
     }
 }
 

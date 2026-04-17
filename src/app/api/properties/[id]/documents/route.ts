@@ -7,14 +7,15 @@ const documents: PropertyDocument[] = [];
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const { searchParams } = new URL(request.url);
     const towerId = searchParams.get('towerId');
     const unitId = searchParams.get('unitId');
 
-    let filteredDocs = documents.filter(d => d.propertyId === params.id);
+    let filteredDocs = documents.filter(d => d.propertyId === id);
 
     if (towerId) {
       filteredDocs = filteredDocs.filter(d => d.towerId === towerId);
@@ -39,9 +40,10 @@ export async function GET(
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const formData = await request.formData();
     const file = formData.get('file') as File;
     const category = formData.get('category') as string;
@@ -59,7 +61,7 @@ export async function POST(
     // For now, create a mock document record
     const document: PropertyDocument = {
       id: uuidv4(),
-      propertyId: params.id,
+      propertyId: id,
       towerId: towerId || undefined,
       unitId: unitId || undefined,
       name: file.name.replace(/\.[^/.]+$/, ''), // Remove extension

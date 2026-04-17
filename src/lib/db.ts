@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import type { Property as PropertyManagement, Tower, Unit, UnitReservation } from '@/types/property';
+import type { Property as PropertyManagement, Tower, Unit, UnitReservation } from '../types/property';
+import type { RenderRequest } from '../types/render';
 
 const DB_PATH = path.join(process.cwd(), 'data', 'db.json');
 
@@ -16,7 +17,8 @@ export type LeadStage =
     | "Visit_Completed"
     | "Negotiation"
     | "Booking_Done"
-    | "Disqualified";
+    | "Disqualified"
+    | "visit_no_show_followup";
 
 export type AICallStatus =
     | "ringing"
@@ -171,10 +173,18 @@ export interface Lead {
     lastName?: string;
     primaryPhone: string;
     secondaryPhone?: string;
+    alternatePhone?: string; // Alias for secondaryPhone
     email?: string;
     preferredContactMethod?: "phone" | "whatsapp" | "email";
     preferredLanguage?: string;
     address?: string;
+
+    interestedProperties?: Array<{
+        propertyId: string;
+        propertyName: string;
+        status: "viewed" | "interested" | "visit_scheduled";
+        addedAt: string;
+    }>;
 
     leadTags?: string[];
     assignedAgentId?: string;
@@ -219,6 +229,10 @@ export interface Lead {
     score?: number;
     status?: string;
     version: number;
+
+    // Compatibility aliases
+    phone?: string;
+    priority?: string;
 }
 
 // ============================================================================
@@ -236,11 +250,15 @@ export type TimelineEventType =
     | "visit_rescheduled"
     | "visit_cancelled"
     | "visit_reminder_sent"
+    | "visit_reminder_failed"
     | "visit_checked_in"
     | "visit_completed"
     | "visit_no_show"
     | "calendar_invite_sent"
     | "whatsapp_confirmation_sent"
+    | "wa_sent"
+    | "wa_delivered"
+    | "form_submission"
     | "sms_sent"
     | "email_sent"
     | "proposal_sent"
@@ -257,7 +275,11 @@ export type TimelineEventType =
     | "unit_released"
     | "unit_booked"
     | "reservation_extended"
-    | "reservation_expired";
+    | "reservation_expired"
+    | "calendar_event_created"
+    | "visit_no_show_followup"
+    | "visit_feedback_logged"
+    | "auto_followup_scheduled";
 
 export interface TimelineEvent {
     id: string;
@@ -347,6 +369,10 @@ export interface Booking {
     location?: string; // structured location
     travel_time_buffer?: number; // minutes
     meta?: Record<string, any>; // extensible metadata
+
+    // Compatibility aliases
+    scheduledAt?: string;
+    date?: string;
 }
 
 export interface Property {
@@ -364,6 +390,10 @@ export interface Property {
     availableFrom?: string;
     createdAt: string;
     updatedAt: string;
+
+    // Compatibility
+    location?: any;
+    projectType?: string;
 }
 
 export interface Project {
@@ -642,6 +672,7 @@ export interface DatabaseSchema {
     towers: Tower[];
     units: Unit[];
     unitReservations: UnitReservation[];
+    renderRequests: RenderRequest[];
 }
 
 // ============================================================================
@@ -682,7 +713,8 @@ function readDb(): DatabaseSchema {
             propertyManagement: [],
             towers: [],
             units: [],
-            unitReservations: []
+            unitReservations: [],
+            renderRequests: []
         };
     }
     const data = fs.readFileSync(DB_PATH, 'utf-8');
@@ -763,6 +795,13 @@ export const db = {
             data.timeline.push(event);
             writeDb(data);
             return event;
+        },
+        createMany: (events: TimelineEvent[]) => {
+            const data = readDb();
+            if (!data.timeline) data.timeline = [];
+            data.timeline.push(...events);
+            writeDb(data);
+            return events;
         },
     },
     activities: {
@@ -1202,5 +1241,44 @@ export const db = {
             writeDb(data);
             return true;
         }
+    },
+    renderRequests: {
+        findAll: () => {
+            const data = readDb();
+            return data.renderRequests || [];
+        },
+        findById: (id: string) => {
+            const data = readDb();
+            return (data.renderRequests || []).find(r => r.id === id);
+        },
+        create: (request: RenderRequest) => {
+            const data = readDb();
+            if (!data.renderRequests) data.renderRequests = [];
+            data.renderRequests.push(request);
+            writeDb(data);
+            return request;
+        },
+        update: (id: string, updates: Partial<RenderRequest>) => {
+            const data = readDb();
+            if (!data.renderRequests) data.renderRequests = [];
+            const index = data.renderRequests.findIndex(r => r.id === id);
+            if (index === -1) return null;
+            data.renderRequests[index] = { ...data.renderRequests[index], ...updates };
+            writeDb(data);
+            return data.renderRequests[index];
+        },
+        delete: (id: string) => {
+            const data = readDb();
+            if (!data.renderRequests) return false;
+            const index = data.renderRequests.findIndex(r => r.id === id);
+            if (index === -1) return false;
+            data.renderRequests.splice(index, 1);
+            writeDb(data);
+            return true;
+        }
     }
+};
+
+export const leadService = {
+    getAllResults: () => db.leads.findAll(),
 };

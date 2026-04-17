@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { db, Lead } from '@/lib/db';
 import { v4 as uuidv4 } from 'uuid';
-import { addTimelineEvent } from '@/lib/timeline';
+import { seedPerformanceMatrixData } from '@/lib/seed-performance';
 
 function randomElement<T>(arr: T[]): T {
     return arr[Math.floor(Math.random() * arr.length)];
@@ -39,6 +39,8 @@ function addHours(dateStr: string, hours: number): string {
 
 export async function POST() {
     try {
+        console.log('🔄 Starting full database seed...');
+        
         const firstNames = ['Rohan', 'Priya', 'Amit', 'Sneha', 'Rahul', 'Anjali', 'Vikram', 'Pooja', 'Arjun', 'Kavya'];
         const lastNames = ['Sharma', 'Gupta', 'Patel', 'Kumar', 'Singh', 'Reddy', 'Desai', 'Mehta'];
         const locations = ['Bandra', 'Powai', 'Andheri', 'Juhu', 'Worli'];
@@ -51,10 +53,6 @@ export async function POST() {
         ];
 
         let totalCreated = 0;
-
-        // Clear existing data
-        const existingLeads = db.leads.findAll();
-        console.log(`Clearing ${existingLeads.length} existing leads`);
 
         // NEW (5)
         for (let i = 0; i < 5; i++) {
@@ -76,7 +74,8 @@ export async function POST() {
                 preferredLanguage: 'en',
                 currentStage: 'New',
                 aiScore: 0,
-                leadTags: ['New']
+                leadTags: ['New'],
+                version: 1
             };
 
             db.leads.create(lead);
@@ -115,7 +114,8 @@ export async function POST() {
                     followupScheduled: true,
                     followupAt: addDays(new Date(), 1),
                     lastAttemptAt: createdAt
-                }
+                },
+                version: 1
             };
 
             db.leads.create(lead);
@@ -156,11 +156,12 @@ export async function POST() {
                     timeline: randomElement(['1-2 months', '2-3 months']),
                     timelineWeeks: randomInt(4, 12),
                     preferredLocations: [location],
-                    propertyType,
+                    propertyType: [propertyType],
                     intentLevel: 'high',
                     qualifier: 'ai',
-                    qualifiedAt
-                }
+                    qualifiedAt,
+                },
+                version: 1
             };
 
             db.leads.create(lead);
@@ -205,7 +206,8 @@ export async function POST() {
                         meetingPoint: project.address,
                         confirmationSent: true,
                         remindersSent: []
-                    }
+                    },
+                    version: 1
                 };
 
                 db.leads.create(lead);
@@ -240,7 +242,8 @@ export async function POST() {
                     feedbackRating: randomInt(3, 5),
                     interestLevelPostVisit: 'high',
                     notes: 'Very interested'
-                }
+                },
+                version: 1
             };
 
             db.leads.create(lead);
@@ -276,7 +279,8 @@ export async function POST() {
                     documentsSent: ['floor_plan.pdf'],
                     negotiationStage: 'under_negotiation',
                     lastNegotiationAt: subtractDays(new Date(), randomInt(1, 3))
-                }
+                },
+                version: 1
             };
 
             db.leads.create(lead);
@@ -314,7 +318,8 @@ export async function POST() {
                     bookingAt,
                     paymentMethod: 'bank_transfer',
                     transactionId: `TXN${randomInt(100000, 999999)}`
-                }
+                },
+                version: 1
             };
 
             db.leads.create(lead);
@@ -348,7 +353,8 @@ export async function POST() {
                     disqualifiedBy: 'ai',
                     notes: 'Not a good fit',
                     disqualifiedAt: createdAt
-                }
+                },
+                version: 1
             };
 
             db.leads.create(lead);
@@ -367,9 +373,12 @@ export async function POST() {
             Disqualified: allLeads.filter(l => l.currentStage === 'Disqualified').length,
         };
 
+        // 2. Showcase Performance Metrics
+        await seedPerformanceMatrixData();
+
         return NextResponse.json({
             success: true,
-            message: `Created ${totalCreated} new leads`,
+            message: `Created ${totalCreated} new leads and showcase performance metrics`,
             totalLeads: allLeads.length,
             stageCount
         });

@@ -50,16 +50,14 @@ export async function GET(request: NextRequest) {
  * Resolve a conflict
  */
 export async function POST(
-    request: NextRequest,
-    { params }: { params: { id: string } }
+    request: NextRequest
 ) {
     // RBAC: Only admin/manager can resolve conflicts
     const authError = await requireRole(request, ['admin', 'manager']);
     if (authError) return authError;
 
-    const { id } = await params;
     const body = await request.json();
-    const { resolution, resolved_by, action } = body;
+    const { id, resolution, resolved_by, action } = body;
 
     const conflict = db.visitConflicts.findById(id);
     if (!conflict) {

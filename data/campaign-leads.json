@@ -1,0 +1,416 @@
+{
+  "leads": [
+    {
+      "id": "cl_camp_1766309574705_54e28ecd-ac63-443e-8db5-633ec2537197_1766309577268",
+      "campaignId": "camp_1766309574705",
+      "leadId": "54e28ecd-ac63-443e-8db5-633ec2537197",
+      "state": "failed",
+      "attemptCount": 3,
+      "createdAt": "2025-12-21T09:32:57.268Z",
+      "updatedAt": "2025-12-21T11:40:00.000Z",
+      "failedAt": "2025-12-21T11:40:00.000Z"
+    },
+    {
+      "id": "cl_camp_1766309574705_c1dd3988-56d0-44a5-9db8-9e355e121cba_1766309577268",
+      "campaignId": "camp_1766309574705",
+      "leadId": "c1dd3988-56d0-44a5-9db8-9e355e121cba",
+      "state": "failed",
+      "attemptCount": 211,
+      "createdAt": "2025-12-21T09:32:57.268Z",
+      "updatedAt": "2025-12-21T12:32:09.251Z",
+      "failedAt": "2025-12-21T12:35:00.000Z"
+    },
+    {
+      "id": "cl_camp_1766309574705_eea250f3-99b8-4332-8d5f-2f5d1d06b0d1_1766309577268",
+      "campaignId": "camp_1766309574705",
+      "leadId": "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1",
+      "state": "queued",
+      "attemptCount": 4,
+      "createdAt": "2025-12-21T09:32:57.268Z",
+      "updatedAt": "2025-12-21T12:49:46.353Z"
+    },
+    {
+      "id": "cl_camp_1766314342264_54e28ecd-ac63-443e-8db5-633ec2537197_1766314342405",
+      "campaignId": "camp_1766314342264",
+      "leadId": "54e28ecd-ac63-443e-8db5-633ec2537197",
+      "state": "failed",
+      "attemptCount": 3,
+      "createdAt": "2025-12-21T09:32:57.268Z",
+      "updatedAt": "2025-12-21T11:40:00.000Z",
+      "failedAt": "2025-12-21T11:40:00.000Z"
+    },
+    {
+      "id": "cl_camp_1766314342264_c1dd3988-56d0-44a5-9db8-9e355e121cba_1766314342405",
+      "campaignId": "camp_1766314342264",
+      "leadId": "c1dd3988-56d0-44a5-9db8-9e355e121cba",
+      "state": "failed",
+      "attemptCount": 210,
+      "createdAt": "2025-12-21T10:52:22.404Z",
+      "updatedAt": "2025-12-21T12:32:08.953Z",
+      "failedAt": "2025-12-21T12:35:00.000Z"
+    },
+    {
+      "id": "cl_camp_1766314342264_eea250f3-99b8-4332-8d5f-2f5d1d06b0d1_1766314342405",
+      "campaignId": "camp_1766314342264",
+      "leadId": "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1",
+      "state": "queued",
+      "attemptCount": 4,
+      "createdAt": "2025-12-21T10:52:22.404Z",
+      "updatedAt": "2025-12-21T12:49:45.894Z"
+    },
+    {
+      "id": "cl_camp_1766318320624_54e28ecd-ac63-443e-8db5-633ec2537197_1766318321000",
+      "campaignId": "camp_1766318320624",
+      "leadId": "54e28ecd-ac63-443e-8db5-633ec2537197",
+      "state": "queued",
+      "attemptCount": 0,
+      "createdAt": "2025-12-21T11:58:41.000Z",
+      "updatedAt": "2025-12-21T11:58:41.000Z"
+    },
+    {
+      "id": "cl_camp_1766318320624_c1dd3988-56d0-44a5-9db8-9e355e121cba_1766318321001",
+      "campaignId": "camp_1766318320624",
+      "leadId": "c1dd3988-56d0-44a5-9db8-9e355e121cba",
+      "state": "queued",
+      "attemptCount": 0,
+      "createdAt": "2025-12-21T11:58:41.000Z",
+      "updatedAt": "2025-12-21T11:58:41.000Z"
+    },
+    {
+      "id": "cl_camp_1766318320624_eea250f3-99b8-4332-8d5f-2f5d1d06b0d1_1766318321002",
+      "campaignId": "camp_1766318320624",
+      "leadId": "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1",
+      "state": "queued",
+      "attemptCount": 0,
+      "createdAt": "2025-12-21T11:58:41.000Z",
+      "updatedAt": "2025-12-21T11:58:41.000Z"
+    },
+    {
+      "id": "cl_camp_1766329068070_54e28ecd-ac63-443e-8db5-633ec2537197_1766329070845",
+      "campaignId": "camp_1766329068070",
+      "leadId": "54e28ecd-ac63-443e-8db5-633ec2537197",
+      "state": "failed",
+      "attemptCount": 1,
+      "createdAt": "2025-12-21T14:57:50.845Z",
+      "updatedAt": "2025-12-21T15:12:32.717Z",
+      "previousState": "calling",
+      "lastExecutionId": "3727f702-ce42-4a10-ad48-38594c237998",
+      "lastCallId": "call_1766329073403_290rphx",
+      "failedAt": "2025-12-21T15:12:32.717Z"
+    },
+    {
+      "id": "cl_camp_1766329068070_c1dd3988-56d0-44a5-9db8-9e355e121cba_1766329070845",
+      "campaignId": "camp_1766329068070",
+      "leadId": "c1dd3988-56d0-44a5-9db8-9e355e121cba",
+      "state": "completed",
+      "attemptCount": 1,
+      "createdAt": "2025-12-21T14:57:50.845Z",
+      "updatedAt": "2025-12-21T15:12:34.936Z",
+      "previousState": "calling",
+      "lastExecutionId": "94c8e38b-b678-411f-95a1-c3a77a516835",
+      "lastCallId": "call_1766329077071_k6vlgjy",
+      "completedAt": "2025-12-21T15:12:34.936Z"
+    },
+    {
+      "id": "cl_camp_1766329068070_eea250f3-99b8-4332-8d5f-2f5d1d06b0d1_1766329070845",
+      "campaignId": "camp_1766329068070",
+      "leadId": "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1",
+      "state": "completed",
+      "attemptCount": 1,
+      "createdAt": "2025-12-21T14:57:50.845Z",
+      "updatedAt": "2025-12-21T15:12:36.293Z",
+      "previousState": "calling",
+      "lastExecutionId": "69d16d6a-d719-4f40-92dd-3b5d2ed4de4a",
+      "lastCallId": "call_1766329082335_rzgcak0",
+      "completedAt": "2025-12-21T15:12:36.293Z"
+    },
+    {
+      "id": "cl_camp_1766400814918_54e28ecd-ac63-443e-8db5-633ec2537197_1766400816377",
+      "campaignId": "camp_1766400814918",
+      "leadId": "54e28ecd-ac63-443e-8db5-633ec2537197",
+      "state": "failed",
+      "attemptCount": 1,
+      "createdAt": "2025-12-22T10:53:36.377Z",
+      "updatedAt": "2025-12-22T11:11:28.654Z",
+      "previousState": "calling",
+      "lastExecutionId": "c7eb06e5-b5a2-4a43-bb0a-af19f08f5f4c",
+      "lastCallId": "call_1766400819895_lfxhw9x",
+      "failedAt": "2025-12-22T11:11:28.654Z"
+    },
+    {
+      "id": "cl_camp_1766400814918_c1dd3988-56d0-44a5-9db8-9e355e121cba_1766400816377",
+      "campaignId": "camp_1766400814918",
+      "leadId": "c1dd3988-56d0-44a5-9db8-9e355e121cba",
+      "state": "completed",
+      "attemptCount": 1,
+      "createdAt": "2025-12-22T10:53:36.377Z",
+      "updatedAt": "2025-12-22T11:21:49.910Z",
+      "previousState": "calling",
+      "lastExecutionId": "c740984a-73e0-4dbd-aeab-a4aa3085db19",
+      "lastCallId": "call_1766401895706_3l5asje",
+      "completedAt": "2025-12-22T11:21:49.910Z"
+    },
+    {
+      "id": "cl_camp_1766400814918_eea250f3-99b8-4332-8d5f-2f5d1d06b0d1_1766400816377",
+      "campaignId": "camp_1766400814918",
+      "leadId": "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1",
+      "state": "completed",
+      "attemptCount": 1,
+      "createdAt": "2025-12-22T10:53:36.377Z",
+      "updatedAt": "2025-12-22T11:32:41.578Z",
+      "previousState": "calling",
+      "lastExecutionId": "a8f5e8f8-22d8-49c4-8859-fa4ca6ec3004",
+      "lastCallId": "call_1766402516882_k5ocm6x",
+      "completedAt": "2025-12-22T11:32:41.578Z"
+    },
+    {
+      "id": "cl_camp_1766404461694_54e28ecd-ac63-443e-8db5-633ec2537197_1766404463070",
+      "campaignId": "camp_1766404461694",
+      "leadId": "54e28ecd-ac63-443e-8db5-633ec2537197",
+      "state": "calling",
+      "attemptCount": 1,
+      "createdAt": "2025-12-22T11:54:23.070Z",
+      "updatedAt": "2025-12-22T11:54:27.005Z",
+      "previousState": "queued",
+      "lastExecutionId": "7fe87d12-c335-4850-88f9-cb27fc12f162"
+    },
+    {
+      "id": "cl_camp_1766404461694_c1dd3988-56d0-44a5-9db8-9e355e121cba_1766404463070",
+      "campaignId": "camp_1766404461694",
+      "leadId": "c1dd3988-56d0-44a5-9db8-9e355e121cba",
+      "state": "queued",
+      "attemptCount": 0,
+      "createdAt": "2025-12-22T11:54:23.070Z",
+      "updatedAt": "2025-12-22T11:54:23.070Z"
+    },
+    {
+      "id": "cl_camp_1766404461694_eea250f3-99b8-4332-8d5f-2f5d1d06b0d1_1766404463070",
+      "campaignId": "camp_1766404461694",
+      "leadId": "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1",
+      "state": "queued",
+      "attemptCount": 0,
+      "createdAt": "2025-12-22T11:54:23.070Z",
+      "updatedAt": "2025-12-22T11:54:23.070Z"
+    },
+    {
+      "id": "cl_camp_1766569801196_54e28ecd-ac63-443e-8db5-633ec2537197_1766569802162",
+      "campaignId": "camp_1766569801196",
+      "leadId": "54e28ecd-ac63-443e-8db5-633ec2537197",
+      "state": "calling",
+      "attemptCount": 1,
+      "createdAt": "2025-12-24T09:50:02.162Z",
+      "updatedAt": "2025-12-24T09:50:05.294Z",
+      "previousState": "queued",
+      "lastExecutionId": "15f0a22f-ce0e-45ce-98e8-2413e5c83ac2"
+    },
+    {
+      "id": "cl_camp_1766569801196_c1dd3988-56d0-44a5-9db8-9e355e121cba_1766569802162",
+      "campaignId": "camp_1766569801196",
+      "leadId": "c1dd3988-56d0-44a5-9db8-9e355e121cba",
+      "state": "queued",
+      "attemptCount": 0,
+      "createdAt": "2025-12-24T09:50:02.162Z",
+      "updatedAt": "2025-12-24T09:50:02.162Z"
+    },
+    {
+      "id": "cl_camp_1766569801196_eea250f3-99b8-4332-8d5f-2f5d1d06b0d1_1766569802162",
+      "campaignId": "camp_1766569801196",
+      "leadId": "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1",
+      "state": "queued",
+      "attemptCount": 0,
+      "createdAt": "2025-12-24T09:50:02.162Z",
+      "updatedAt": "2025-12-24T09:50:02.162Z"
+    },
+    {
+      "id": "cl_camp_1775870320157_54e28ecd-ac63-443e-8db5-633ec2537197_fpf1ohg9",
+      "campaignId": "camp_1775870320157",
+      "leadId": "54e28ecd-ac63-443e-8db5-633ec2537197",
+      "state": "calling",
+      "attemptCount": 1,
+      "createdAt": "2026-04-11T01:18:41.439Z",
+      "updatedAt": "2026-04-11T01:18:43.419Z",
+      "previousState": "queued",
+      "lastExecutionId": "2e9e39b3-e36e-453d-9957-8a2049a4e737"
+    },
+    {
+      "id": "cl_camp_1775870320157_c1dd3988-56d0-44a5-9db8-9e355e121cba_uzbrp6xy",
+      "campaignId": "camp_1775870320157",
+      "leadId": "c1dd3988-56d0-44a5-9db8-9e355e121cba",
+      "state": "queued",
+      "attemptCount": 0,
+      "createdAt": "2026-04-11T01:18:41.439Z",
+      "updatedAt": "2026-04-11T01:18:41.439Z"
+    },
+    {
+      "id": "cl_camp_1775870320157_eea250f3-99b8-4332-8d5f-2f5d1d06b0d1_080guois",
+      "campaignId": "camp_1775870320157",
+      "leadId": "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1",
+      "state": "queued",
+      "attemptCount": 0,
+      "createdAt": "2026-04-11T01:18:41.439Z",
+      "updatedAt": "2026-04-11T01:18:41.439Z"
+    },
+    {
+      "id": "cl_camp_1775923448811_54e28ecd-ac63-443e-8db5-633ec2537197_tbozrqsd",
+      "campaignId": "camp_1775923448811",
+      "leadId": "54e28ecd-ac63-443e-8db5-633ec2537197",
+      "state": "calling",
+      "attemptCount": 1,
+      "createdAt": "2026-04-11T16:04:10.738Z",
+      "updatedAt": "2026-04-11T16:04:12.749Z",
+      "previousState": "queued",
+      "lastExecutionId": "22ed78bb-5615-4aac-9f3e-397d987bea09"
+    },
+    {
+      "id": "cl_camp_1775923448811_c1dd3988-56d0-44a5-9db8-9e355e121cba_dytvm5g9",
+      "campaignId": "camp_1775923448811",
+      "leadId": "c1dd3988-56d0-44a5-9db8-9e355e121cba",
+      "state": "queued",
+      "attemptCount": 0,
+      "createdAt": "2026-04-11T16:04:10.738Z",
+      "updatedAt": "2026-04-11T16:04:10.738Z"
+    },
+    {
+      "id": "cl_camp_1775923448811_eea250f3-99b8-4332-8d5f-2f5d1d06b0d1_jsai85v5",
+      "campaignId": "camp_1775923448811",
+      "leadId": "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1",
+      "state": "queued",
+      "attemptCount": 0,
+      "createdAt": "2026-04-11T16:04:10.738Z",
+      "updatedAt": "2026-04-11T16:04:10.738Z"
+    },
+    {
+      "id": "cl_camp_1775928848821_54e28ecd-ac63-443e-8db5-633ec2537197_zhhhgqcq",
+      "campaignId": "camp_1775928848821",
+      "leadId": "54e28ecd-ac63-443e-8db5-633ec2537197",
+      "state": "calling",
+      "attemptCount": 1,
+      "createdAt": "2026-04-11T17:34:11.146Z",
+      "updatedAt": "2026-04-11T17:34:13.396Z",
+      "previousState": "queued",
+      "lastExecutionId": "ef35dfdf-ee99-48e7-ae72-736e95601332"
+    },
+    {
+      "id": "cl_camp_1775928848821_c1dd3988-56d0-44a5-9db8-9e355e121cba_x6s2kack",
+      "campaignId": "camp_1775928848821",
+      "leadId": "c1dd3988-56d0-44a5-9db8-9e355e121cba",
+      "state": "queued",
+      "attemptCount": 0,
+      "createdAt": "2026-04-11T17:34:11.146Z",
+      "updatedAt": "2026-04-11T17:34:11.146Z"
+    },
+    {
+      "id": "cl_camp_1775928848821_eea250f3-99b8-4332-8d5f-2f5d1d06b0d1_8y5yct36",
+      "campaignId": "camp_1775928848821",
+      "leadId": "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1",
+      "state": "queued",
+      "attemptCount": 0,
+      "createdAt": "2026-04-11T17:34:11.146Z",
+      "updatedAt": "2026-04-11T17:34:11.146Z"
+    }
+  ],
+  "transitions": [
+    {
+      "from": "queued",
+      "to": "calling",
+      "reason": "Call initiated with Bolna",
+      "timestamp": "2025-12-21T14:57:53.407Z"
+    },
+    {
+      "from": "queued",
+      "to": "calling",
+      "reason": "Call initiated with Bolna",
+      "timestamp": "2025-12-21T14:57:57.073Z"
+    },
+    {
+      "from": "queued",
+      "to": "calling",
+      "reason": "Call initiated with Bolna",
+      "timestamp": "2025-12-21T14:58:02.338Z"
+    },
+    {
+      "from": "calling",
+      "to": "failed",
+      "reason": "Max retries exceeded",
+      "timestamp": "2025-12-21T15:12:32.717Z"
+    },
+    {
+      "from": "calling",
+      "to": "completed",
+      "reason": "Call completed successfully",
+      "timestamp": "2025-12-21T15:12:34.936Z"
+    },
+    {
+      "from": "calling",
+      "to": "completed",
+      "reason": "Call completed successfully",
+      "timestamp": "2025-12-21T15:12:36.293Z"
+    },
+    {
+      "from": "queued",
+      "to": "calling",
+      "reason": "Call initiated with Bolna",
+      "timestamp": "2025-12-22T10:53:39.897Z"
+    },
+    {
+      "from": "calling",
+      "to": "failed",
+      "reason": "Max retries exceeded",
+      "timestamp": "2025-12-22T11:11:28.654Z"
+    },
+    {
+      "from": "queued",
+      "to": "calling",
+      "reason": "Call initiated with Bolna",
+      "timestamp": "2025-12-22T11:11:35.710Z"
+    },
+    {
+      "from": "calling",
+      "to": "completed",
+      "reason": "Call completed successfully",
+      "timestamp": "2025-12-22T11:21:49.910Z"
+    },
+    {
+      "from": "queued",
+      "to": "calling",
+      "reason": "Call initiated with Bolna",
+      "timestamp": "2025-12-22T11:21:56.884Z"
+    },
+    {
+      "from": "calling",
+      "to": "completed",
+      "reason": "Call completed successfully",
+      "timestamp": "2025-12-22T11:32:41.578Z"
+    },
+    {
+      "from": "queued",
+      "to": "calling",
+      "reason": "Call initiated with Bolna",
+      "timestamp": "2025-12-22T11:54:27.005Z"
+    },
+    {
+      "from": "queued",
+      "to": "calling",
+      "reason": "Call initiated with Bolna",
+      "timestamp": "2025-12-24T09:50:05.294Z"
+    },
+    {
+      "from": "queued",
+      "to": "calling",
+      "reason": "Call initiated with Bolna",
+      "timestamp": "2026-04-11T01:18:43.419Z"
+    },
+    {
+      "from": "queued",
+      "to": "calling",
+      "reason": "Call initiated with Bolna",
+      "timestamp": "2026-04-11T16:04:12.749Z"
+    },
+    {
+      "from": "queued",
+      "to": "calling",
+      "reason": "Call initiated with Bolna",
+      "timestamp": "2026-04-11T17:34:13.396Z"
+    }
+  ]
+}

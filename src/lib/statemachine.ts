@@ -14,6 +14,7 @@ export const ALLOWED_TRANSITIONS: Record<LeadStage, LeadStage[]> = {
     Negotiation: ['Booking_Done', 'Disqualified'],
     Booking_Done: [], // Terminal
     Disqualified: ['Qualified'], // Reopen (Manager only)
+    visit_no_show_followup: ['Qualified', 'Disqualified'],
 };
 
 // ============================================================================
@@ -118,7 +119,7 @@ export function validateTransition(
 
     const validation = schema.safeParse(payload);
     if (!validation.success) {
-        const errors = validation.error.errors.map((e) => ({
+        const errors = (validation.error as z.ZodError).issues.map((e: z.ZodIssue) => ({
             field: e.path.join('.'),
             message: e.message,
         }));

@@ -1,6 +1,20 @@
+import type { RenderAsset, RenderRequest } from './render';
+
 /**
  * Property Management Types - Integrated into CRM
  */
+
+export enum PropertyType {
+    RESIDENTIAL = 'Residential',
+    COMMERCIAL = 'Commercial',
+    MIXED_USE = 'Mixed-Use',
+}
+
+export enum ConstructionStatus {
+    PRE_LAUNCH = 'Pre-Launch',
+    UNDER_DEVELOPMENT = 'Under Development',
+    READY_FOR_POSSESSION = 'Ready for Possession',
+}
 
 export enum UnitType {
     ONE_BHK = 'ONE_BHK',
@@ -9,6 +23,9 @@ export enum UnitType {
     FOUR_BHK = 'FOUR_BHK',
     SHOP = 'SHOP',
     OFFICE = 'OFFICE',
+    STUDIO = 'STUDIO',
+    RETAIL = 'RETAIL',
+    OTHER = 'OTHER',
 }
 
 export enum ProjectStatus {
@@ -44,13 +61,36 @@ export enum DocumentCategory {
     OTHER = 'OTHER',
 }
 
+export interface Project {
+    id: string;
+    name: string;
+    developer: string;
+    location: string;
+    address: string;
+    totalUnits: number;
+    availableUnits: number;
+    priceRange: { min: number; max: number };
+    status: 'upcoming' | 'under_construction' | 'ready_to_move' | 'completed';
+    possessionDate?: string;
+    amenities: string[];
+    coordinates?: { lat: number; lng: number };
+    images?: string[];
+    brochure?: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
 export interface Property {
     id: string;
     // Basic Info
     name: string;
     code: string | null;
     status: ProjectStatus;
+    constructionStatus?: ConstructionStatus;
+
     projectType: "RESIDENTIAL" | "COMMERCIAL" | "MIXED_USE";
+    propertyType?: PropertyType;
+
     developerName: string;
     tagline?: string | null;
     description?: string | null;
@@ -84,6 +124,7 @@ export interface Property {
     reraId: string;
     reraUrl?: string | null;
     reraExpiryDate?: string | null;
+    reraQRCodeUrl?: string | null; // NEW: Direct link to RERA QR
 
     // Dates
     launchDate?: string | null;
@@ -98,12 +139,20 @@ export interface Property {
     maintenanceChargePerSqft?: number | null;
     gstIncluded?: boolean;
     paymentPlanType?: "CONSTRUCTION_LINKED" | "TIME_LINKED" | "DOWN_PAYMENT" | "FLEXI" | "OTHER";
+    paymentPlans?: PaymentPlan[]; // NEW: List of available payment schemes
+    bankApprovals?: BankApproval[]; // NEW: List of approved banks for home loans
 
     // Marketing
     primaryImageUrl?: string | null;
     brochureUrl?: string | null;
     highlights: string[];
-    amenities: string[];
+    amenities: Amenity[];
+    documents?: PropertyDocument[];
+    locationIntelligence?: {
+        connectivity: { name: string; distance: string }[];
+        schools: { name: string; distance: string }[];
+        hospitals: { name: string; distance: string }[];
+    }; // NEW: Stored location metadata
 
     // Flags
     isActive: boolean;
@@ -111,18 +160,26 @@ export interface Property {
 
     createdAt: string;
     updatedAt: string;
-    // Keep thumbnail for backward compatibility if needed, or map it to primaryImageUrl
     thumbnailUrl?: string | null;
+    renders?: RenderAsset[];
+    renderRequests?: RenderRequest[];
 }
+
+export type SectionType = 'Residential' | 'Commercial';
 
 export interface Tower {
     id: string;
     propertyId: string;
+    sectionType?: SectionType;
     name: string;
-    floors: number;
+    totalFloors: number;
     totalUnits: number;
     availableUnits: number;
     status: BuildingStatus;
+    constructionStage?: 'Foundation' | 'Plinth' | 'Slab' | 'Brickwork' | 'Plastering' | 'Finishing' | 'Ready'; // NEW: Granular tracking
+    constructionPercent?: number; // NEW: 0-100
+    possessionDate?: string; // NEW: Per-tower possession
+    totalParkingSlots?: number; // NEW: Parking tracking
     specifications?: {
         height?: string;
         structure?: string;
@@ -130,42 +187,43 @@ export interface Tower {
     };
     createdAt: string;
     updatedAt: string;
+    renders?: RenderAsset[];
+    renderRequests?: RenderRequest[];
 }
+
+export interface Building extends Tower { }
 
 export interface Unit {
     id: string;
     towerId: string;
     propertyId: string;
+    sectionType?: SectionType;
     unitNumber: string;
     floor: number;
-    type: UnitType;
+    type: UnitType | string;
+    configuration: string; // NEW: "1BHK", "2BHK", etc.
     status: UnitStatus;
+    holdExpiry?: string; // NEW: For soft-holds
     carpetArea: number;
     builtUpArea: number;
+    superBuiltUpArea?: number; // NEW: Saleable area
     facing?: string;
     basePrice: number;
     floorRise: number;
     plcCharges: number;
     totalPrice: number;
+    priceOverride?: number; // NEW: For specific discounts
     reservation?: UnitReservation;
-    specifications?: {
-        bedrooms?: number;
-        bathrooms?: number;
-        balconies?: number;
-        parkingSlots?: number;
-    };
-    // Inventory Intelligence
-    inventoryStats?: {
-        daysOnMarket: number;
-        lastCampaignDate?: string;
-        campaignTouchCount: number;
-        viewCount: number;
-        shortlistCount: number;
-        lastImpressionAt?: string;
-    };
+    specifications?: Record<string, any>;
+    isHighDemand?: boolean; // NEW: Marketing flag
     createdAt: string;
     updatedAt: string;
+    renders?: RenderAsset[];
+    renderRequests?: RenderRequest[];
 }
+
+// For backward compatibility
+export type Space = Unit;
 
 export interface Amenity {
     id: string;
@@ -282,4 +340,29 @@ export interface PropertyInventoryStats {
     booked: number;
     blocked: number;
     occupancyRate: number;
+}
+
+export interface BrochureParseResult {
+    success: boolean;
+    data?: Partial<Property> & {
+        structured?: Record<string, any>;
+    };
+    warning?: string;
+    message?: string;
+}
+
+export interface PaymentPlan {
+    id: string;
+    name: string;
+    type: string;
+    description: string;
+    milestones: { label: string; percentage: number }[];
+}
+
+export interface BankApproval {
+    id: string;
+    bankName: string;
+    logoUrl?: string;
+    maxLtv?: number;
+    interestRateRange?: string;
 }

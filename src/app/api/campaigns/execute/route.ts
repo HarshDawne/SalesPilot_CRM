@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { db, Lead } from '@/lib/db';
 import { addDays, format, setHours, setMinutes } from 'date-fns';
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
         const { leadIds, campaignName, channel } = body;
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
                     lead.currentStage = 'Visit_Booked';
                     lead.visit = {
                         visitId: Math.random().toString(36).substr(2, 9),
-                        visitStatus: 'Scheduled',
+                        visitStatus: 'confirmed',
                         visitDateTime: visitDate.toISOString(),
                         assignedAgentId: 'agent-1', // Mock Agent
                         confirmationSent: true,
@@ -56,7 +56,7 @@ export async function POST(request: Request) {
                     lead.aiCalling.callRecords.push({
                         callId: Math.random().toString(36).substr(2, 9),
                         startTime: new Date().toISOString(),
-                        status: 'completed',
+                        status: 'connected',
                         duration: 125,
                         aiConfidence: 92,
                         summary: `Customer interested in ${campaignName}. Booked site visit for ${format(visitDate, 'PPP p')}.`,

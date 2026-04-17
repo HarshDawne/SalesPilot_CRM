@@ -15,20 +15,25 @@ export async function POST(req: NextRequest) {
         }
 
         // Create Lead
-        const newLead = {
+        const newLead: any = {
             id: uuidv4(),
+            name: body.name,
             firstName: body.name.split(" ")[0],
             lastName: body.name.split(" ").slice(1).join(" ") || "",
             email: body.email || null,
-            phone: body.phone,
+            primaryPhone: body.phone,
+            phone: body.phone, // alias for compatibility
             budgetMin: body.budget_min || 0,
             budgetMax: body.budget_max || 0,
-            timelineToBuy: body.timeline_to_buy || "Unknown",
-            status: "New",
-            tags: body.tags || ["New Lead"],
+            currentStage: "New",
+            status: "New", // Legacy status field
+            leadTags: body.tags || ["New Lead"],
             createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            createdVia: body.source === 'api' ? 'api' : 'website',
             lastContactedAt: null,
-            assignedTo: null, // Auto-assignment logic could go here
+            assignedAgentId: null,
+            version: 1
         };
 
         await db.leads.create(newLead);

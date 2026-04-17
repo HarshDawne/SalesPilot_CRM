@@ -5,29 +5,34 @@
 
 import { firebasePropertyDb } from './firebase-property-db';
 import { seedProperties, seedTowers, seedUnits } from './seed-properties';
-import { seedDocuments, seedRenderRequests, additionalSeedUnits } from './seed-enhancements';
+import { knowledgeProperties, knowledgeTowers, knowledgeUnits } from './seed-knowledge';
+import { seedPerformanceMatrixData } from './seed-performance';
 
 export async function seedAllData() {
     console.log('🌱 Starting database seeding...');
 
     try {
-        // Combine all units
-        const allUnits = [...seedUnits, ...additionalSeedUnits];
+        // 1. Core Property Data
+        const allUnits = [...seedUnits, ...knowledgeUnits];
+        const allProperties = [...seedProperties, ...knowledgeProperties];
+        const allTowers = [...seedTowers, ...knowledgeTowers];
 
         await firebasePropertyDb.seedDatabase({
-            properties: seedProperties,
-            towers: seedTowers,
+            properties: allProperties,
+            towers: allTowers,
             units: allUnits,
-            documents: seedDocuments,
-            renderRequests: seedRenderRequests,
+            documents: [],
+            renderRequests: [],
         });
+
+        // 2. Showcase Performance Data
+        const performanceCount = await seedPerformanceMatrixData();
 
         console.log('✅ Database seeded successfully!');
         console.log(`   - ${seedProperties.length} properties`);
         console.log(`   - ${seedTowers.length} towers`);
         console.log(`   - ${allUnits.length} units`);
-        console.log(`   - ${seedDocuments.length} documents`);
-        console.log(`   - ${seedRenderRequests.length} render requests`);
+        console.log(`   - ${performanceCount || 0} performance events`);
 
         return {
             success: true,
@@ -35,8 +40,7 @@ export async function seedAllData() {
                 properties: seedProperties.length,
                 towers: seedTowers.length,
                 units: allUnits.length,
-                documents: seedDocuments.length,
-                renderRequests: seedRenderRequests.length,
+                performanceEvents: performanceCount || 0,
             },
         };
     } catch (error) {

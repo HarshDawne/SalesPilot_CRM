@@ -7,14 +7,15 @@ const renderRequests: RenderRequest[] = [];
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body = await request.json();
     const { status } = body;
 
-    const requestIndex = renderRequests.findIndex(r => r.id === params.id);
-    
+    const requestIndex = renderRequests.findIndex(r => r.id === id);
+
     if (requestIndex === -1) {
       return NextResponse.json(
         { success: false, error: 'Request not found' },
@@ -24,11 +25,10 @@ export async function PATCH(
 
     const oldStatus = renderRequests[requestIndex].status;
     renderRequests[requestIndex].status = status as RenderStatus;
-    renderRequests[requestIndex].updatedAt = new Date().toISOString();
 
     // Broadcast status update to user
     broadcastSSE('render-status-update', {
-      requestId: params.id,
+      requestId: id,
       oldStatus,
       newStatus: status,
       propertyId: renderRequests[requestIndex].propertyId,
@@ -37,7 +37,7 @@ export async function PATCH(
     // If status is READY, notify the user
     if (status === 'READY') {
       // In production, send email/WhatsApp notification
-      console.log(`Notify user: Render ${params.id} is ready`);
+      console.log(`Notify user: Render ${id} is ready`);
     }
 
     return NextResponse.json({

@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
                         timeline: '2-3 months',
                         timelineWeeks: 10,
                         preferredLocations: [locations[Math.floor(Math.random() * locations.length)]],
-                        propertyType: propertyTypes[Math.floor(Math.random() * propertyTypes.length)],
+                        propertyType: [propertyTypes[Math.floor(Math.random() * propertyTypes.length)]],
                         intentLevel: 'high',
                         qualifier: 'ai',
                         qualifiedAt,

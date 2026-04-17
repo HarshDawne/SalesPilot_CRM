@@ -1,0 +1,43 @@
+{
+    "brochure_send": {
+        "text": "Hi {{leadName}}! 👋\\n\\nThank you for your interest in {{propertyName}}.\\n\\n📄 Here's the detailed brochure.\\n🏢 {{bedrooms}} BHK starting at {{priceFormatted}}\\n📍 {{locality}}\\n\\nWould you like to schedule a site visit? Reply YES to confirm.\\n\\n{{salesTeamName}}",
+        "variables": [
+            "leadName",
+            "propertyName",
+            "bedrooms",
+            "priceFormatted",
+            "locality",
+            "salesTeamName"
+        ]
+    },
+    "missed_call_followup": {
+        "text": "Hi {{leadName}},\\n\\nWe tried calling you regarding {{propertyName}} but couldn't connect.\\n\\nWhen would be a good time to discuss this amazing opportunity?\\n\\nReply with your preferred time or call us back at {{salesPhone}}.\\n\\nBest regards,\\n{{salesTeamName}}",
+        "variables": [
+            "leadName",
+            "propertyName",
+            "salesPhone",
+            "salesTeamName"
+        ]
+    },
+    "site_visit_reminder": {
+        "text": "🔔 Site Visit Reminder\\n\\nHi {{leadName}}!\\n\\nThis is a reminder for your site visit tomorrow:\\n\\n📍 {{propertyName}}\\n📅 {{visitDate}}\\n⏰ {{visitTime}}\\n📌 {{meetingPoint}}\\n\\nLooking forward to seeing you! Reply CONFIRM or call {{agentPhone}}.\\n\\n{{salesTeamName}}",
+        "variables": [
+            "leadName",
+            "propertyName",
+            "visitDate",
+            "visitTime",
+            "meetingPoint",
+            "agentPhone",
+            "salesTeamName"
+        ]
+    },
+    "interested_followup": {
+        "text": "Hi {{leadName}}! 🎉\\n\\nGreat to know you're interested in {{propertyName}}!\\n\\nOur sales team will help you with:\\n✅ Floor plans\\n✅ Payment options\\n✅ Site visit booking\\n\\nWhen can we schedule a call?\\n\\nReply or call {{salesPhone}}.\\n\\n{{salesTeamName}}",
+        "variables": [
+            "leadName",
+            "propertyName",
+            "salesPhone",
+            "salesTeamName"
+        ]
+    }
+}

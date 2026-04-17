@@ -5,10 +5,11 @@ const documents: any[] = [];
 
 export async function DELETE(
     request: NextRequest,
-    { params }: { params: { id: string; docId: string } }
+    { params }: { params: Promise<{ id: string; docId: string }> }
 ) {
+    const { docId } = await params;
     try {
-        const index = documents.findIndex(d => d.id === params.docId);
+        const index = documents.findIndex(d => d.id === docId);
 
         if (index === -1) {
             return NextResponse.json(
@@ -35,10 +36,11 @@ export async function DELETE(
 
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string; docId: string } }
+    { params }: { params: Promise<{ id: string; docId: string }> }
 ) {
+    const { docId } = await params;
     try {
-        const document = documents.find(d => d.id === params.docId);
+        const document = documents.find(d => d.id === docId);
 
         if (!document) {
             return NextResponse.json(

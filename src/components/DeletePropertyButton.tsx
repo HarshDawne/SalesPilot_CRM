@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Trash2 } from "lucide-react";
+import { useToast } from "@/components/ui/ToastProvider";
 
 interface DeletePropertyButtonProps {
     propertyId: string;
@@ -10,6 +11,7 @@ interface DeletePropertyButtonProps {
 }
 
 export default function DeletePropertyButton({ propertyId, propertyName }: DeletePropertyButtonProps) {
+    const { showToast } = useToast();
     const router = useRouter();
     const [isDeleting, setIsDeleting] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
@@ -33,7 +35,7 @@ export default function DeletePropertyButton({ propertyId, propertyName }: Delet
             router.refresh();
         } catch (error: any) {
             console.error('Delete error:', error);
-            alert(error.message || 'Failed to delete property');
+            showToast(error.message || 'Failed to delete property', "error");
             setIsDeleting(false);
             setShowConfirm(false);
         }

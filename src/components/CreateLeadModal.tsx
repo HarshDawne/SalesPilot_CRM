@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { X, User, Phone, Mail, DollarSign, Clock } from "lucide-react";
+import { X, User, Phone, Mail, Clock } from "lucide-react";
+import { useToast } from "@/components/ui/ToastProvider";
 
 interface CreateLeadModalProps {
     isOpen: boolean;
@@ -10,6 +11,7 @@ interface CreateLeadModalProps {
 }
 
 export default function CreateLeadModal({ isOpen, onClose, onSuccess }: CreateLeadModalProps) {
+    const { showToast } = useToast();
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         firstName: "",
@@ -52,6 +54,7 @@ export default function CreateLeadModal({ isOpen, onClose, onSuccess }: CreateLe
             });
 
             if (res.ok) {
+                showToast("Lead created successfully", "success");
                 onSuccess();
                 onClose();
                 // Reset form
@@ -67,11 +70,11 @@ export default function CreateLeadModal({ isOpen, onClose, onSuccess }: CreateLe
                     preferredLocation: "",
                 });
             } else {
-                alert("Failed to create lead");
+                showToast("Failed to create lead", "error");
             }
         } catch (error) {
             console.error("Error creating lead:", error);
-            alert("Error creating lead");
+            showToast("Error creating lead", "error");
         } finally {
             setLoading(false);
         }
@@ -153,7 +156,7 @@ export default function CreateLeadModal({ isOpen, onClose, onSuccess }: CreateLe
                             <div>
                                 <label className="block text-sm font-medium text-slate-700 mb-1">Min Budget</label>
                                 <div className="relative">
-                                    <DollarSign size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold ml-1">₹</span>
                                     <input
                                         type="number"
                                         placeholder="5000000"
@@ -166,7 +169,7 @@ export default function CreateLeadModal({ isOpen, onClose, onSuccess }: CreateLe
                             <div>
                                 <label className="block text-sm font-medium text-slate-700 mb-1">Max Budget</label>
                                 <div className="relative">
-                                    <DollarSign size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold ml-1">₹</span>
                                     <input
                                         type="number"
                                         placeholder="8000000"

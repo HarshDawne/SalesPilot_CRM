@@ -57,7 +57,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(leads);
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
 
@@ -241,7 +241,7 @@ export async function POST(request: Request) {
     }
 }
 
-export async function PATCH(request: Request) {
+export async function PATCH(request: NextRequest) {
     try {
         const body = await request.json();
         const { leadId, updates, actor } = body;

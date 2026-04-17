@@ -1,0 +1,118 @@
+{
+  "jobs": [
+    {
+      "id": "job_1765697093495_9cnvffk8g",
+      "campaignId": "test-campaign-1",
+      "leadId": "lead-1",
+      "status": "FAILED",
+      "outcome": "FAILED_TO_INITIATE",
+      "attempts": 1,
+      "createdAt": "2025-12-14T07:24:53.495Z",
+      "updatedAt": "2025-12-14T07:24:53.495Z",
+      "metadata": {
+        "bolnaResponse": "Invalid Phone"
+      }
+    },
+    {
+      "id": "job_1765697640083_h1wb2f1r1",
+      "campaignId": "test-phone-format-campaign",
+      "leadId": "lead-1",
+      "phoneNumber": "",
+      "status": "FAILED",
+      "outcome": "FAILED_TO_INITIATE",
+      "attempts": 1,
+      "createdAt": "2025-12-14T07:34:00.083Z",
+      "updatedAt": "2025-12-14T07:34:00.083Z",
+      "metadata": {
+        "bolnaResponse": "Invalid Phone"
+      }
+    },
+    {
+      "id": "job_1765697727552_a3zdc9dmp",
+      "campaignId": "test-phone-format-campaign",
+      "leadId": "lead-1",
+      "phoneNumber": "+919876543210",
+      "status": "FAILED",
+      "outcome": "FAILED_TO_INITIATE",
+      "attempts": 1,
+      "createdAt": "2025-12-14T07:35:27.552Z",
+      "updatedAt": "2025-12-14T07:35:27.552Z",
+      "metadata": {
+        "bolnaResponse": "{\"message\":\"Trial accounts can only make calls to verified phone numbers.\"}"
+      }
+    },
+    {
+      "id": "job_1765699106240_c1hwnqlr1",
+      "campaignId": "unknown_campaign",
+      "leadId": "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1",
+      "leadName": "Harsh Dawne",
+      "phoneNumber": "+918657654711",
+      "status": "IN_PROGRESS",
+      "outcome": null,
+      "attempts": 1,
+      "createdAt": "2025-12-14T07:58:26.240Z",
+      "updatedAt": "2025-12-14T07:58:26.240Z",
+      "metadata": {
+        "bolnaResponse": {
+          "status": "queued",
+          "message": "done",
+          "execution_id": "1aa37dd4-abfe-4499-a550-8937af99ff61",
+          "run_id": "1aa37dd4-abfe-4499-a550-8937af99ff61"
+        }
+      }
+    },
+    {
+      "id": "job_1765699127120_jmqy8clvy",
+      "campaignId": "unknown_campaign",
+      "executionId": "f39e979a-a093-4f71-8e49-dce49aa259c3",
+      "leadId": "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1",
+      "leadName": "Harsh Dawne",
+      "phoneNumber": "+918657654711",
+      "status": "COMPLETED",
+      "outcome": "completed",
+      "attempts": 1,
+      "createdAt": "2025-12-14T07:58:47.120Z",
+      "updatedAt": "2025-12-14T09:27:15.404Z",
+      "metadata": {
+        "bolnaResponse": {
+          "status": "queued",
+          "message": "done",
+          "execution_id": "f39e979a-a093-4f71-8e49-dce49aa259c3",
+          "run_id": "f39e979a-a093-4f71-8e49-dce49aa259c3"
+        },
+        "webhookPayload": {
+          "execution_id": "f39e979a-a093-4f71-8e49-dce49aa259c3",
+          "status": "completed",
+          "call_duration": 125,
+          "recording_url": "https://api.bolna.dev/recordings/sample.mp3",
+          "transcript": "Agent: Hello? User: Yes, I am interested.",
+          "to": "+918657654711"
+        },
+        "transcript": "Agent: Hello? User: Yes, I am interested.",
+        "recordingUrl": "https://api.bolna.dev/recordings/sample.mp3"
+      },
+      "durationSeconds": 125
+    },
+    {
+      "id": "job_1765725297715_rpylktsoi",
+      "campaignId": "unknown_campaign",
+      "executionId": "9d61adaf-32b1-43a5-917e-53b0d91c8189",
+      "leadId": "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1",
+      "leadName": "Harsh Dawne",
+      "phoneNumber": "+918657654711",
+      "status": "IN_PROGRESS",
+      "outcome": null,
+      "attempts": 1,
+      "createdAt": "2025-12-14T15:14:57.716Z",
+      "updatedAt": "2025-12-14T15:14:57.716Z",
+      "metadata": {
+        "bolnaResponse": {
+          "status": "queued",
+          "message": "done",
+          "execution_id": "9d61adaf-32b1-43a5-917e-53b0d91c8189",
+          "run_id": "9d61adaf-32b1-43a5-917e-53b0d91c8189"
+        }
+      }
+    }
+  ]
+}

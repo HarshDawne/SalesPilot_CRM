@@ -44,7 +44,7 @@ export default function UserRenderView({ propertyId }: UserRenderViewProps) {
 
     const getStatusBadge = (status: string) => {
         switch (status) {
-            case 'REQUESTED':
+            case 'PENDING':
                 return (
                     <span className="inline-flex items-center gap-1 px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">
                         <Clock className="w-4 h-4" />
@@ -58,7 +58,7 @@ export default function UserRenderView({ propertyId }: UserRenderViewProps) {
                         In Progress
                     </span>
                 );
-            case 'READY':
+            case 'COMPLETED':
                 return (
                     <span className="inline-flex items-center gap-1 px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
                         <CheckCircle className="w-4 h-4" />
@@ -103,21 +103,21 @@ export default function UserRenderView({ propertyId }: UserRenderViewProps) {
                     <div className="flex items-start justify-between mb-3">
                         <div>
                             <h4 className="font-medium text-gray-900">
-                                {request.renderType.replace('_', ' ')} Render
+                                {request.requestedRenderTypes[0]?.replace('_', ' ') || '3D'} Render
                             </h4>
                             <p className="text-sm text-gray-600 mt-1">
-                                Requested on {new Date(request.requestedAt).toLocaleDateString()}
+                                Requested on {new Date(request.createdAt).toLocaleDateString()}
                             </p>
                         </div>
                         {getStatusBadge(request.status)}
                     </div>
 
-                    {request.description && (
-                        <p className="text-sm text-gray-700 mb-3">{request.description}</p>
+                    {request.instructions && (
+                        <p className="text-sm text-gray-700 mb-3">{request.instructions}</p>
                     )}
 
                     {/* Status Messages */}
-                    {request.status === 'REQUESTED' && (
+                    {request.status === 'PENDING' && (
                         <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg mb-3">
                             <p className="text-sm text-yellow-800">
                                 <strong>Your request has been received!</strong> Our design team will start working on it soon.
@@ -133,7 +133,7 @@ export default function UserRenderView({ propertyId }: UserRenderViewProps) {
                         </div>
                     )}
 
-                    {request.status === 'READY' && (
+                    {request.status === 'COMPLETED' && (
                         <div className="p-3 bg-green-50 border border-green-200 rounded-lg mb-3">
                             <p className="text-sm text-green-800">
                                 <strong>Your render is ready!</strong> You can download it below.
@@ -148,30 +148,39 @@ export default function UserRenderView({ propertyId }: UserRenderViewProps) {
                                 Available Renders ({request.renders.length})
                             </h5>
                             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                                {request.renders.map((render) => (
-                                    <div
-                                        key={render.id}
-                                        className="border border-gray-200 rounded-lg p-3 hover:shadow-md transition-shadow"
-                                    >
-                                        <div className="aspect-video bg-gray-100 rounded mb-2 flex items-center justify-center">
-                                            <ImageIcon className="w-8 h-8 text-gray-400" />
-                                        </div>
-                                        <div className="text-sm font-medium text-gray-900 truncate mb-1">
-                                            {render.name}
-                                        </div>
-                                        <div className="text-xs text-gray-500 mb-2">
-                                            {render.resolution} • {(render.fileSize / 1024 / 1024).toFixed(1)} MB
-                                        </div>
-                                        <a
-                                            href={render.fileUrl}
-                                            download
-                                            className="inline-flex items-center gap-1 text-xs text-blue-600 hover:text-blue-700"
+                                {request.renders.map((render) => {
+                                    const media = render.media?.[0];
+                                    return (
+                                        <div
+                                            key={render.id}
+                                            className="border border-gray-200 rounded-lg p-3 hover:shadow-md transition-shadow"
                                         >
-                                            <Download className="w-3 h-3" />
-                                            Download
-                                        </a>
-                                    </div>
-                                ))}
+                                            <div className="aspect-video bg-gray-100 rounded mb-2 flex items-center justify-center relative overflow-hidden">
+                                                {media ? (
+                                                    <img src={media.url} className="w-full h-full object-cover" alt="Render" />
+                                                ) : (
+                                                    <ImageIcon className="w-8 h-8 text-gray-400" />
+                                                )}
+                                            </div>
+                                            <div className="text-sm font-medium text-gray-900 truncate mb-1">
+                                                {render.renderType}
+                                            </div>
+                                            <div className="text-xs text-gray-500 mb-2">
+                                                {new Date(render.uploadedAt).toLocaleDateString()}
+                                            </div>
+                                            {media && (
+                                                <a
+                                                    href={media.url}
+                                                    download
+                                                    className="inline-flex items-center gap-1 text-xs text-blue-600 hover:text-blue-700"
+                                                >
+                                                    <Download className="w-3 h-3" />
+                                                    Download
+                                                </a>
+                                            )}
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
                     )}

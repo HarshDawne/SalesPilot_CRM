@@ -14,12 +14,12 @@ export default function UnitDocumentsModal({ isOpen, onClose, unit, documents = 
     if (!isOpen || !unit) return null;
 
     // Use passed documents or fallback to mock if empty (for dev/preview)
-    const displayDocs = documents.length > 0 ? documents : [
-        { id: '1', name: "Booking Application Form", category: "OTHER", fileSize: 2400000, uploadedAt: "2024-10-12", status: "Verified" },
-        { id: '2', name: "Payment Receipt - Token", category: "OTHER", fileSize: 1100000, uploadedAt: "2024-10-12", status: "Verified" },
-        { id: '3', name: "KYC Documents", category: "OTHER", fileSize: 4500000, uploadedAt: "2024-10-13", status: "Pending" },
-        { id: '4', name: "Allotment Letter", category: "OTHER", fileSize: 1800000, uploadedAt: "2024-10-15", status: "Draft" },
-    ];
+    const displayDocs: PropertyDocument[] = documents.length > 0 ? documents : [
+        { id: '1', propertyId: 'mock', name: "Booking Application Form", category: "OTHER", fileName: "booking_form.pdf", fileUrl: "#", fileSize: 2400000, mimeType: "application/pdf", uploadedBy: "System", uploadedAt: "2024-10-12T10:00:00Z" },
+        { id: '2', propertyId: 'mock', name: "Payment Receipt - Token", category: "OTHER", fileName: "receipt.pdf", fileUrl: "#", fileSize: 1100000, mimeType: "application/pdf", uploadedBy: "System", uploadedAt: "2024-10-12T11:00:00Z" },
+        { id: '3', propertyId: 'mock', name: "KYC Documents", category: "OTHER", fileName: "kyc.pdf", fileUrl: "#", fileSize: 4500000, mimeType: "application/pdf", uploadedBy: "System", uploadedAt: "2024-10-13T09:00:00Z" },
+        { id: '4', propertyId: 'mock', name: "Allotment Letter", category: "OTHER", fileName: "allotment.pdf", fileUrl: "#", fileSize: 1800000, mimeType: "application/pdf", uploadedBy: "System", uploadedAt: "2024-10-15T14:00:00Z" },
+    ] as any; // Cast as any if we don't want to fill every single optional field but keep it mostly correct
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200" onClick={onClose}>
@@ -62,14 +62,9 @@ export default function UnitDocumentsModal({ isOpen, onClose, unit, documents = 
                                         <div>
                                             <div className="flex items-center gap-2">
                                                 <h3 className="font-medium text-slate-900">{doc.name}</h3>
-                                                {doc.status === 'Verified' && (
-                                                    <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-700 uppercase tracking-wide flex items-center gap-1">
-                                                        <ShieldCheck size={10} /> Verified
-                                                    </span>
-                                                )}
                                             </div>
                                             <div className="flex items-center gap-3 text-xs text-slate-500 mt-0.5">
-                                                <span>{doc.type || 'PDF'}</span>
+                                                <span>{doc.fileName.split('.').pop()?.toUpperCase() || 'PDF'}</span>
                                                 <span className="w-1 h-1 rounded-full bg-slate-300" />
                                                 <span>{doc.fileSize ? (doc.fileSize / 1024 / 1024).toFixed(1) : '0'} MB</span>
                                                 <span className="w-1 h-1 rounded-full bg-slate-300" />

@@ -3,7 +3,7 @@ import { db } from '@/lib/db';
 import { requireRole } from '@/lib/auth';
 import { v4 as uuidv4 } from 'uuid';
 
-export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     const authError = await requireRole(request, ['admin', 'manager']);
     if (authError) return authError;
 
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
         let leads = [];
         if (Array.isArray(campaign.lead_query)) {
             // If explicit IDs
-            leads = campaign.lead_query.map(lid => db.leads.findById(lid)).filter(l => l);
+            leads = campaign.lead_query.map(lid => db.leads.findById(lid)).filter((l): l is any => !!l);
         } else {
             // If filter object (mock: fetch all for now or filter by tag)
             leads = db.leads.findAll();

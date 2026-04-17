@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import type { RenderRequest } from '@/types/render';
+import { firebasePropertyDb } from '@/lib/firebase-property-db';
 
 // Mock storage (shared with request route)
 const renderRequests: RenderRequest[] = [];
@@ -9,13 +10,10 @@ export async function GET(request: NextRequest) {
         // In production, add authentication check for admin users
 
         // Return all requests sorted by priority and date
-        const sortedRequests = [...renderRequests].sort((a, b) => {
-            const priorityOrder = { URGENT: 0, HIGH: 1, MEDIUM: 2, LOW: 3 };
-            const priorityDiff = priorityOrder[a.priority] - priorityOrder[b.priority];
-
-            if (priorityDiff !== 0) return priorityDiff;
-
-            return new Date(b.requestedAt).getTime() - new Date(a.requestedAt).getTime();
+        // Return all requests sorted by date
+        const requests = await firebasePropertyDb.getAllRenderRequests();
+        const sortedRequests = [...requests].sort((a, b) => {
+            return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
         });
 
         return NextResponse.json({

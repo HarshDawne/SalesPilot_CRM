@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { unitService } from '@/lib/property-db';
+import { unitService } from '@/lib/property-service';
 import { db } from '@/lib/db';
 import { addTimelineEvent } from '@/lib/timeline';
 
 export async function POST(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const { id: unitId } = params;
+        const { id: unitId } = await params;
         const { leadId, hours } = await request.json();
 
         if (!leadId) {
@@ -59,10 +59,10 @@ export async function POST(
 
 export async function DELETE(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const { id: unitId } = params;
+        const { id: unitId } = await params;
 
         const unit = unitService.releaseReservation(unitId);
         if (!unit) {

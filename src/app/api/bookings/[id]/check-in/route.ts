@@ -9,7 +9,7 @@ import { addTimelineEvent } from '@/lib/timeline';
  */
 export async function POST(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     // RBAC: sales, manager, admin can check-in
     const authError = await requireRole(request, ['sales', 'manager', 'admin']);

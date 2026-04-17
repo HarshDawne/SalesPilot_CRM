@@ -3,8 +3,8 @@ import { propertyService, towerService, unitService } from '@/lib/property-db';
 
 export async function GET() {
     try {
-        const properties = propertyService.getAll();
-        const allUnits = unitService.getAll();
+        const properties = await propertyService.getAll();
+        const allUnits = await unitService.getAll();
 
         // 1. Dead Stock Analysis (Available > 90 Days)
         const ninetyDaysAgo = new Date();
@@ -25,14 +25,14 @@ export async function GET() {
         );
 
         // 3. Occupancy by Property
-        const propertyStats = properties.map(p => {
-            const stats = unitService.getInventoryStats(p.id);
+        const propertyStats = await Promise.all(properties.map(async p => {
+            const stats = await unitService.getInventoryStats(p.id);
             return {
                 id: p.id,
                 name: p.name,
                 ...stats
             };
-        });
+        }));
 
         // 4. Dead Stock Value
         const deadStockValue = deadStock.reduce((sum, u) => sum + u.totalPrice, 0);

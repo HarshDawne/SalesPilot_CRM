@@ -5,7 +5,7 @@ import type { NextRequest } from 'next/server';
 const rateLimitMap = new Map<string, { count: number; startTime: number }>();
 
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
-const MAX_REQUESTS = 100; // 100 requests per minute
+const MAX_REQUESTS = 1000; // Increased for dev/polling
 
 export function middleware(request: NextRequest) {
     // Only apply to /api routes

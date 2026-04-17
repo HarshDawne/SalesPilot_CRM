@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Inter, Outfit } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import { Sidebar, MobileHeader } from "@/components/Sidebar";
+import { ToastProvider } from "@/components/ui/ToastProvider";
+import ClientLayoutWrapper from "@/components/layout/ClientLayoutWrapper";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
-  title: "HyperSell CRM",
-  description: "Real Estate Sales OS + CRM + Property Management",
+  title: "HyperSell CRM | Strategic Sales OS",
+  description: "Billion-dollar Real Estate Operating System for High-Velocity Teams",
 };
 
 export default function RootLayout({
@@ -17,15 +17,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${outfit.variable} font-sans bg-slate-50 text-slate-900 antialiased`}>
-        <div className="flex h-screen overflow-hidden">
-          <Sidebar />
-          <main className="flex-1 overflow-auto bg-slate-50 relative">
-            <MobileHeader />
-            {children}
-          </main>
-        </div>
+    <html lang="en" suppressHydrationWarning className="scroll-smooth">
+      <body className={`${inter.variable} font-sans bg-bg-base text-text-main antialiased selection:bg-ai-accent/30`}>
+        <ToastProvider>
+           <ClientLayoutWrapper>
+             {children}
+           </ClientLayoutWrapper>
+        </ToastProvider>
       </body>
     </html>
   );

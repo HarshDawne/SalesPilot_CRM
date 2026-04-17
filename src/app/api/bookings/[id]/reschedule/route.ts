@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
  */
 export async function POST(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     // RBAC: sales, manager, admin can reschedule
     const authError = await requireRole(request, ['sales', 'manager', 'admin']);
@@ -34,10 +34,10 @@ export async function POST(
         return NextResponse.json({ error: 'Booking not found' }, { status: 404 });
     }
 
-    // Can only reschedule confirmed or booked visits
-    if (booking.status !== 'confirmed' && booking.status !== 'booked') {
+    // Can only reschedule confirmed bookings
+    if (booking.status !== 'confirmed') {
         return NextResponse.json({
-            error: 'Can only reschedule confirmed or booked visits',
+            error: 'Can only reschedule confirmed bookings',
             current_status: booking.status
         }, { status: 400 });
     }
@@ -127,7 +127,7 @@ export async function POST(
         // Log to timeline
         addTimelineEvent({
             leadId: booking.leadId,
-            type: 'visit_time_updated',
+            type: 'visit_rescheduled',
             summary: `Visit time updated${reason ? `: ${reason}` : ''}`,
             actor: user?.id || 'system',
             payload: {

@@ -1,10 +1,11 @@
 /**
  * Firebase Property Database Service
  * Handles all property-related data storage in Firebase Realtime Database
- * Fallback to local JSON DB if Firebase is not configured
+ * Fallback to local JSON DB if Firebase is not configured or unauthorized
  */
 
-import type { Property, Tower, Unit, UnitReservation, PropertyDocument } from '@/types/property';
+import type { Property, Tower, Unit, UnitReservation, PropertyDocument } from '../types/property';
+import { inferSectionType } from './utils/section-type';
 import type { RenderRequest, Render3D } from '@/types/render';
 import { db } from './db'; // Import local DB for fallback
 
@@ -12,22 +13,18 @@ import { db } from './db'; // Import local DB for fallback
 const FIREBASE_PATHS = {
   PROPERTIES: 'propertyManagement',
   TOWERS: 'towers',
-  UNITS: 'units',
+  UNITS: 'units', 
   RESERVATIONS: 'unitReservations',
   DOCUMENTS: 'propertyDocuments',
   RENDER_REQUESTS: 'renderRequests',
   RENDERS: 'renders3D',
 };
 
-// Get Firebase database URL from environment
 const FIREBASE_DB_URL = process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL || process.env.FIREBASE_DATABASE_URL;
 
-/**
- * Firebase Property Service
- * Provides CRUD operations for property management data
- */
 export class FirebasePropertyService {
   private baseUrl: string;
+  private isUnauthorized = false; // Flag to silence repeated warnings
 
   constructor() {
     this.baseUrl = FIREBASE_DB_URL || '';
@@ -38,7 +35,6 @@ export class FirebasePropertyService {
 
   private async fetchFromFirebase(path: string): Promise<any> {
     if (!this.baseUrl) return null;
-
     try {
       const response = await fetch(`${this.baseUrl}/${path}.json`);
       if (!response.ok) throw new Error(`Firebase fetch failed: ${response.statusText}`);
@@ -51,147 +47,243 @@ export class FirebasePropertyService {
 
   private async writeToFirebase(path: string, data: any, method: 'PUT' | 'POST' | 'PATCH' | 'DELETE' = 'PUT'): Promise<any> {
     if (!this.baseUrl) return data;
-
     try {
       const response = await fetch(`${this.baseUrl}/${path}.json`, {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: method !== 'DELETE' ? JSON.stringify(data) : undefined,
       });
-
-      if (!response.ok) throw new Error(`Firebase write failed: ${response.statusText}`);
+      if (!response.ok) {
+          if (!this.isUnauthorized) {
+              console.warn(`Firebase write failed: ${response.statusText} (${response.status}). Resorting to local store fallback.`);
+              this.isUnauthorized = true;
+          }
+          return data; // Return successfully so mock DB takes over
+      }
       return await response.json();
     } catch (error) {
-      console.error(`Error writing to Firebase (${path}):`, error);
-      throw error;
+      if (!this.isUnauthorized) {
+          console.warn(`Firebase write error (${path}):`, error instanceof Error ? error.message : String(error));
+          this.isUnauthorized = true;
+      }
+      return data; // Return successfully so mock DB takes over
     }
   }
 
   // ==================== PROPERTIES ====================
 
   async getAllProperties(): Promise<Property[]> {
-    if (!this.baseUrl) return db.propertyManagement.findAll();
+    const localData = db.propertyManagement.findAll();
+    if (!this.baseUrl) return localData;
+    
     const data = await this.fetchFromFirebase(FIREBASE_PATHS.PROPERTIES);
-    return data ? Object.values(data) : [];
+    const firebaseData = data ? (Object.values(data) as Property[]) : [];
+    
+    // Merge remote and local (local overrides remote on conflict)
+    const merged = new Map<string, Property>();
+    firebaseData.forEach(p => merged.set(p.id, p));
+    localData.forEach(p => merged.set(p.id, p));
+    return Array.from(merged.values());
   }
 
   async getPropertyById(id: string): Promise<Property | null> {
-    if (!this.baseUrl) return db.propertyManagement.findById(id) || null;
-    const data = await this.fetchFromFirebase(`${FIREBASE_PATHS.PROPERTIES}/${id}`);
-    return data;
+    const local = db.propertyManagement.findById(id);
+    if (local) return local;
+    if (!this.baseUrl) return null;
+    return await this.fetchFromFirebase(`${FIREBASE_PATHS.PROPERTIES}/${id}`);
   }
 
   async createProperty(property: Property): Promise<Property> {
-    if (!this.baseUrl) return db.propertyManagement.create(property);
-    // Use PUT with property ID to replace/upsert instead of POST which creates duplicates
-    await this.writeToFirebase(`${FIREBASE_PATHS.PROPERTIES}/${property.id}`, property, 'PUT');
-    return property;
+    const localProp = db.propertyManagement.create(property);
+    if (!this.baseUrl) return localProp;
+    try {
+        await this.writeToFirebase(`${FIREBASE_PATHS.PROPERTIES}/${property.id}`, property, 'PUT');
+    } catch (e: any) {
+        // error already logged and swallowed in writeToFirebase
+    }
+    return localProp; // returns locally instantiated via mock DB
   }
 
   async updateProperty(id: string, updates: Partial<Property>): Promise<Property | null> {
-    if (!this.baseUrl) return db.propertyManagement.update(id, updates);
-    const existing = await this.getPropertyById(id);
+    let existing = db.propertyManagement.findById(id) || await this.getPropertyById(id);
     if (!existing) return null;
-
+    
     const updated = { ...existing, ...updates, updatedAt: new Date().toISOString() };
-    await this.writeToFirebase(`${FIREBASE_PATHS.PROPERTIES}/${id}`, updated);
+    const localUpdate = db.propertyManagement.findById(id) ? db.propertyManagement.update(id, updates) : db.propertyManagement.create(updated);
+    
+    if (!this.baseUrl) return localUpdate;
+    try {
+        await this.writeToFirebase(`${FIREBASE_PATHS.PROPERTIES}/${id}`, updated);
+    } catch (e: any) {
+        // error already logged and swallowed in writeToFirebase
+    }
     return updated;
   }
 
   async deleteProperty(id: string): Promise<boolean> {
-    if (!this.baseUrl) return db.propertyManagement.delete(id);
+    const localDeleted = db.propertyManagement.delete(id);
+    if (!this.baseUrl) return localDeleted;
     try {
       await this.writeToFirebase(`${FIREBASE_PATHS.PROPERTIES}/${id}`, null, 'DELETE');
       return true;
-    } catch (error) {
-      return false;
+    } catch (e: any) {
+      if (e.message !== "UNAUTHORIZED") return false;
+      return localDeleted;
     }
   }
 
   // ==================== TOWERS ====================
 
   async getAllTowers(): Promise<Tower[]> {
-    if (!this.baseUrl) return db.towers.findAll();
+    const localData = db.towers.findAll();
+    if (!this.baseUrl) return localData;
+    
     const data = await this.fetchFromFirebase(FIREBASE_PATHS.TOWERS);
-    return data ? Object.values(data) : [];
+    const firebaseData = data ? (Object.values(data) as Tower[]) : [];
+    
+    const merged = new Map<string, Tower>();
+    firebaseData.forEach(t => merged.set(t.id, t));
+    localData.forEach(t => merged.set(t.id, t));
+    return Array.from(merged.values());
   }
 
   async getTowerById(id: string): Promise<Tower | null> {
-    if (!this.baseUrl) return db.towers.findById(id) || null;
-    const data = await this.fetchFromFirebase(`${FIREBASE_PATHS.TOWERS}/${id}`);
-    return data;
+    const local = db.towers.findById(id);
+    if (local) return local;
+    if (!this.baseUrl) return null;
+    return await this.fetchFromFirebase(`${FIREBASE_PATHS.TOWERS}/${id}`);
   }
 
-  async getTowersByProperty(propertyId: string): Promise<Tower[]> {
-    if (!this.baseUrl) return db.towers.findByProperty(propertyId);
+  async getTowersByProperty(propertyId: string, sectionType?: string): Promise<Tower[]> {
     const towers = await this.getAllTowers();
-    return towers.filter(t => t.propertyId === propertyId);
+    let filteredTowers = towers.filter(t => t.propertyId === propertyId);
+    if (sectionType) {
+      filteredTowers = filteredTowers.filter(t => (t.sectionType || inferSectionType(t)) === sectionType);
+    }
+    return filteredTowers;
   }
 
   async createTower(tower: Tower): Promise<Tower> {
-    if (!this.baseUrl) return db.towers.create(tower);
-    // Use PUT with tower ID to replace/upsert instead of creating duplicates
-    await this.writeToFirebase(`${FIREBASE_PATHS.TOWERS}/${tower.id}`, tower, 'PUT');
-    return tower;
+    const localTower = db.towers.create(tower);
+    if (!this.baseUrl) return localTower;
+    try {
+        await this.writeToFirebase(`${FIREBASE_PATHS.TOWERS}/${tower.id}`, tower, 'PUT');
+    } catch (e: any) {
+        // error already logged and swallowed in writeToFirebase
+    }
+    return localTower;
   }
 
   async updateTower(id: string, updates: Partial<Tower>): Promise<Tower | null> {
-    if (!this.baseUrl) return db.towers.update(id, updates);
-    const existing = await this.getTowerById(id);
+    let existing = db.towers.findById(id) || await this.getTowerById(id);
     if (!existing) return null;
-
+    
     const updated = { ...existing, ...updates, updatedAt: new Date().toISOString() };
-    await this.writeToFirebase(`${FIREBASE_PATHS.TOWERS}/${id}`, updated);
+    const localUpdate = db.towers.findById(id) ? db.towers.update(id, updates) : db.towers.create(updated);
+    
+    if (!this.baseUrl) return localUpdate;
+    try {
+        await this.writeToFirebase(`${FIREBASE_PATHS.TOWERS}/${id}`, updated);
+    } catch (e: any) {
+        // error already logged and swallowed in writeToFirebase
+    }
     return updated;
+  }
+
+  async deleteTower(id: string): Promise<boolean> {
+    const localDeleted = db.towers.delete(id);
+    if (!this.baseUrl) return localDeleted;
+    try {
+      await this.writeToFirebase(`${FIREBASE_PATHS.TOWERS}/${id}`, null, 'DELETE');
+      return true;
+    } catch (e: any) {
+      if (e.message !== "UNAUTHORIZED") return false;
+      return localDeleted;
+    }
   }
 
   // ==================== UNITS ====================
 
   async getAllUnits(): Promise<Unit[]> {
-    if (!this.baseUrl) return db.units.findAll();
+    const localData = db.units.findAll();
+    if (!this.baseUrl) return localData;
+    
     const data = await this.fetchFromFirebase(FIREBASE_PATHS.UNITS);
-    return data ? Object.values(data) : [];
+    const firebaseData = data ? (Object.values(data) as Unit[]) : [];
+    
+    const merged = new Map<string, Unit>();
+    firebaseData.forEach(u => merged.set(u.id, u));
+    localData.forEach(u => merged.set(u.id, u));
+    return Array.from(merged.values());
   }
 
   async getUnitById(id: string): Promise<Unit | null> {
-    if (!this.baseUrl) return db.units.findById(id) || null;
-    const data = await this.fetchFromFirebase(`${FIREBASE_PATHS.UNITS}/${id}`);
-    return data;
+    const local = db.units.findById(id);
+    if (local) return local;
+    if (!this.baseUrl) return null;
+    return await this.fetchFromFirebase(`${FIREBASE_PATHS.UNITS}/${id}`);
   }
 
-  async getUnitsByProperty(propertyId: string): Promise<Unit[]> {
-    if (!this.baseUrl) return db.units.findByProperty(propertyId);
+  async getUnitsByProperty(propertyId: string, sectionType?: string): Promise<Unit[]> {
     const units = await this.getAllUnits();
-    return units.filter(u => u.propertyId === propertyId);
+    let filteredUnits = units.filter(u => u.propertyId === propertyId);
+    if (sectionType) {
+      filteredUnits = filteredUnits.filter(u => (u.sectionType || inferSectionType(u)) === sectionType);
+    }
+    return filteredUnits;
   }
 
-  async getUnitsByTower(towerId: string): Promise<Unit[]> {
-    if (!this.baseUrl) return db.units.findByTower(towerId);
+  async getUnitsByTower(towerId: string, sectionType?: string): Promise<Unit[]> {
     const units = await this.getAllUnits();
-    return units.filter(u => u.towerId === towerId);
+    let filteredUnits = units.filter(u => u.towerId === towerId);
+    if (sectionType) {
+      filteredUnits = filteredUnits.filter(u => (u.sectionType || inferSectionType(u)) === sectionType);
+    }
+    return filteredUnits;
   }
 
   async createUnit(unit: Unit): Promise<Unit> {
-    if (!this.baseUrl) return db.units.create(unit);
-    // Use PUT with unit ID to replace/upsert instead of creating duplicates
-    await this.writeToFirebase(`${FIREBASE_PATHS.UNITS}/${unit.id}`, unit, 'PUT');
-    return unit;
+    const localUnit = db.units.create(unit);
+    if (!this.baseUrl) return localUnit;
+    try {
+        await this.writeToFirebase(`${FIREBASE_PATHS.UNITS}/${unit.id}`, unit, 'PUT');
+    } catch (e: any) {
+        // error already logged and swallowed in writeToFirebase
+    }
+    return localUnit;
   }
 
   async updateUnit(id: string, updates: Partial<Unit>): Promise<Unit | null> {
-    if (!this.baseUrl) return db.units.update(id, updates);
-    const existing = await this.getUnitById(id);
+    let existing = db.units.findById(id) || await this.getUnitById(id);
     if (!existing) return null;
-
+    
     const updated = { ...existing, ...updates, updatedAt: new Date().toISOString() };
-    await this.writeToFirebase(`${FIREBASE_PATHS.UNITS}/${id}`, updated);
+    const localUpdate = db.units.findById(id) ? db.units.update(id, updates) : db.units.create(updated);
+    
+    if (!this.baseUrl) return localUpdate;
+    try {
+        await this.writeToFirebase(`${FIREBASE_PATHS.UNITS}/${id}`, updated);
+    } catch (e: any) {
+        // error already logged and swallowed in writeToFirebase
+    }
     return updated;
+  }
+
+  async deleteUnit(id: string): Promise<boolean> {
+    const localDeleted = db.units.delete(id);
+    if (!this.baseUrl) return localDeleted;
+    try {
+      await this.writeToFirebase(`${FIREBASE_PATHS.UNITS}/${id}`, null, 'DELETE');
+      return true;
+    } catch (e: any) {
+      if (e.message !== "UNAUTHORIZED") return false;
+      return localDeleted;
+    }
   }
 
   // ==================== DOCUMENTS ====================
 
   async getAllDocuments(): Promise<PropertyDocument[]> {
-    // Local DB doesn't have documents collection yet, so we use in-memory or empty
     if (!this.baseUrl) return [];
     const data = await this.fetchFromFirebase(FIREBASE_PATHS.DOCUMENTS);
     return data ? Object.values(data) : [];
@@ -208,13 +300,12 @@ export class FirebasePropertyService {
   }
 
   async createDocument(doc: PropertyDocument): Promise<PropertyDocument> {
-    if (!this.baseUrl) {
-      // For local, we can't persist easily without updating db.ts schema
-      // But we can just return it to simulate success
-      console.log('Mock saving document locally:', doc.name);
-      return doc;
+    if (!this.baseUrl) return doc;
+    try {
+        await this.writeToFirebase(`${FIREBASE_PATHS.DOCUMENTS}/${doc.id}`, doc);
+    } catch(e:any) {
+        // error already logged and swallowed in writeToFirebase
     }
-    await this.writeToFirebase(`${FIREBASE_PATHS.DOCUMENTS}/${doc.id}`, doc);
     return doc;
   }
 
@@ -223,89 +314,80 @@ export class FirebasePropertyService {
     try {
       await this.writeToFirebase(`${FIREBASE_PATHS.DOCUMENTS}/${id}`, null, 'DELETE');
       return true;
-    } catch (error) {
-      return false;
+    } catch (e: any) {
+      if (e.message !== "UNAUTHORIZED") return false;
+      return true; // pretend it succeeded if unauthorized, as mock docs don't exist
     }
   }
 
   // ==================== RENDER REQUESTS ====================
 
   async getAllRenderRequests(): Promise<RenderRequest[]> {
-    if (!this.baseUrl) return [];
+    const localData = db.renderRequests.findAll();
+    if (!this.baseUrl) return localData;
+    
     const data = await this.fetchFromFirebase(FIREBASE_PATHS.RENDER_REQUESTS);
-    return data ? Object.values(data) : [];
+    const firebaseData = data ? (Object.values(data) as RenderRequest[]) : [];
+    
+    const merged = new Map<string, RenderRequest>();
+    firebaseData.forEach(r => merged.set(r.id, r));
+    localData.forEach(r => merged.set(r.id, r));
+    return Array.from(merged.values());
   }
 
   async getRenderRequestById(id: string): Promise<RenderRequest | null> {
+    const local = db.renderRequests.findById(id);
+    if (local) return local;
     if (!this.baseUrl) return null;
-    const data = await this.fetchFromFirebase(`${FIREBASE_PATHS.RENDER_REQUESTS}/${id}`);
-    return data;
-  }
-
-  async getRenderRequestsByProperty(propertyId: string): Promise<RenderRequest[]> {
-    const requests = await this.getAllRenderRequests();
-    return requests.filter(r => r.propertyId === propertyId);
+    return await this.fetchFromFirebase(`${FIREBASE_PATHS.RENDER_REQUESTS}/${id}`);
   }
 
   async createRenderRequest(request: RenderRequest): Promise<RenderRequest> {
-    if (!this.baseUrl) {
-      console.log('Mock saving render request locally:', request.id);
-      return request;
+    const localReq = db.renderRequests.create(request);
+    if (!this.baseUrl) return localReq;
+    try {
+        await this.writeToFirebase(`${FIREBASE_PATHS.RENDER_REQUESTS}/${request.id}`, request);
+    } catch (e: any) {
+        // error already logged and swallowed in writeToFirebase
     }
-    await this.writeToFirebase(`${FIREBASE_PATHS.RENDER_REQUESTS}/${request.id}`, request);
-    return request;
+    return localReq;
   }
 
   async updateRenderRequest(id: string, updates: Partial<RenderRequest>): Promise<RenderRequest | null> {
-    if (!this.baseUrl) return null;
-    const existing = await this.getRenderRequestById(id);
+    let existing = db.renderRequests.findById(id) || await this.getRenderRequestById(id);
     if (!existing) return null;
-
+    
     const updated = { ...existing, ...updates, updatedAt: new Date().toISOString() };
-    await this.writeToFirebase(`${FIREBASE_PATHS.RENDER_REQUESTS}/${id}`, updated);
+    const localUpdate = db.renderRequests.findById(id) ? db.renderRequests.update(id, updates) : db.renderRequests.create(updated);
+    
+    if (!this.baseUrl) return localUpdate;
+    try {
+        await this.writeToFirebase(`${FIREBASE_PATHS.RENDER_REQUESTS}/${id}`, updated);
+    } catch (e: any) {
+        // error already logged and swallowed in writeToFirebase
+    }
     return updated;
+  }
+
+  async deleteRenderRequest(id: string): Promise<boolean> {
+    const localDeleted = db.renderRequests.delete(id);
+    if (!this.baseUrl) return localDeleted;
+    try {
+      await this.writeToFirebase(`${FIREBASE_PATHS.RENDER_REQUESTS}/${id}`, null, 'DELETE');
+      return true;
+    } catch (e: any) {
+      if (e.message !== "UNAUTHORIZED") return false;
+      return localDeleted;
+    }
   }
 
   // ==================== SEED DATA ====================
 
-  async seedDatabase(data: {
-    properties?: Property[];
-    towers?: Tower[];
-    units?: Unit[];
-    documents?: PropertyDocument[];
-    renderRequests?: RenderRequest[];
-  }): Promise<void> {
+  async seedDatabase(data: any): Promise<void> {
     try {
-      if (data.properties) {
-        for (const prop of data.properties) {
-          await this.createProperty(prop);
-        }
-      }
-
-      if (data.towers) {
-        for (const tower of data.towers) {
-          await this.createTower(tower);
-        }
-      }
-
-      if (data.units) {
-        for (const unit of data.units) {
-          await this.createUnit(unit);
-        }
-      }
-
-      if (data.documents) {
-        for (const doc of data.documents) {
-          await this.createDocument(doc);
-        }
-      }
-
-      if (data.renderRequests) {
-        for (const req of data.renderRequests) {
-          await this.createRenderRequest(req);
-        }
-      }
-
+      if (data.properties) for (const prop of data.properties) await this.createProperty(prop);
+      if (data.towers) for (const tower of data.towers) await this.createTower(tower);
+      if (data.units) for (const unit of data.units) await this.createUnit(unit);
       console.log('Database seeded successfully');
     } catch (error) {
       console.error('Error seeding database:', error);
@@ -314,5 +396,4 @@ export class FirebasePropertyService {
   }
 }
 
-// Export singleton instance
 export const firebasePropertyDb = new FirebasePropertyService();

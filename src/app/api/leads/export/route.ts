@@ -7,12 +7,12 @@ export async function GET() {
     const headers = ["ID", "First Name", "Last Name", "Phone", "Email", "Status", "Source", "Created At"];
     const rows = leads.map(lead => [
         lead.id,
-        lead.firstName,
-        lead.lastName,
-        lead.phone,
-        lead.email,
-        lead.status,
-        lead.source || "",
+        lead.firstName || "",
+        lead.lastName || "",
+        lead.primaryPhone,
+        lead.email || "",
+        lead.currentStage,
+        lead.createdVia || "",
         lead.createdAt
     ]);
 

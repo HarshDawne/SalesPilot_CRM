@@ -10,8 +10,10 @@ import { formatDistanceToNow } from "date-fns";
 import CreateLeadModal from "./CreateLeadModal";
 import KanbanBoard from "./KanbanBoard";
 import { useRealtimeLeads } from "@/hooks/useRealtimeLeads";
+import { useToast } from "@/components/ui/ToastProvider";
 
 export default function LeadList() {
+    const { showToast } = useToast();
     const [search, setSearch] = useState("");
     const [statusFilter, setStatusFilter] = useState<string>("All");
     const [smartFilter, setSmartFilter] = useState<string>("All"); // "All", "Fresh", "Hot", "Visit Due"
@@ -94,14 +96,14 @@ export default function LeadList() {
             const res = await fetch('/api/leads/import', { method: 'POST', body: formData });
             const data = await res.json();
             if (data.status === 'success') {
-                alert(`Imported: ${data.created}, Duplicates: ${data.duplicates}`);
+                showToast(`Imported: ${data.created}, Duplicates: ${data.duplicates}`, "success");
                 // Real-time hook will automatically show new leads
             } else {
-                alert('Import failed');
+                showToast('Import failed', "error");
             }
         } catch (err) {
             console.error(err);
-            alert('Import error');
+            showToast('Import error', "error");
         }
     };
 
@@ -135,14 +137,14 @@ export default function LeadList() {
             });
             const data = await res.json();
             if (data.status === 'success') {
-                alert(`Campaign Started! Queued: ${data.queued}`);
+                showToast(`Campaign Started! Queued: ${data.queued}`, "success");
                 setSelectedLeads(new Set());
             } else {
-                alert('Failed to start campaign');
+                showToast('Failed to start campaign', "error");
             }
         } catch (error) {
             console.error(error);
-            alert('Error starting campaign');
+            showToast('Error starting campaign', "error");
         }
     };
 

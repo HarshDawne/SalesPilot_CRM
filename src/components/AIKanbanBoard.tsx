@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Lead, LeadStage } from "@/lib/db";
 import LeadCard from "./LeadCard";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/ToastProvider";
 import { Bot, Loader2, Phone, ChevronLeft, ChevronRight } from "lucide-react";
 
 const STAGES: { key: LeadStage; label: string; icon: string; color: string }[] = [
@@ -14,12 +15,14 @@ const STAGES: { key: LeadStage; label: string; icon: string; color: string }[] =
     { key: "Visit_Completed", label: "Visit Completed", icon: "🏠", color: "bg-indigo-50 border-indigo-200" },
     { key: "Negotiation", label: "Negotiation", icon: "💼", color: "bg-orange-50 border-orange-200" },
     { key: "Booking_Done", label: "Booking Done", icon: "🎉", color: "bg-emerald-50 border-emerald-200" },
+    { key: "visit_no_show_followup", label: "No Show Followup", icon: "🔄", color: "bg-amber-50 border-amber-200" },
     { key: "Disqualified", label: "Disqualified", icon: "❌", color: "bg-red-50 border-red-200" }
 ];
 
 const LEADS_PER_PAGE = 10;
 
 export default function AIKanbanBoard() {
+    const { showToast } = useToast();
     const router = useRouter();
     const [leads, setLeads] = useState<Lead[]>([]);
     const [loading, setLoading] = useState(true);
@@ -34,6 +37,7 @@ export default function AIKanbanBoard() {
         Visit_Completed: 0,
         Negotiation: 0,
         Booking_Done: 0,
+        visit_no_show_followup: 0,
         Disqualified: 0
     });
 
@@ -141,7 +145,7 @@ export default function AIKanbanBoard() {
 
     const startAICampaign = async () => {
         if (selectedNewLeads.size === 0) {
-            alert('Please select at least one lead to start the campaign');
+            showToast('Please select at least one lead', "warning");
             return;
         }
 
@@ -156,12 +160,12 @@ export default function AIKanbanBoard() {
             });
 
             const result = await response.json();
-            alert(`AI Campaign started for ${result.queued} leads!`);
+            showToast(`AI Campaign started for ${result.queued} leads!`, "success");
             setSelectedNewLeads(new Set());
             await fetchLeads();
         } catch (error) {
             console.error('Failed to start campaign:', error);
-            alert('Failed to start AI campaign');
+            showToast('Failed to start AI campaign', "error");
         } finally {
             setStartingCampaign(false);
         }

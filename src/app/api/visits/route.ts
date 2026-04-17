@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(bookings);
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
         const {
@@ -151,7 +151,7 @@ export async function POST(request: Request) {
     }
 }
 
-export async function PATCH(request: Request) {
+export async function PATCH(request: NextRequest) {
     try {
         const body = await request.json();
         const { bookingId, updates } = body;

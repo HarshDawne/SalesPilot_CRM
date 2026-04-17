@@ -71,7 +71,7 @@ export default function TowerGrid({ towers, onTowerClick }: TowerGridProps) {
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">{tower.name}</h3>
-                                    <p className="text-xs font-medium text-slate-500">{tower.floors} Floors</p>
+                                    <p className="text-xs font-medium text-slate-500">{tower.totalFloors} Floors</p>
                                 </div>
                             </div>
                             <span className={`badge-pill backdrop-blur-sm ${getStatusColor(tower.status)}`}>

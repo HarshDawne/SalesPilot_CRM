@@ -3,7 +3,7 @@ import { db } from '@/lib/db';
 import { requireRole } from '@/lib/auth';
 import { addTimelineEvent } from '@/lib/timeline';
 
-export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     // RBAC: Only agents/admins can accept transfers
     const authError = await requireRole(request, ['admin', 'sales', 'manager']);
     if (authError) return authError;

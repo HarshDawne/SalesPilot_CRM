@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
-import type { RenderRequest } from '@/types/render';
-import { addTimelineEvent } from '@/lib/timeline';
-import { broadcastSSE } from '@/lib/realtime';
+import type { RenderRequest, RenderSourceType, RenderType } from '@/types/render';
+import { firebasePropertyDb } from '@/lib/firebase-property-db';
 
 // Mock storage (in production, use database)
 const renderRequests: RenderRequest[] = [];
@@ -10,11 +9,25 @@ const renderRequests: RenderRequest[] = [];
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { propertyId, unitId, renderType, description, specifications, requestedByName } = body;
+        const {
+            propertyId,
+            towerId,
+            unitId,
+            sourceType,
+            propertyName,
+            builderName,
+            contactName,
+            phone,
+            businessEmail,
+            renderTypes,
+            instructions,
+            userMedia,
+            referenceMedia
+        } = body;
 
-        if (!propertyId || !renderType) {
+        if (!propertyId || !sourceType || !propertyName || !builderName || !contactName || !phone || !businessEmail) {
             return NextResponse.json(
-                { success: false, error: 'Property ID and render type are required' },
+                { success: false, error: 'Missing required fields' },
                 { status: 400 }
             );
         }
@@ -22,32 +35,25 @@ export async function POST(request: NextRequest) {
         const renderRequest: RenderRequest = {
             id: uuidv4(),
             propertyId,
+            towerId,
             unitId,
-            requestedBy: 'current-user-id', // In production, get from auth
-            requestedByName: requestedByName || 'User',
-            renderType,
-            description,
-            specifications,
-            status: 'REQUESTED',
-            requestedAt: new Date().toISOString(),
-            priority: 'MEDIUM',
-            renders: [],
+            sourceType: (sourceType || (unitId ? 'UNIT' : 'PROPERTY')) as RenderSourceType,
+            propertyName,
+            builderName,
+            contactDetails: {
+                name: contactName,
+                phone: phone,
+                email: businessEmail || 'unknown@builder.com'
+            },
+            requestedRenderTypes: (renderTypes || []) as RenderType[],
+            instructions,
+            mediaUrls: [...(userMedia || []), ...(referenceMedia || [])],
+            status: 'PENDING',
             createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
+            renders: [],
         };
 
-        renderRequests.push(renderRequest);
-
-        // Create timeline event if there's a lead associated
-        // In production, you'd link this to the actual lead
-
-        // Broadcast notification to admins
-        broadcastSSE('render-request', {
-            requestId: renderRequest.id,
-            status: 'REQUESTED',
-            propertyId,
-            renderType,
-        });
+        await firebasePropertyDb.createRenderRequest(renderRequest);
 
         return NextResponse.json({
             success: true,
@@ -66,17 +72,17 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
     try {
         const { searchParams } = new URL(request.url);
-        const userId = searchParams.get('userId');
         const propertyId = searchParams.get('propertyId');
+        const unitId = searchParams.get('unitId');
 
-        let filteredRequests = renderRequests;
-
-        if (userId) {
-            filteredRequests = filteredRequests.filter(r => r.requestedBy === userId);
-        }
+        let filteredRequests = await firebasePropertyDb.getAllRenderRequests();
 
         if (propertyId) {
             filteredRequests = filteredRequests.filter(r => r.propertyId === propertyId);
+        }
+
+        if (unitId) {
+            filteredRequests = filteredRequests.filter(r => r.unitId === unitId);
         }
 
         return NextResponse.json({

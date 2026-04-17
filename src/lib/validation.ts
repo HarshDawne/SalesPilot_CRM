@@ -7,54 +7,54 @@ export const LeadCreateSchema = z.object({
     .min(2, 'Name must be at least 2 characters')
     .max(100, 'Name must be less than 100 characters')
     .regex(/^[a-zA-Z\s.'-]+$/, 'Name contains invalid characters'),
-  
+
   phone: z.string()
     .regex(/^\+?[1-9]\d{7,14}$/, 'Invalid phone number format (E.164)'),
-  
+
   // Optional fields
   email: z.string()
     .email('Invalid email format')
     .optional()
     .or(z.literal('')),
-  
+
   firstName: z.string().min(1).max(50).optional(),
   lastName: z.string().max(50).optional(),
-  
+
   source: z.enum(['WEBSITE', 'FB_ADS', 'GOOGLE_ADS', 'META', 'REFERRAL', 'DIRECT', 'OTHER'])
     .optional()
     .default('WEBSITE'),
-  
+
   budgetMin: z.number()
     .min(0)
     .max(10000000000) // 1000 Cr max
     .optional(),
-  
+
   budgetMax: z.number()
     .min(0)
     .max(10000000000)
     .optional(),
-  
+
   preferredLocation: z.string().max(200).optional(),
-  
+
   unitType: z.enum(['1BHK', '2BHK', '3BHK', '4BHK', 'Duplex', 'Villa', 'Penthouse'])
     .optional(),
-  
+
   // Website integration fields
   page_url: z.string().url().max(500).optional(),
   form_id: z.string().max(100).optional(),
-  
-  utm: z.record(z.string()).optional(),
-  
+
+  utm: z.record(z.string(), z.any()).optional(),
+
   device: z.object({
-    ip: z.string().ip().optional(),
+    ip: z.string().regex(/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/).optional(),
     user_agent: z.string().max(500).optional(),
     session_id: z.string().max(100).optional(),
   }).optional(),
-  
+
   consent: z.boolean().optional(),
-  
+
   dedupe_key: z.string().max(100).optional(),
-  
+
   // Honeypot (should always be empty)
   hp_field: z.string().max(0).optional(),
 }).refine(
@@ -107,7 +107,7 @@ export const ActivityCreateSchema = z.object({
     'calendar_event_created'
   ]),
   summary: z.string().min(1).max(500),
-  metadata: z.record(z.any()).optional(),
+  metadata: z.record(z.string(), z.any()).optional(),
 });
 
 // Webhook validation schema
@@ -152,7 +152,7 @@ export function maskPhone(phone: string): string {
 export function maskEmail(email: string): string {
   const [local, domain] = email.split('@');
   if (!domain) return email;
-  const maskedLocal = local.length > 2 
+  const maskedLocal = local.length > 2
     ? local[0] + '*'.repeat(local.length - 2) + local[local.length - 1]
     : local;
   return `${maskedLocal}@${domain}`;
@@ -170,7 +170,7 @@ export function maskIP(ip: string): string {
 export function sanitizeLeadForResponse(lead: any, userRole?: string): any {
   // Admins see everything
   if (userRole === 'admin') return lead;
-  
+
   // Other users see masked data
   return {
     ...lead,

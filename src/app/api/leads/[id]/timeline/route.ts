@@ -3,9 +3,10 @@ import { db } from '@/lib/db';
 
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
-    const leadId = params.id;
+    const { id } = await params;
+    const leadId = id;
     const timeline = db.timeline.findByLeadId(leadId);
 
     return NextResponse.json(timeline);

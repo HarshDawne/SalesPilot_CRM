@@ -8,9 +8,10 @@ const renderRequests: RenderRequest[] = [];
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const formData = await request.formData();
     const file = formData.get('file') as File;
 
@@ -21,7 +22,7 @@ export async function POST(
       );
     }
 
-    const requestIndex = renderRequests.findIndex(r => r.id === params.id);
+    const requestIndex = renderRequests.findIndex(r => r.id === id);
 
     if (requestIndex === -1) {
       return NextResponse.json(
@@ -33,7 +34,7 @@ export async function POST(
     // In production, upload to Firebase Storage or S3
     const render: Render3D = {
       id: uuidv4(),
-      requestId: params.id,
+      requestId: id,
       name: file.name,
       fileUrl: `/uploads/renders/${file.name}`, // Mock URL
       fileSize: file.size,
@@ -46,26 +47,25 @@ export async function POST(
     };
 
     // Mark previous renders as not latest
-    renderRequests[requestIndex].renders.forEach(r => r.isLatest = false);
+    (renderRequests[requestIndex].renders as any[]).forEach(r => { if (r.isLatest) r.isLatest = false; });
 
     // Add new render
-    renderRequests[requestIndex].renders.push(render);
-    renderRequests[requestIndex].updatedAt = new Date().toISOString();
+    (renderRequests[requestIndex].renders as any[]).push(render);
 
     // Auto-update status to READY if not already
     if (renderRequests[requestIndex].status === 'IN_PROGRESS') {
-      renderRequests[requestIndex].status = 'READY';
+      (renderRequests[requestIndex] as any).status = 'COMPLETED';
     }
 
     // Broadcast to user
     broadcastSSE('render-uploaded', {
-      requestId: params.id,
+      requestId: id,
       renderId: render.id,
       propertyId: renderRequests[requestIndex].propertyId,
     });
 
     // Notify user that render is ready
-    console.log(`Notify user: New render uploaded for request ${params.id}`);
+    console.log(`Notify user: New render uploaded for request ${id}`);
 
     return NextResponse.json({
       success: true,

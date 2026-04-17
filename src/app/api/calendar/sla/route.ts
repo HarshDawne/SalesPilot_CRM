@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
 
     // Get all leads qualified in the period
     const qualifiedLeads = db.leads.findAll().filter(lead => {
-        if (lead.currentStage !== 'Qualified' && lead.currentStage !== 'Visit Booked' && lead.currentStage !== 'Negotiation') {
+        if (lead.currentStage !== 'Qualified' && lead.currentStage !== 'Visit_Booked' && lead.currentStage !== 'Negotiation') {
             return false;
         }
         // Check if qualified recently (simplified - in production, track qualification timestamp)

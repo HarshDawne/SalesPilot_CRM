@@ -1,0 +1,47 @@
+{
+    "project_details": {
+        "subject": "{{propertyName}} - Exclusive Details for {{leadName}}",
+        "template": "<!DOCTYPE html><html><head><style>body{font-family:Arial,sans-serif;line-height:1.6;color:#333;max-width:600px;margin:0 auto;padding:20px}h1{color:#1a5490}. cta{background:#1a5490;color:#fff;padding:12px 30px;text-decoration:none;border-radius:5px;display:inline-block;margin:20px 0}.amenity{background:#f4f4f4;padding:8px;margin:5px;border-radius:4px;display:inline-block}</style></head><body><h1>{{propertyName}}</h1><p>Dear {{leadName}},</p><p>Thank you for your interest in <strong>{{propertyName}}</strong>. Here are the exclusive details:</p><h2>Property Highlights</h2><ul><li>📍 Location: {{locality}}, {{city}}</li><li>🏢 Configuration: {{bedrooms}} BHK</li><li>📐 Area: {{areaRange}} sq.ft</li><li>💰 Price: {{priceRange}}</li></ul><h2>Premium Amenities</h2><div>{{amenitiesHtml}}</div><a href=\"{{scheduleSiteVisitUrl}}\" class=\"cta\">Schedule Site Visit</a><p>For any queries, feel free to reply to this email or call us at {{salesPhone}}.</p><p>Best regards,<br><strong>{{salesTeamName}}</strong></p></body></html>",
+        "variables": [
+            "leadName",
+            "propertyName",
+            "locality",
+            "city",
+            "bedrooms",
+            "areaRange",
+            "priceRange",
+            "amenitiesHtml",
+            "scheduleSiteVisitUrl",
+            "salesPhone",
+            "salesTeamName"
+        ]
+    },
+    "site_visit_confirmation": {
+        "subject": "Site Visit Confirmed - {{propertyName}}",
+        "template": "<!DOCTYPE html><html><head><style>body{font-family:Arial,sans-serif;line-height:1.6;color:#333;max-width:600px;margin:0 auto;padding:20px}.confirmation{background:#e8f5e9;border-left:4px solid #4caf50;padding:15px;margin:20px 0}.details{background:#f9f9f9;padding:15px;border-radius:5px;margin:15px 0}strong{color:#1a5490}</style></head><body><h1>Site Visit Confirmed! 🎉</h1><p>Dear {{leadName}},</p><div class=\"confirmation\"><p><strong>Your site visit has been successfully scheduled.</strong></p></div><div class=\"details\"><p><strong>📍 Property:</strong> {{propertyName}}</p><p><strong>📅 Date:</strong> {{visitDate}}</p><p><strong>⏰ Time:</strong> {{visitTime}}</p><p><strong>📌 Meeting Point:</strong> {{meetingPoint}}</p><p><strong>👤 Sales Agent:</strong> {{agentName}} ({{agentPhone}})</p></div><p>We look forward to showing you your future home!</p><p>Best regards,<br><strong>{{salesTeamName}}</strong></p></body></html>",
+        "variables": [
+            "leadName",
+            "propertyName",
+            "visitDate",
+            "visitTime",
+            "meetingPoint",
+            "agentName",
+            "agentPhone",
+            "salesTeamName"
+        ]
+    },
+    "payment_reminder": {
+        "subject": "Payment Due Reminder - {{propertyName}}",
+        "template": "<!DOCTYPE html><html><head><style>body{font-family:Arial,sans-serif;line-height:1.6;color:#333;max-width:600px;margin:0 auto;padding:20px}.reminder{background:#fff3cd;border-left:4px solid:#ffc107;padding:15px;margin:20px 0}.amount{font-size:24px;color:#1a5490;font-weight:bold}</style></head><body><h1>Payment Reminder</h1><p>Dear {{leadName}},</p><div class=\"reminder\"><p>This is a friendly reminder that your payment for <strong>{{propertyName}}</strong> is due.</p></div><p><strong>Amount Due:</strong> <span class=\"amount\">₹{{amountDue}}</span></p><p><strong>Due Date:</strong> {{dueDate}}</p><p><strong>Booking ID:</strong> {{bookingId}}</p><p>Please make the payment at your earliest convenience to avoid any delays in possession.</p><p><a href=\"{{paymentLink}}\" style=\"background:#1a5490;color:#fff;padding:12px 30px;text-decoration:none;border-radius:5px;display:inline-block;margin:20px 0\">Pay Now</a></p><p>For any assistance, contact us at {{salesPhone}}.</p><p>Best regards,<br><strong>{{salesTeamName}}</strong></p></body></html>",
+        "variables": [
+            "leadName",
+            "propertyName",
+            "amountDue",
+            "dueDate",
+            "bookingId",
+            "paymentLink",
+            "salesPhone",
+            "salesTeamName"
+        ]
+    }
+}

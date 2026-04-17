@@ -1,0 +1,612 @@
+{
+  "campaigns": [
+    {
+      "id": "camp_1765810229984",
+      "name": "E2E Test Campaign",
+      "status": "draft",
+      "propertyIds": [
+        "prop_123"
+      ],
+      "leadIds": [
+        "f68d320b-f255-431d-99cb-197a3f524e05"
+      ],
+      "totalLeads": 1,
+      "queuedLeads": 1,
+      "callingLeads": 0,
+      "completedCalls": 0,
+      "successfulCalls": 0,
+      "failedCalls": 0,
+      "retryCount": 0,
+      "createdAt": "2025-12-15T14:50:29.984Z",
+      "updatedAt": "2025-12-15T14:50:29.984Z"
+    },
+    {
+      "id": "camp_1765810297190",
+      "name": "E2E Test Campaign",
+      "status": "draft",
+      "propertyIds": [
+        "prop_123"
+      ],
+      "leadIds": [
+        "8a2f5c3a-e597-408b-8835-dfee512af80d"
+      ],
+      "totalLeads": 1,
+      "queuedLeads": 1,
+      "callingLeads": 0,
+      "completedCalls": 0,
+      "successfulCalls": 0,
+      "failedCalls": 0,
+      "retryCount": 0,
+      "createdAt": "2025-12-15T14:51:37.190Z",
+      "updatedAt": "2025-12-15T14:51:37.190Z"
+    },
+    {
+      "id": "camp_1765814010057",
+      "name": "E2E Test Campaign",
+      "status": "draft",
+      "propertyIds": [
+        "prop_123"
+      ],
+      "leadIds": [
+        "50a27746-9fc3-4104-8801-f354f341e5a2"
+      ],
+      "totalLeads": 1,
+      "queuedLeads": 1,
+      "callingLeads": 0,
+      "completedCalls": 0,
+      "successfulCalls": 0,
+      "failedCalls": 0,
+      "retryCount": 0,
+      "createdAt": "2025-12-15T15:53:30.057Z",
+      "updatedAt": "2025-12-15T15:53:30.057Z"
+    },
+    {
+      "id": "camp_1765816691259",
+      "name": "Audit Campaign 1765816691253",
+      "status": "draft",
+      "propertyIds": [
+        "prop_audit"
+      ],
+      "leadIds": [
+        "24ec8dad-bdbe-400c-b52a-a4e477d4f765"
+      ],
+      "totalLeads": 1,
+      "queuedLeads": 1,
+      "callingLeads": 0,
+      "completedCalls": 0,
+      "successfulCalls": 0,
+      "failedCalls": 0,
+      "retryCount": 0,
+      "createdAt": "2025-12-15T16:38:11.259Z",
+      "updatedAt": "2025-12-15T16:38:11.259Z"
+    },
+    {
+      "id": "camp_1765817571068",
+      "name": "Audit Campaign 1765817571061",
+      "status": "draft",
+      "propertyIds": [
+        "prop_audit"
+      ],
+      "leadIds": [
+        "5b8dcdd4-3380-4dfd-9baf-693b1a7f90b9"
+      ],
+      "totalLeads": 1,
+      "queuedLeads": 1,
+      "callingLeads": 0,
+      "completedCalls": 0,
+      "successfulCalls": 0,
+      "failedCalls": 0,
+      "retryCount": 0,
+      "createdAt": "2025-12-15T16:52:51.068Z",
+      "updatedAt": "2025-12-15T16:52:51.068Z"
+    },
+    {
+      "id": "camp_1765965738243",
+      "name": "Audit Campaign 1765965738238",
+      "status": "draft",
+      "propertyIds": [
+        "prop_audit"
+      ],
+      "leadIds": [
+        "2778d81e-e407-40cc-a27f-74c2080c254c"
+      ],
+      "totalLeads": 1,
+      "queuedLeads": 1,
+      "callingLeads": 0,
+      "completedCalls": 0,
+      "successfulCalls": 0,
+      "failedCalls": 0,
+      "retryCount": 0,
+      "createdAt": "2025-12-17T10:02:18.243Z",
+      "updatedAt": "2025-12-17T10:02:18.243Z"
+    },
+    {
+      "id": "camp_1765979868175",
+      "name": "Audit Campaign 1765979868167",
+      "status": "draft",
+      "propertyIds": [
+        "prop_audit"
+      ],
+      "leadIds": [
+        "de3afa2b-cecb-4a29-ad35-1d254cdc776a"
+      ],
+      "totalLeads": 1,
+      "queuedLeads": 1,
+      "callingLeads": 0,
+      "completedCalls": 0,
+      "successfulCalls": 0,
+      "failedCalls": 0,
+      "retryCount": 0,
+      "createdAt": "2025-12-17T13:57:48.175Z",
+      "updatedAt": "2025-12-17T13:57:48.175Z"
+    },
+    {
+      "id": "camp_1766235218816",
+      "name": "Campaign - 20/12/2025 5:39:38 pm",
+      "type": "launch",
+      "status": "draft",
+      "propertyIds": [
+        "luxury-villa"
+      ],
+      "leadIds": [
+        "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1"
+      ],
+      "totalLeads": 1,
+      "queuedLeads": 1,
+      "callingLeads": 0,
+      "completedCalls": 0,
+      "successfulCalls": 0,
+      "failedCalls": 0,
+      "retryCount": 0,
+      "rules": {
+        "maxRetries": 3
+      },
+      "createdAt": "2025-12-20T12:53:38.816Z",
+      "updatedAt": "2025-12-20T12:53:38.817Z"
+    },
+    {
+      "id": "camp_1766309574705",
+      "name": "New campaign 21-12-2025 15:01",
+      "type": "launch",
+      "status": "running",
+      "propertyIds": [
+        "prop-001",
+        "prop-kb-002",
+        "prop-kb-001",
+        "prop-kb-003",
+        "prop-kb-004",
+        "prop-kb-005"
+      ],
+      "leadIds": [
+        "54e28ecd-ac63-443e-8db5-633ec2537197",
+        "c1dd3988-56d0-44a5-9db8-9e355e121cba",
+        "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1"
+      ],
+      "totalLeads": 3,
+      "queuedLeads": 1,
+      "callingLeads": 0,
+      "completedCalls": 0,
+      "successfulCalls": 0,
+      "failedCalls": 0,
+      "retryCount": 0,
+      "rules": {
+        "maxRetries": 1
+      },
+      "createdAt": "2025-12-21T09:32:54.705Z",
+      "updatedAt": "2026-03-01T07:45:18.788Z",
+      "startedAt": "2025-12-21T09:32:57.269Z",
+      "attempted": 0,
+      "connected": 0,
+      "qualified": 0,
+      "cost": 0,
+      "metrics": {
+        "attempted": 0,
+        "connected": 0,
+        "qualified": 0,
+        "cost": 0,
+        "visitsBooked": 0
+      }
+    },
+    {
+      "id": "camp_1766314342264",
+      "name": "New campaign 21-12-2025 16:21",
+      "type": "launch",
+      "status": "running",
+      "propertyIds": [
+        "prop-001",
+        "prop-kb-001",
+        "prop-kb-002",
+        "prop-kb-005",
+        "prop-kb-003"
+      ],
+      "leadIds": [
+        "54e28ecd-ac63-443e-8db5-633ec2537197",
+        "c1dd3988-56d0-44a5-9db8-9e355e121cba",
+        "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1"
+      ],
+      "totalLeads": 3,
+      "queuedLeads": 1,
+      "callingLeads": 0,
+      "completedCalls": 0,
+      "successfulCalls": 0,
+      "failedCalls": 0,
+      "retryCount": 0,
+      "rules": {
+        "maxRetries": 1
+      },
+      "createdAt": "2025-12-21T10:52:22.264Z",
+      "updatedAt": "2026-03-01T07:45:18.782Z",
+      "startedAt": "2025-12-21T10:52:22.406Z",
+      "attempted": 0,
+      "connected": 0,
+      "qualified": 0,
+      "cost": 0,
+      "metrics": {
+        "attempted": 0,
+        "connected": 0,
+        "qualified": 0,
+        "cost": 0,
+        "visitsBooked": 0
+      }
+    },
+    {
+      "id": "camp_1766318320624",
+      "name": "New campaign 21-12-2025 17:28",
+      "type": "launch",
+      "status": "running",
+      "propertyIds": [
+        "prop-001",
+        "prop-kb-001",
+        "prop-kb-002",
+        "prop-kb-003",
+        "prop-kb-004",
+        "prop-kb-005"
+      ],
+      "leadIds": [
+        "54e28ecd-ac63-443e-8db5-633ec2537197",
+        "c1dd3988-56d0-44a5-9db8-9e355e121cba",
+        "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1"
+      ],
+      "totalLeads": 3,
+      "queuedLeads": 3,
+      "callingLeads": 0,
+      "completedCalls": 0,
+      "successfulCalls": 0,
+      "failedCalls": 0,
+      "retryCount": 0,
+      "rules": {
+        "maxRetries": 1
+      },
+      "createdAt": "2025-12-21T11:58:40.624Z",
+      "updatedAt": "2026-03-01T07:45:18.778Z",
+      "startedAt": "2025-12-21T11:58:41.072Z",
+      "attempted": 1,
+      "connected": 0,
+      "qualified": 0,
+      "cost": 0,
+      "metrics": {
+        "attempted": 1,
+        "connected": 0,
+        "qualified": 0,
+        "cost": 0,
+        "visitsBooked": 0
+      }
+    },
+    {
+      "id": "camp_1766329068070",
+      "name": "New campaign 21-12-2025 20:24",
+      "type": "launch",
+      "status": "completed",
+      "propertyIds": [
+        "prop-001",
+        "prop-kb-001",
+        "prop-kb-002",
+        "prop-kb-003",
+        "prop-kb-005"
+      ],
+      "leadIds": [
+        "54e28ecd-ac63-443e-8db5-633ec2537197",
+        "c1dd3988-56d0-44a5-9db8-9e355e121cba",
+        "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1"
+      ],
+      "totalLeads": 3,
+      "queuedLeads": 0,
+      "callingLeads": 0,
+      "completedCalls": 0,
+      "successfulCalls": 2,
+      "failedCalls": 0,
+      "retryCount": 0,
+      "rules": {
+        "maxRetries": 1
+      },
+      "createdAt": "2025-12-21T14:57:48.070Z",
+      "updatedAt": "2026-03-01T07:45:18.774Z",
+      "startedAt": "2025-12-21T14:57:50.854Z",
+      "pausedAt": "2025-12-21T15:12:37.157Z",
+      "completedAt": "2025-12-21T15:12:37.159Z",
+      "attempted": 3,
+      "connected": 0,
+      "qualified": 0,
+      "cost": 0,
+      "metrics": {
+        "attempted": 3,
+        "connected": 0,
+        "qualified": 0,
+        "cost": 0,
+        "visitsBooked": 0
+      }
+    },
+    {
+      "id": "camp_1766400814918",
+      "name": "ok",
+      "type": "launch",
+      "status": "completed",
+      "propertyIds": [
+        "prop-001",
+        "prop-kb-001",
+        "prop-kb-002",
+        "prop-kb-003"
+      ],
+      "leadIds": [
+        "54e28ecd-ac63-443e-8db5-633ec2537197",
+        "c1dd3988-56d0-44a5-9db8-9e355e121cba",
+        "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1"
+      ],
+      "totalLeads": 3,
+      "queuedLeads": 0,
+      "callingLeads": 0,
+      "completedCalls": 0,
+      "successfulCalls": 2,
+      "failedCalls": 0,
+      "retryCount": 0,
+      "rules": {
+        "maxRetries": 1
+      },
+      "createdAt": "2025-12-22T10:53:34.918Z",
+      "updatedAt": "2026-03-01T07:45:18.719Z",
+      "startedAt": "2025-12-22T10:53:36.379Z",
+      "attempted": 3,
+      "connected": 0,
+      "qualified": 0,
+      "cost": 0,
+      "metrics": {
+        "attempted": 3,
+        "connected": 0,
+        "qualified": 0,
+        "cost": 0,
+        "visitsBooked": 0
+      },
+      "pausedAt": "2025-12-22T11:32:45.227Z",
+      "completedAt": "2025-12-22T11:32:45.228Z"
+    },
+    {
+      "id": "camp_1766404461694",
+      "name": "ok2",
+      "type": "launch",
+      "status": "running",
+      "propertyIds": [
+        "prop-001"
+      ],
+      "leadIds": [
+        "54e28ecd-ac63-443e-8db5-633ec2537197",
+        "c1dd3988-56d0-44a5-9db8-9e355e121cba",
+        "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1"
+      ],
+      "totalLeads": 3,
+      "queuedLeads": 2,
+      "callingLeads": 1,
+      "completedCalls": 0,
+      "successfulCalls": 0,
+      "failedCalls": 0,
+      "retryCount": 0,
+      "rules": {
+        "maxRetries": 1
+      },
+      "createdAt": "2025-12-22T11:54:21.694Z",
+      "updatedAt": "2026-03-01T07:45:18.674Z",
+      "startedAt": "2025-12-22T11:54:23.072Z",
+      "attempted": 1,
+      "connected": 0,
+      "qualified": 0,
+      "cost": 0,
+      "metrics": {
+        "attempted": 1,
+        "connected": 0,
+        "qualified": 0,
+        "cost": 0,
+        "visitsBooked": 0
+      }
+    },
+    {
+      "id": "camp_1766569801196",
+      "name": "okk3",
+      "type": "launch",
+      "status": "running",
+      "propertyIds": [
+        "prop-001"
+      ],
+      "leadIds": [
+        "54e28ecd-ac63-443e-8db5-633ec2537197",
+        "c1dd3988-56d0-44a5-9db8-9e355e121cba",
+        "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1"
+      ],
+      "totalLeads": 3,
+      "queuedLeads": 2,
+      "callingLeads": 1,
+      "completedCalls": 0,
+      "successfulCalls": 0,
+      "failedCalls": 0,
+      "retryCount": 0,
+      "rules": {
+        "maxRetries": 1
+      },
+      "createdAt": "2025-12-24T09:50:01.196Z",
+      "updatedAt": "2026-03-01T07:45:18.647Z",
+      "startedAt": "2025-12-24T09:50:02.163Z",
+      "attempted": 1,
+      "connected": 0,
+      "qualified": 0,
+      "cost": 0,
+      "metrics": {
+        "attempted": 1,
+        "connected": 0,
+        "qualified": 0,
+        "cost": 0,
+        "visitsBooked": 0
+      }
+    },
+    {
+      "id": "camp_1772351190458",
+      "name": "E2E Test Campaign",
+      "type": "launch",
+      "status": "draft",
+      "propertyIds": [
+        "prop_123"
+      ],
+      "leadIds": [
+        "df1096c8-ba5a-4889-9f0c-542d3e6c39a4"
+      ],
+      "totalLeads": 1,
+      "queuedLeads": 1,
+      "callingLeads": 0,
+      "completedCalls": 0,
+      "successfulCalls": 0,
+      "failedCalls": 0,
+      "retryCount": 0,
+      "rules": {
+        "maxRetries": 3,
+        "retryDelayMinutes": 30,
+        "followUpEnabled": true,
+        "followUpDelayMinutes": 60,
+        "workingHoursOnly": true,
+        "workingHours": {
+          "start": "09:00",
+          "end": "18:00",
+          "timezone": "UTC"
+        }
+      },
+      "createdAt": "2026-03-01T07:46:30.458Z",
+      "updatedAt": "2026-03-01T07:46:30.458Z"
+    },
+    {
+      "id": "camp_1772351335336",
+      "name": "Audit Campaign 1772351335329",
+      "type": "launch",
+      "status": "draft",
+      "propertyIds": [
+        "prop_audit"
+      ],
+      "leadIds": [
+        "173fda6b-df43-4e9d-9c3c-45b7b328182f"
+      ],
+      "totalLeads": 1,
+      "queuedLeads": 1,
+      "callingLeads": 0,
+      "completedCalls": 0,
+      "successfulCalls": 0,
+      "failedCalls": 0,
+      "retryCount": 0,
+      "rules": {
+        "maxRetries": 3,
+        "retryDelayMinutes": 30,
+        "followUpEnabled": true,
+        "followUpDelayMinutes": 60,
+        "workingHoursOnly": true,
+        "workingHours": {
+          "start": "09:00",
+          "end": "18:00",
+          "timezone": "UTC"
+        }
+      },
+      "createdAt": "2026-03-01T07:48:55.336Z",
+      "updatedAt": "2026-03-01T07:48:55.336Z"
+    },
+    {
+      "id": "camp_1775870320157",
+      "name": "campaign 1",
+      "type": "launch",
+      "status": "running",
+      "propertyIds": [
+        "901c075d-4731-4bfb-992d-fc64d6c900e6"
+      ],
+      "leadIds": [
+        "54e28ecd-ac63-443e-8db5-633ec2537197",
+        "c1dd3988-56d0-44a5-9db8-9e355e121cba",
+        "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1"
+      ],
+      "totalLeads": 3,
+      "queuedLeads": 2,
+      "callingLeads": 1,
+      "completedCalls": 0,
+      "successfulCalls": 0,
+      "qualifiedLeads": 0,
+      "failedCalls": 0,
+      "retryCount": 0,
+      "totalCost": 0,
+      "rules": {
+        "maxRetries": 2
+      },
+      "createdAt": "2026-04-11T01:18:40.157Z",
+      "updatedAt": "2026-04-11T01:18:43.421Z",
+      "startedAt": "2026-04-11T01:18:41.440Z"
+    },
+    {
+      "id": "camp_1775923448811",
+      "name": "gdh",
+      "type": "launch",
+      "status": "running",
+      "propertyIds": [
+        "e2b96330-3305-4b2f-9dd5-070bed43962f"
+      ],
+      "leadIds": [
+        "54e28ecd-ac63-443e-8db5-633ec2537197",
+        "c1dd3988-56d0-44a5-9db8-9e355e121cba",
+        "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1"
+      ],
+      "totalLeads": 3,
+      "queuedLeads": 2,
+      "callingLeads": 1,
+      "completedCalls": 0,
+      "successfulCalls": 0,
+      "qualifiedLeads": 0,
+      "failedCalls": 0,
+      "retryCount": 0,
+      "totalCost": 0,
+      "rules": {
+        "maxRetries": 2
+      },
+      "createdAt": "2026-04-11T16:04:08.811Z",
+      "updatedAt": "2026-04-11T16:04:12.754Z",
+      "startedAt": "2026-04-11T16:04:10.740Z"
+    },
+    {
+      "id": "camp_1775928848821",
+      "name": "ok",
+      "type": "launch",
+      "status": "running",
+      "propertyIds": [
+        "prop-001"
+      ],
+      "leadIds": [
+        "54e28ecd-ac63-443e-8db5-633ec2537197",
+        "c1dd3988-56d0-44a5-9db8-9e355e121cba",
+        "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1"
+      ],
+      "totalLeads": 3,
+      "queuedLeads": 2,
+      "callingLeads": 1,
+      "completedCalls": 0,
+      "successfulCalls": 0,
+      "qualifiedLeads": 0,
+      "failedCalls": 0,
+      "retryCount": 0,
+      "totalCost": 0,
+      "rules": {
+        "maxRetries": 1
+      },
+      "createdAt": "2026-04-11T17:34:08.822Z",
+      "updatedAt": "2026-04-11T17:34:13.400Z",
+      "startedAt": "2026-04-11T17:34:11.150Z"
+    }
+  ]
+}

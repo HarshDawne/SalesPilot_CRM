@@ -1,0 +1,449 @@
+/* Premium Font Imports - MUST BE FIRST */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* ============================================================================ */
+/* EMERALD PRESTIGE+ DESIGN SYSTEM - Tailwind v3 Compatible */
+/* Premium Enterprise Real Estate CRM */
+/* ============================================================================ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Typography */
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-heading: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+
+    /* ========== EMERALD PRESTIGE COLOR PALETTE ========== */
+
+    /* Primary Brand - Emerald */
+    --color-primary: #059669;
+    --color-primary-hover: #047857;
+    --color-primary-light: #10b981;
+    --color-emerald-deep: #064e3b;
+    --color-emerald-50: #ecfdf5;
+
+    /* Luxury Accents */
+    --color-accent-gold: #f59e0b;
+    --color-gold-soft: #fef3c7;
+    --color-accent-teal: #14b8a6;
+
+    /* ========== CHARCOAL + COPPER SYSTEM (Properties) ========== */
+    --color-primary-charcoal: #0b0f14;
+    --color-charcoal: #0b0f14;
+    --color-copper: #b86b34;
+    --color-copper-600: #a95c2d;
+    --color-accent-ice: #e6f7fb;
+    --color-muted: #6b7280;
+
+    /* Neutrals */
+    --color-dark: #0f172a;
+    --color-dark-matte: #1e293b;
+    --color-surface: #ffffff;
+    --color-background: #f8fafc;
+    --color-border-light: #e2e8f0;
+    --color-border: #cbd5e1;
+
+    /* Text Hierarchy */
+    --color-text-primary: #0f172a;
+    --color-text-secondary: #475569;
+    --color-text-tertiary: #94a3b8;
+
+    /* State Colors */
+    --color-success: #10b981;
+    --color-info: #0ea5e9;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
+
+    /* ========== PREMIUM SHADOWS & DEPTH ========== */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-sm: 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px rgba(0, 0, 0, 0.04);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.10), 0 10px 10px rgba(0, 0, 0, 0.04);
+    --shadow-glow: 0 0 20px rgba(5, 150, 105, 0.15);
+    --shadow-gold-glow: 0 0 15px rgba(245, 158, 11, 0.12);
+
+    /* Premium Card Shadow */
+    --shadow-card: 0 6px 18px rgba(3, 7, 18, 0.08);
+    --shadow-card-hover: 0 12px 24px -4px rgba(0, 0, 0, 0.10), 0 0 0 1px rgba(5, 150, 105, 0.1);
+    --shadow-floating: 0 20px 40px rgba(3, 7, 18, 0.10);
+
+    /* Radii */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+
+    --foreground-rgb: 15, 23, 42;
+    --background-start-rgb: 248, 250, 252;
+    --background-end-rgb: 248, 250, 252;
+  }
+
+  body {
+    color: rgb(var(--foreground-rgb));
+    background: rgb(var(--background-start-rgb));
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+
+  /* Premium Cards */
+  .premium-card {
+    @apply bg-white rounded-2xl border border-slate-200/60 transition-all duration-200;
+    box-shadow: var(--shadow-card);
+  }
+
+  .premium-card:hover {
+    @apply border-emerald-200/80 -translate-y-1;
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .premium-card-emerald {
+    @apply bg-white rounded-2xl border border-t-4 border-t-emerald-500 transition-all duration-200;
+    border-right-color: rgba(226, 232, 240, 0.6);
+    border-bottom-color: rgba(226, 232, 240, 0.6);
+    border-left-color: rgba(226, 232, 240, 0.6);
+    box-shadow: var(--shadow-card);
+  }
+
+  .premium-card-emerald:hover {
+    @apply -translate-y-1;
+    border-right-color: rgba(167, 243, 208, 0.8);
+    border-bottom-color: rgba(167, 243, 208, 0.8);
+    border-left-color: rgba(167, 243, 208, 0.8);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .premium-card-gold {
+    @apply bg-white rounded-2xl border border-t-4 border-t-amber-500 transition-all duration-200;
+    border-right-color: rgba(226, 232, 240, 0.6);
+    border-bottom-color: rgba(226, 232, 240, 0.6);
+    border-left-color: rgba(226, 232, 240, 0.6);
+    box-shadow: var(--shadow-card);
+  }
+
+  .premium-card-gold:hover {
+    @apply -translate-y-1;
+    border-right-color: rgba(167, 243, 208, 0.8);
+    border-bottom-color: rgba(167, 243, 208, 0.8);
+    border-left-color: rgba(167, 243, 208, 0.8);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  /* Glassmorphism */
+  .glass {
+    @apply border shadow-lg;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(24px);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-dark {
+    @apply border shadow-xl;
+    background-color: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(24px);
+    border-color: rgba(51, 65, 85, 0.3);
+  }
+
+  .glass-panel {
+    @apply border shadow-md;
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    border-color: rgba(226, 232, 240, 0.5);
+  }
+
+  /* Premium Badges */
+  .badge-pill {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border transition-all duration-150;
+  }
+
+  .badge-emerald {
+    @apply bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold;
+  }
+
+  .badge-gold {
+    @apply bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border;
+  }
+
+  .badge-success {
+    @apply bg-emerald-50 text-emerald-700 border-emerald-200 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border;
+  }
+
+  .badge-warning {
+    @apply bg-amber-50 text-amber-700 border-amber-200 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border;
+  }
+
+  .badge-danger {
+    @apply bg-red-50 text-red-700 border-red-200 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border;
+  }
+
+  .badge-info {
+    @apply bg-blue-50 text-blue-700 border-blue-200 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border;
+  }
+
+  .badge-neutral {
+    @apply bg-slate-100 text-slate-700 border-slate-200 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border;
+  }
+
+  /* Premium Buttons */
+  .btn-primary {
+    @apply bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-semibold transition-all duration-150 hover:bg-emerald-700 active:scale-95 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
+    box-shadow: 0 4px 6px -1px rgba(5, 150, 105, 0.1), 0 2px 4px -1px rgba(5, 150, 105, 0.06);
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 10px 15px -3px rgba(5, 150, 105, 0.3), 0 4px 6px -2px rgba(5, 150, 105, 0.05);
+  }
+
+  .btn-secondary {
+    @apply bg-white text-slate-700 border-2 border-slate-200 px-5 py-2.5 rounded-xl font-semibold transition-all duration-150 hover:bg-slate-50 hover:border-emerald-300 active:scale-95 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
+  }
+
+  .btn-gold {
+    @apply bg-gradient-to-r from-amber-500 to-amber-600 text-white px-5 py-2.5 rounded-xl font-semibold transition-all duration-150 hover:from-amber-600 hover:to-amber-700 active:scale-95;
+    box-shadow: 0 4px 6px -1px rgba(245, 158, 11, 0.3), 0 2px 4px -1px rgba(245, 158, 11, 0.06);
+  }
+
+  .btn-gold:hover {
+    box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.4), 0 4px 6px -2px rgba(245, 158, 11, 0.05);
+  }
+
+  .btn-ghost {
+    @apply text-slate-700 px-5 py-2.5 rounded-xl font-semibold transition-all duration-150 hover:bg-slate-100 active:scale-95;
+  }
+
+  /* Gradients */
+  .gradient-emerald {
+    @apply bg-gradient-to-br from-emerald-500 to-teal-600;
+  }
+
+  .gradient-emerald-soft {
+    @apply bg-gradient-to-br from-emerald-50 to-teal-50;
+  }
+
+  .gradient-gold {
+    @apply bg-gradient-to-br from-amber-400 to-amber-600;
+  }
+
+  .gradient-dark-emerald {
+    @apply bg-gradient-to-br from-slate-900 via-slate-900 to-emerald-950;
+  }
+
+  .text-gradient-emerald {
+    @apply bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent;
+  }
+
+  .text-gradient-gold {
+    @apply bg-gradient-to-r from-amber-600 to-amber-500 bg-clip-text text-transparent;
+  }
+
+  /* Micro Animations */
+  .micro-lift {
+    @apply transition-all duration-150 hover:-translate-y-1;
+  }
+
+  .micro-scale {
+    @apply transition-transform duration-150 hover:scale-105;
+  }
+
+  .icon-hover {
+    @apply transition-transform duration-150;
+  }
+
+  .icon-hover:hover svg {
+    transform: scale(1.1);
+  }
+
+  /* Glow Effects */
+  .glow-emerald {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .glow-gold {
+    box-shadow: var(--shadow-gold-glow);
+  }
+
+  .hover-glow-emerald:hover {
+    box-shadow: 0 0 25px rgba(5, 150, 105, 0.25);
+  }
+
+  /* Focus States */
+  .focus-emerald {
+    @apply focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:border-emerald-500;
+  }
+
+  /* Premium Inputs */
+  .input-premium {
+    @apply w-full px-4 py-2.5 rounded-xl border-2 border-slate-200 bg-white transition-all duration-150 placeholder:text-slate-400 hover:border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none;
+  }
+
+  /* Typography */
+  .font-heading {
+    font-family: var(--font-heading);
+  }
+
+  .font-body {
+    font-family: var(--font-sans);
+  }
+
+  /* ========== CHARCOAL + COPPER PROPERTIES SYSTEM ========== */
+
+  /* Property Cards */
+  .property-card {
+    @apply bg-white overflow-hidden transition-all duration-150;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--color-border);
+  }
+
+  .property-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-floating);
+  }
+
+  .property-card__image {
+    @apply w-full object-cover;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  }
+
+  .property-card__badge {
+    @apply absolute top-3 right-3 px-3 py-1 text-xs font-semibold rounded-full;
+  }
+
+  .property-card__stats {
+    @apply flex items-center gap-4 text-sm;
+  }
+
+  /* Copper Buttons */
+  .btn-primary-copper {
+    @apply px-6 py-3 rounded-lg font-semibold text-white transition-all duration-150;
+    background: linear-gradient(135deg, var(--color-copper) 0%, var(--color-copper-600) 100%);
+    box-shadow: 0 4px 12px rgba(184, 107, 52, 0.25);
+  }
+
+  .btn-primary-copper:hover {
+    @apply scale-105;
+    box-shadow: 0 6px 20px rgba(184, 107, 52, 0.35);
+  }
+
+  .btn-secondary-charcoal {
+    @apply px-6 py-3 rounded-lg font-semibold bg-white transition-all duration-150;
+    color: var(--color-charcoal);
+    border: 1px solid var(--color-charcoal);
+  }
+
+  .btn-secondary-charcoal:hover {
+    @apply bg-slate-50;
+  }
+
+  /* Copper Badges */
+  .badge-copper {
+    @apply px-3 py-1 rounded-full text-xs font-semibold;
+    background-color: rgba(184, 107, 52, 0.1);
+    color: var(--color-copper-600);
+    border: 1px solid rgba(184, 107, 52, 0.3);
+  }
+
+  /* Filter Panel */
+  .filter-panel {
+    @apply bg-white p-6 transition-all duration-200;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+  }
+
+  /* KPI Cards */
+  .kpi-card {
+    @apply bg-white p-6 transition-all duration-200;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--color-border);
+  }
+
+  .kpi-card__number {
+    @apply text-4xl font-bold font-heading;
+    color: var(--color-charcoal);
+  }
+
+  .kpi-card__label {
+    @apply text-sm font-medium;
+    color: var(--color-muted);
+  }
+
+  /* Text Colors */
+  .text-charcoal {
+    color: var(--color-charcoal);
+  }
+
+  .text-copper {
+    color: var(--color-copper);
+  }
+
+  .text-muted {
+    color: var(--color-muted);
+  }
+
+  /* Focus Ring */
+  .focus-ring-copper:focus {
+    @apply outline-none;
+    box-shadow: 0 0 0 2px rgba(169, 92, 45, 0.14), 0 0 0 4px rgba(184, 107, 52, 0.06);
+  }
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes glow-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(5, 150, 105, 0.15);
+  }
+
+  50% {
+    box-shadow: 0 0 30px rgba(5, 150, 105, 0.3);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+/* ========== SCROLLBAR STYLING ========== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #059669;
+}

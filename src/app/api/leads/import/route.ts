@@ -61,22 +61,19 @@ export async function POST(req: NextRequest) {
 
             const newLead: Lead = {
                 id: uuidv4(),
+                name: `${data.firstName} ${data.lastName}`.trim(),
                 firstName: data.firstName,
                 lastName: data.lastName || "",
                 email: data.email || "",
-                phone: data.phone,
-                source: data.source || "Import",
-                budgetMin: Number(data.budgetMin) || 0,
-                budgetMax: Number(data.budgetMax) || 0,
-                preferredLocation: data.preferredLocation || "",
-                status: "New",
-                dedupe_keys: [`phone:${data.phone}`, `email:${data.email}`],
+                primaryPhone: data.phone,
+                createdVia: "agent_import",
+                currentStage: "New",
                 createdAt: new Date().toISOString(),
                 updatedAt: new Date().toISOString(),
-                lastContactedAt: new Date().toISOString(),
-                tags: ["Imported"],
-                score: 10
-            };
+                leadTags: ["Imported"],
+                aiScore: 10,
+                version: 1
+            } as any;
 
             const createdLead = db.leads.create(newLead);
             createdCount++;

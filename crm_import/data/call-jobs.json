@@ -1,0 +1,605 @@
+{
+    "callJobs": [
+        {
+            "callId": "call_001",
+            "campaignId": "camp_1763892794065",
+            "leadId": "lead_001",
+            "leadName": "Rajesh Kumar",
+            "phone": "+91 98765 43210",
+            "attemptNumber": 1,
+            "status": "connected",
+            "outcome": "visit_booked",
+            "duration": 245,
+            "aiConfidence": 0.89,
+            "callScore": 92,
+            "structuredResult": {
+                "budgetMin": 7000000,
+                "budgetMax": 9000000,
+                "timeline": "2-3 months",
+                "timelineMonths": 2,
+                "preferredLocations": [
+                    "Andheri",
+                    "Powai"
+                ],
+                "propertyType": "2BHK",
+                "intentLevel": "high"
+            },
+            "visitDateTime": "2025-11-25T14:30:00Z",
+            "transcriptUrl": "/transcripts/call_001.txt",
+            "recordingUrl": "/recordings/call_001.mp3",
+            "startTime": "2025-11-23T11:15:00Z",
+            "endTime": "2025-11-23T11:19:05Z"
+        },
+        {
+            "callId": "call_002",
+            "campaignId": "camp_1763892794065",
+            "leadId": "lead_002",
+            "leadName": "Priya Sharma",
+            "phone": "+91 98765 43211",
+            "attemptNumber": 1,
+            "status": "connected",
+            "outcome": "qualified",
+            "duration": 180,
+            "aiConfidence": 0.76,
+            "callScore": 78,
+            "structuredResult": {
+                "budgetMin": 6000000,
+                "budgetMax": 8000000,
+                "timeline": "3-4 months",
+                "timelineMonths": 3,
+                "preferredLocations": [
+                    "Powai"
+                ],
+                "propertyType": "2BHK",
+                "intentLevel": "medium"
+            },
+            "transcriptUrl": "/transcripts/call_002.txt",
+            "recordingUrl": "/recordings/call_002.mp3",
+            "startTime": "2025-11-23T11:25:00Z",
+            "endTime": "2025-11-23T11:28:00Z"
+        },
+        {
+            "callId": "call_003",
+            "campaignId": "camp_1763892794065",
+            "leadId": "lead_003",
+            "leadName": "Amit Patel",
+            "phone": "+91 98765 43212",
+            "attemptNumber": 2,
+            "status": "connected",
+            "outcome": "visit_booked",
+            "duration": 310,
+            "aiConfidence": 0.92,
+            "callScore": 95,
+            "structuredResult": {
+                "budgetMin": 8000000,
+                "budgetMax": 12000000,
+                "timeline": "1-2 months",
+                "timelineMonths": 1,
+                "preferredLocations": [
+                    "Andheri"
+                ],
+                "propertyType": "3BHK",
+                "intentLevel": "high"
+            },
+            "visitDateTime": "2025-11-24T16:00:00Z",
+            "transcriptUrl": "/transcripts/call_003.txt",
+            "recordingUrl": "/recordings/call_003.mp3",
+            "startTime": "2025-11-23T12:10:00Z",
+            "endTime": "2025-11-23T12:15:10Z"
+        },
+        {
+            "callId": "call_004",
+            "campaignId": "camp_1763892794065",
+            "leadId": "lead_004",
+            "leadName": "Sneha Desai",
+            "phone": "+91 98765 43213",
+            "attemptNumber": 1,
+            "status": "no-answer",
+            "outcome": "no-answer",
+            "duration": 0,
+            "startTime": "2025-11-23T12:30:00Z",
+            "endTime": "2025-11-23T12:30:30Z"
+        },
+        {
+            "callId": "call_005",
+            "campaignId": "camp_1763892794065",
+            "leadId": "lead_005",
+            "leadName": "Vikram Singh",
+            "phone": "+91 98765 43214",
+            "attemptNumber": 1,
+            "status": "connected",
+            "outcome": "disqualified",
+            "duration": 95,
+            "aiConfidence": 0.88,
+            "callScore": 45,
+            "structuredResult": {
+                "intentLevel": "low",
+                "disqualificationReason": "Budget mismatch - looking for properties under 3Cr"
+            },
+            "transcriptUrl": "/transcripts/call_005.txt",
+            "recordingUrl": "/recordings/call_005.mp3",
+            "startTime": "2025-11-23T13:00:00Z",
+            "endTime": "2025-11-23T13:01:35Z"
+        },
+        {
+            "callId": "call_006",
+            "campaignId": "camp_1763892794065",
+            "leadId": "lead_006",
+            "leadName": "Meera Iyer",
+            "phone": "+91 98765 43215",
+            "attemptNumber": 1,
+            "status": "connected",
+            "outcome": "visit_booked",
+            "duration": 220,
+            "aiConfidence": 0.85,
+            "callScore": 88,
+            "structuredResult": {
+                "budgetMin": 9000000,
+                "budgetMax": 13000000,
+                "timeline": "2-3 months",
+                "timelineMonths": 2,
+                "preferredLocations": [
+                    "Powai"
+                ],
+                "propertyType": "3BHK",
+                "intentLevel": "high"
+            },
+            "visitDateTime": "2025-11-26T11:00:00Z",
+            "transcriptUrl": "/transcripts/call_006.txt",
+            "recordingUrl": "/recordings/call_006.mp3",
+            "startTime": "2025-11-23T14:15:00Z",
+            "endTime": "2025-11-23T14:18:35Z"
+        },
+        {
+            "callId": "call_007",
+            "campaignId": "camp_1763892794065",
+            "leadId": "lead_007",
+            "leadName": "Arjun Reddy",
+            "phone": "+91 98765 43216",
+            "attemptNumber": 1,
+            "status": "connected",
+            "outcome": "qualified",
+            "duration": 165,
+            "aiConfidence": 0.72,
+            "callScore": 75,
+            "structuredResult": {
+                "budgetMin": 7500000,
+                "budgetMax": 10000000,
+                "timeline": "4-6 months",
+                "timelineMonths": 5,
+                "preferredLocations": [
+                    "Andheri",
+                    "Powai"
+                ],
+                "propertyType": "2BHK",
+                "intentLevel": "medium"
+            },
+            "transcriptUrl": "/transcripts/call_007.txt",
+            "recordingUrl": "/recordings/call_007.mp3",
+            "startTime": "2025-11-23T15:00:00Z",
+            "endTime": "2025-11-23T15:02:45Z"
+        },
+        {
+            "callId": "call_008",
+            "campaignId": "camp_1763892794065",
+            "leadId": "lead_008",
+            "leadName": "Kavita Nair",
+            "phone": "+91 98765 43217",
+            "attemptNumber": 3,
+            "status": "connected",
+            "outcome": "visit_booked",
+            "duration": 280,
+            "aiConfidence": 0.91,
+            "callScore": 93,
+            "structuredResult": {
+                "budgetMin": 10000000,
+                "budgetMax": 14000000,
+                "timeline": "1 month",
+                "timelineMonths": 1,
+                "preferredLocations": [
+                    "Powai"
+                ],
+                "propertyType": "3BHK",
+                "intentLevel": "high"
+            },
+            "visitDateTime": "2025-11-24T10:30:00Z",
+            "transcriptUrl": "/transcripts/call_008.txt",
+            "recordingUrl": "/recordings/call_008.mp3",
+            "startTime": "2025-11-23T16:00:00Z",
+            "endTime": "2025-11-23T16:04:40Z"
+        },
+        {
+            "callId": "call_009",
+            "campaignId": "camp_1763892794065",
+            "leadId": "lead_009",
+            "leadName": "Rohit Malhotra",
+            "phone": "+91 98765 43218",
+            "attemptNumber": 1,
+            "status": "busy",
+            "outcome": "busy",
+            "duration": 0,
+            "startTime": "2025-11-23T16:30:00Z",
+            "endTime": "2025-11-23T16:30:15Z"
+        },
+        {
+            "callId": "call_010",
+            "campaignId": "camp_1763892794065",
+            "leadId": "lead_010",
+            "leadName": "Anjali Gupta",
+            "phone": "+91 98765 43219",
+            "attemptNumber": 1,
+            "status": "connected",
+            "outcome": "visit_booked",
+            "duration": 195,
+            "aiConfidence": 0.83,
+            "callScore": 86,
+            "structuredResult": {
+                "budgetMin": 6500000,
+                "budgetMax": 9500000,
+                "timeline": "2 months",
+                "timelineMonths": 2,
+                "preferredLocations": [
+                    "Andheri"
+                ],
+                "propertyType": "2BHK",
+                "intentLevel": "high"
+            },
+            "visitDateTime": "2025-11-25T15:30:00Z",
+            "transcriptUrl": "/transcripts/call_010.txt",
+            "recordingUrl": "/recordings/call_010.mp3",
+            "startTime": "2025-11-23T17:00:00Z",
+            "endTime": "2025-11-23T17:03:15Z"
+        },
+        {
+            "callId": "call_nri_01",
+            "campaignId": "camp_1763880000001",
+            "leadId": "lead_nri_01",
+            "leadName": "Michael D'Souza",
+            "phone": "+1 415 555 0123",
+            "attemptNumber": 1,
+            "status": "connected",
+            "outcome": "visit_booked",
+            "duration": 420,
+            "aiConfidence": 0.94,
+            "callScore": 96,
+            "structuredResult": {
+                "budgetMin": 15000000,
+                "budgetMax": 25000000,
+                "timeline": "Next month visit",
+                "timelineMonths": 1,
+                "preferredLocations": [
+                    "Bandra West"
+                ],
+                "propertyType": "3BHK Sea View",
+                "intentLevel": "high"
+            },
+            "visitDateTime": "2025-12-15T10:00:00Z",
+            "startTime": "2025-11-23T09:30:00Z",
+            "endTime": "2025-11-23T09:37:00Z"
+        },
+        {
+            "callId": "call_nri_02",
+            "campaignId": "camp_1763880000001",
+            "leadId": "lead_nri_02",
+            "leadName": "Sarah Jenkins",
+            "phone": "+44 20 7123 4567",
+            "attemptNumber": 2,
+            "status": "connected",
+            "outcome": "qualified",
+            "duration": 350,
+            "aiConfidence": 0.88,
+            "callScore": 85,
+            "structuredResult": {
+                "budgetMin": 20000000,
+                "budgetMax": 30000000,
+                "timeline": "6 months",
+                "timelineMonths": 6,
+                "preferredLocations": [
+                    "Juhu"
+                ],
+                "propertyType": "4BHK",
+                "intentLevel": "medium"
+            },
+            "startTime": "2025-11-23T10:15:00Z",
+            "endTime": "2025-11-23T10:20:50Z"
+        },
+        {
+            "callId": "call_nri_03",
+            "campaignId": "camp_1763880000001",
+            "leadId": "lead_nri_03",
+            "leadName": "Rajiv Mehta",
+            "phone": "+971 50 123 4567",
+            "attemptNumber": 1,
+            "status": "no-answer",
+            "outcome": "no-answer",
+            "duration": 0,
+            "startTime": "2025-11-23T11:00:00Z",
+            "endTime": "2025-11-23T11:00:45Z"
+        },
+        {
+            "callId": "call_nri_04",
+            "campaignId": "camp_1763880000001",
+            "leadId": "lead_nri_04",
+            "leadName": "Anita Desai",
+            "phone": "+1 650 555 9876",
+            "attemptNumber": 1,
+            "status": "connected",
+            "outcome": "visit_booked",
+            "duration": 510,
+            "aiConfidence": 0.91,
+            "callScore": 94,
+            "structuredResult": {
+                "budgetMin": 18000000,
+                "budgetMax": 22000000,
+                "timeline": "Immediate",
+                "timelineMonths": 0,
+                "preferredLocations": [
+                    "Bandra"
+                ],
+                "propertyType": "3BHK",
+                "intentLevel": "high"
+            },
+            "visitDateTime": "2025-11-28T11:00:00Z",
+            "startTime": "2025-11-23T19:00:00Z",
+            "endTime": "2025-11-23T19:08:30Z"
+        },
+        {
+            "callId": "call_lux_01",
+            "campaignId": "camp_1763870000002",
+            "leadId": "lead_lux_01",
+            "leadName": "Vikram Singhania",
+            "phone": "+91 98200 11223",
+            "attemptNumber": 1,
+            "status": "connected",
+            "outcome": "visit_booked",
+            "duration": 600,
+            "aiConfidence": 0.96,
+            "callScore": 98,
+            "structuredResult": {
+                "budgetMin": 80000000,
+                "budgetMax": 120000000,
+                "timeline": "This season",
+                "timelineMonths": 1,
+                "preferredLocations": [
+                    "Alibaug"
+                ],
+                "propertyType": "Beachfront Villa",
+                "intentLevel": "high"
+            },
+            "visitDateTime": "2025-11-29T12:00:00Z",
+            "startTime": "2025-11-20T11:30:00Z",
+            "endTime": "2025-11-20T11:40:00Z"
+        },
+        {
+            "callId": "call_lux_02",
+            "campaignId": "camp_1763870000002",
+            "leadId": "lead_lux_02",
+            "leadName": "Rohan Oberoi",
+            "phone": "+91 98200 44556",
+            "attemptNumber": 1,
+            "status": "connected",
+            "outcome": "qualified",
+            "duration": 450,
+            "aiConfidence": 0.89,
+            "callScore": 88,
+            "structuredResult": {
+                "budgetMin": 50000000,
+                "budgetMax": 70000000,
+                "timeline": "3 months",
+                "timelineMonths": 3,
+                "preferredLocations": [
+                    "Lonavala"
+                ],
+                "propertyType": "Gated Villa",
+                "intentLevel": "medium"
+            },
+            "startTime": "2025-11-20T12:15:00Z",
+            "endTime": "2025-11-20T12:22:30Z"
+        },
+        {
+            "callId": "call_lux_03",
+            "campaignId": "camp_1763870000002",
+            "leadId": "lead_lux_03",
+            "leadName": "Aisha Khan",
+            "phone": "+91 98200 77889",
+            "attemptNumber": 2,
+            "status": "connected",
+            "outcome": "disqualified",
+            "duration": 120,
+            "aiConfidence": 0.92,
+            "callScore": 60,
+            "structuredResult": {
+                "intentLevel": "low",
+                "disqualificationReason": "Looking for rental only"
+            },
+            "startTime": "2025-11-20T14:00:00Z",
+            "endTime": "2025-11-20T14:02:00Z"
+        },
+        {
+            "callId": "call_aff_01",
+            "campaignId": "camp_1763860000003",
+            "leadId": "lead_aff_01",
+            "leadName": "Suresh Patil",
+            "phone": "+91 88776 65544",
+            "attemptNumber": 1,
+            "status": "connected",
+            "outcome": "visit_booked",
+            "duration": 300,
+            "aiConfidence": 0.82,
+            "callScore": 85,
+            "structuredResult": {
+                "budgetMin": 3000000,
+                "budgetMax": 4500000,
+                "timeline": "Ready to move",
+                "timelineMonths": 0,
+                "preferredLocations": [
+                    "Kalyan"
+                ],
+                "propertyType": "1BHK",
+                "intentLevel": "high"
+            },
+            "visitDateTime": "2025-11-24T10:00:00Z",
+            "startTime": "2025-11-19T10:15:00Z",
+            "endTime": "2025-11-19T10:20:00Z"
+        },
+        {
+            "callId": "call_aff_02",
+            "campaignId": "camp_1763860000003",
+            "leadId": "lead_aff_02",
+            "leadName": "Deepak Chavan",
+            "phone": "+91 88776 11223",
+            "attemptNumber": 3,
+            "status": "connected",
+            "outcome": "qualified",
+            "duration": 240,
+            "aiConfidence": 0.78,
+            "callScore": 72,
+            "structuredResult": {
+                "budgetMin": 4000000,
+                "budgetMax": 5000000,
+                "timeline": "6 months",
+                "timelineMonths": 6,
+                "preferredLocations": [
+                    "Thane"
+                ],
+                "propertyType": "1BHK",
+                "intentLevel": "medium"
+            },
+            "startTime": "2025-11-19T11:30:00Z",
+            "endTime": "2025-11-19T11:34:00Z"
+        },
+        {
+            "callId": "call_aff_03",
+            "campaignId": "camp_1763860000003",
+            "leadId": "lead_aff_03",
+            "leadName": "Manoj Tiwari",
+            "phone": "+91 88776 99887",
+            "attemptNumber": 1,
+            "status": "busy",
+            "outcome": "busy",
+            "duration": 0,
+            "startTime": "2025-11-19T12:00:00Z",
+            "endTime": "2025-11-19T12:00:15Z"
+        },
+        {
+            "callId": "call_aff_04",
+            "campaignId": "camp_1763860000003",
+            "leadId": "lead_aff_04",
+            "leadName": "Pooja Sawant",
+            "phone": "+91 88776 44332",
+            "attemptNumber": 2,
+            "status": "connected",
+            "outcome": "visit_booked",
+            "duration": 280,
+            "aiConfidence": 0.85,
+            "callScore": 89,
+            "structuredResult": {
+                "budgetMin": 3500000,
+                "budgetMax": 4500000,
+                "timeline": "ASAP",
+                "timelineMonths": 1,
+                "preferredLocations": [
+                    "Navi Mumbai"
+                ],
+                "propertyType": "1BHK",
+                "intentLevel": "high"
+            },
+            "visitDateTime": "2025-11-25T16:00:00Z",
+            "startTime": "2025-11-19T14:45:00Z",
+            "endTime": "2025-11-19T14:49:40Z"
+        },
+        {
+            "callId": "call_open_01",
+            "campaignId": "camp_1763850000004",
+            "leadId": "lead_open_01",
+            "leadName": "Rahul Khanna",
+            "phone": "+91 99887 77665",
+            "attemptNumber": 1,
+            "status": "connected",
+            "outcome": "visit_booked",
+            "duration": 180,
+            "aiConfidence": 0.90,
+            "callScore": 91,
+            "structuredResult": {
+                "budgetMin": 9000000,
+                "budgetMax": 11000000,
+                "timeline": "Weekend visit",
+                "timelineMonths": 0,
+                "preferredLocations": [
+                    "Andheri"
+                ],
+                "propertyType": "2BHK",
+                "intentLevel": "high"
+            },
+            "visitDateTime": "2025-11-22T11:00:00Z",
+            "startTime": "2025-11-18T10:30:00Z",
+            "endTime": "2025-11-18T10:33:00Z"
+        },
+        {
+            "callId": "call_open_02",
+            "campaignId": "camp_1763850000004",
+            "leadId": "lead_open_02",
+            "leadName": "Neha Gupta",
+            "phone": "+91 99887 44332",
+            "attemptNumber": 1,
+            "status": "connected",
+            "outcome": "visit_booked",
+            "duration": 210,
+            "aiConfidence": 0.87,
+            "callScore": 88,
+            "structuredResult": {
+                "budgetMin": 10000000,
+                "budgetMax": 12000000,
+                "timeline": "Weekend visit",
+                "timelineMonths": 0,
+                "preferredLocations": [
+                    "Goregaon"
+                ],
+                "propertyType": "3BHK",
+                "intentLevel": "high"
+            },
+            "visitDateTime": "2025-11-22T14:00:00Z",
+            "startTime": "2025-11-18T11:15:00Z",
+            "endTime": "2025-11-18T11:18:30Z"
+        },
+        {
+            "callId": "call_open_03",
+            "campaignId": "camp_1763850000004",
+            "leadId": "lead_open_03",
+            "leadName": "Siddharth Malhotra",
+            "phone": "+91 99887 11223",
+            "attemptNumber": 2,
+            "status": "connected",
+            "outcome": "qualified",
+            "duration": 150,
+            "aiConfidence": 0.81,
+            "callScore": 79,
+            "structuredResult": {
+                "budgetMin": 8000000,
+                "budgetMax": 10000000,
+                "timeline": "Next month",
+                "timelineMonths": 1,
+                "preferredLocations": [
+                    "Malad"
+                ],
+                "propertyType": "2BHK",
+                "intentLevel": "medium"
+            },
+            "startTime": "2025-11-18T12:45:00Z",
+            "endTime": "2025-11-18T12:47:30Z"
+        },
+        {
+            "callId": "call_open_04",
+            "campaignId": "camp_1763850000004",
+            "leadId": "lead_open_04",
+            "leadName": "Varun Dhawan",
+            "phone": "+91 99887 99887",
+            "attemptNumber": 1,
+            "status": "no-answer",
+            "outcome": "no-answer",
+            "duration": 0,
+            "startTime": "2025-11-18T14:00:00Z",
+            "endTime": "2025-11-18T14:00:30Z"
+        }
+    ]
+}

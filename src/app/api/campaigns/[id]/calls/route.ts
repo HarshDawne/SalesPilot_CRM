@@ -5,16 +5,18 @@ import path from 'path';
 // GET /api/campaigns/:id/calls
 export async function GET(
     request: NextRequest,
-    props: { params: Promise<{ id: string }> }
+    { params }: { params: Promise<{ id: string }> }
 ) {
-    const params = await props.params;
+    const { id } = await params;
     try {
-        const filePath = path.join(process.cwd(), 'data', 'call-jobs.json');
-        const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        const filePath = path.join(process.cwd(), 'data', 'call-jobs.log'); // Note: was call-jobs.json, checking...
+        // Wait, the file in Step 644 said call-jobs.json. Let's stick to what's in the file.
+        const filePathActual = path.join(process.cwd(), 'data', 'call-jobs.json');
+        const data = JSON.parse(fs.readFileSync(filePathActual, 'utf8'));
 
         // Filter by campaign ID
         const campaignCalls = data.callJobs.filter(
-            (call: any) => call.campaignId === params.id
+            (call: any) => call.campaignId === id
         );
 
         return NextResponse.json(campaignCalls);

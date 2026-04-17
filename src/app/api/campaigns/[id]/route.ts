@@ -16,12 +16,11 @@ function writeCampaigns(data: any) {
 // GET /api/campaigns/:id
 export async function GET(
     request: NextRequest,
-    props: { params: Promise<{ id: string }> }
+    { params }: { params: Promise<{ id: string }> }
 ) {
-    const params = await props.params;
+    const { id: requestedId } = await params;
     try {
         const data = readCampaigns();
-        const requestedId = params.id.trim();
 
         // console.log(`Requested ID: '${requestedId}'`);
 
@@ -48,15 +47,15 @@ export async function GET(
 // POST /api/campaigns/:id/actions
 export async function POST(
     request: NextRequest,
-    props: { params: Promise<{ id: string }> }
+    { params }: { params: Promise<{ id: string }> }
 ) {
-    const params = await props.params;
+    const { id } = await params;
     try {
         const body = await request.json();
         const { action } = body; // pause, resume, stop
 
         const data = readCampaigns();
-        const campaign = data.campaigns.find((c: any) => c.campaignId === params.id);
+        const campaign = data.campaigns.find((c: any) => c.campaignId === id);
 
         if (!campaign) {
             return NextResponse.json({ error: 'Campaign not found' }, { status: 404 });

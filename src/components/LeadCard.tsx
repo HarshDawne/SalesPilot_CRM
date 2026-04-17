@@ -17,6 +17,7 @@ const stageColors: Record<LeadStage, string> = {
     "Visit_Completed": "bg-indigo-100 text-indigo-700",
     "Negotiation": "bg-orange-100 text-orange-700",
     "Booking_Done": "bg-emerald-100 text-emerald-700",
+    "visit_no_show_followup": "bg-amber-100 text-amber-700",
     "Disqualified": "bg-red-100 text-red-700"
 };
 

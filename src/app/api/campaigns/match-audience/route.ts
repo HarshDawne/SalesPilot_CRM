@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { leadService } from '@/lib/db';
 import { Lead } from '@/lib/db';
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
         const { propertyId, towerIds, unitIds, criteria } = body;

@@ -187,6 +187,21 @@ export function logVisitCompleted(
     });
 }
 
+export function logVisitFeedback(
+    leadId: string,
+    outcome: string,
+    notes?: string
+) {
+    return addTimelineEvent({
+        leadId,
+        type: "visit_feedback_logged",
+        summary: `Visit Outcome: ${outcome}`,
+        actor: "agent",
+        payload: { outcome, notes },
+        immutable: true
+    });
+}
+
 export function logVisitNoShow(leadId: string, visitId: string) {
     return addTimelineEvent({
         leadId,

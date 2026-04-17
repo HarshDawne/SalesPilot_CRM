@@ -4,8 +4,10 @@
  */
 
 import { db } from './db';
-import type { Property, Tower, Unit, UnitStatus, PropertyInventoryStats } from '@/types/property';
+import { Property, Tower, Unit, UnitStatus, PropertyInventoryStats } from '../types/property';
 import { v4 as uuidv4 } from 'uuid';
+
+export interface Building extends Tower { }
 
 // ============================================================================
 // PROPERTY OPERATIONS
@@ -192,7 +194,7 @@ export const unitService = {
 
     reserve(unitId: string, leadId: string, leadName: string, hours: number = 48): Unit | null {
         const unit = db.units.findById(unitId);
-        if (!unit || unit.status !== 'AVAILABLE') return null;
+        if (!unit || unit.status !== UnitStatus.AVAILABLE) return null;
 
         const reservation = {
             id: uuidv4(),
@@ -209,20 +211,21 @@ export const unitService = {
         };
 
         db.unitReservations.create(reservation);
-        return this.update(unitId, { status: 'RESERVED', reservation });
+        return this.update(unitId, { status: UnitStatus.RESERVED, reservation });
     },
 
     releaseReservation(unitId: string): Unit | null {
         const unit = db.units.findById(unitId);
-        if (!unit || unit.status !== 'RESERVED') return null;
+        if (!unit || unit.status !== UnitStatus.RESERVED) return null;
 
         const reservation = db.unitReservations.findByUnit(unitId);
         if (reservation) {
             db.unitReservations.update(reservation.id, { isActive: false });
         }
 
-        return this.update(unitId, { status: 'AVAILABLE', reservation: undefined });
+        return this.update(unitId, { status: UnitStatus.AVAILABLE, reservation: undefined });
     },
+
 
     extendReservation(unitId: string, hours: number = 24): Unit | null {
         const unit = db.units.findById(unitId);
@@ -249,7 +252,7 @@ export const unitService = {
             db.unitReservations.update(reservation.id, { isActive: false });
         }
 
-        return this.update(unitId, { status: 'BOOKED', reservation: undefined });
+        return this.update(unitId, { status: UnitStatus.BOOKED, reservation: undefined });
     },
 
     isAvailable(unitId: string): boolean {

@@ -142,6 +142,27 @@ Best regards,
         channel: "in_app",
         template: "⚠️ No-show: {name} missed visit at {time}. Follow up required.",
         variables: ["name", "time"]
+    },
+    POST_VISIT_INTERESTED: {
+        id: "post_visit_interested",
+        name: "Post-Visit (Interested)",
+        channel: "whatsapp",
+        template: "Hi {name}, it was great meeting you today at {projectName}! As promised, here is the brochure and unit details we discussed: {brochureUrl}. Let me know if you would like to block a specific unit. 🏡",
+        variables: ["name", "projectName", "brochureUrl"]
+    },
+    POST_VISIT_NURTURE: {
+        id: "post_visit_nurture",
+        name: "Post-Visit (Nurture)",
+        channel: "whatsapp",
+        template: "Hi {name}, thank you for visiting {projectName} today. I've sent the project highlights to your email. Feel free to reach out if you have any questions as you evaluate. Best, {agentName}.",
+        variables: ["name", "projectName", "agentName"]
+    },
+    VISIT_MISSED_FOLLOWUP: {
+        id: "visit_missed_followup",
+        name: "Missed Visit Follow-up",
+        channel: "whatsapp",
+        template: "Hi {name}, we missed you today at {projectName}. I understand things come up! Would you like to reschedule for later this week? Reply with a preferred time.",
+        variables: ["name", "projectName"]
     }
 };
 
@@ -154,6 +175,51 @@ const notificationQueue: Notification[] = [];
 // ============================================================================
 // CORE FUNCTIONS
 // ============================================================================
+
+/**
+ * Trigger automated post-visit follow-up workflows
+ */
+export async function triggerPostVisitWorkflow(lead: Lead, outcome: 'interested' | 'nurture' | 'no_show', context: { projectName: string, brochureUrl?: string, agentName: string }) {
+    const variables = {
+        name: lead.name || "there",
+        projectName: context.projectName,
+        brochureUrl: context.brochureUrl || "https://example.com/brochure",
+        agentName: context.agentName
+    };
+
+    if (outcome === 'interested') {
+        await queueNotification({
+            leadId: lead.id,
+            channel: "whatsapp",
+            templateId: "POST_VISIT_INTERESTED",
+            recipient: lead.primaryPhone,
+            variables
+        });
+    } else if (outcome === 'nurture') {
+        await queueNotification({
+            leadId: lead.id,
+            channel: "whatsapp",
+            templateId: "POST_VISIT_NURTURE",
+            recipient: lead.primaryPhone,
+            variables
+        });
+    } else if (outcome === 'no_show') {
+        await queueNotification({
+            leadId: lead.id,
+            channel: "whatsapp",
+            templateId: "VISIT_MISSED_FOLLOWUP",
+            recipient: lead.primaryPhone,
+            variables
+        });
+    }
+
+    addTimelineEvent({
+        leadId: lead.id,
+        type: "auto_followup_scheduled",
+        summary: `Auto-followup sentiment: ${outcome}`,
+        actor: "system"
+    });
+}
 
 /**
  * Render a template with variables

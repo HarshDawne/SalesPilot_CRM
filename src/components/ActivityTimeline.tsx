@@ -14,25 +14,25 @@ export default function ActivityTimeline({ activities }: ActivityTimelineProps) 
 
     const getIcon = (type: string) => {
         switch (type) {
-            case "ai_call": return <Phone size={16} className="text-blue-600" />;
-            case "whatsapp": return <MessageCircle size={16} className="text-green-600" />;
-            case "booking": return <Calendar size={16} className="text-orange-600" />;
+            case "ai_call": return <Phone size={16} className="text-primary" />;
+            case "whatsapp": return <MessageCircle size={16} className="text-emerald-600" />;
+            case "booking": return <Calendar size={16} className="text-secondary" />;
             case "form_submission": return <FileText size={16} className="text-purple-600" />;
-            case "status_change": return <CheckCircle size={16} className="text-gray-600" />;
-            case "note": return <StickyNote size={16} className="text-yellow-600" />;
-            default: return <AlertCircle size={16} className="text-gray-400" />;
+            case "status_change": return <CheckCircle size={16} className="text-slate-600" />;
+            case "note": return <StickyNote size={16} className="text-amber-600" />;
+            default: return <AlertCircle size={16} className="text-slate-400" />;
         }
     };
 
     const getBgColor = (type: string) => {
         switch (type) {
-            case "ai_call": return "bg-blue-50 border-blue-100";
-            case "whatsapp": return "bg-green-50 border-green-100";
-            case "booking": return "bg-orange-50 border-orange-100";
+            case "ai_call": return "bg-primary/5 border-primary/20";
+            case "whatsapp": return "bg-emerald-50 border-emerald-100";
+            case "booking": return "bg-secondary/5 border-secondary/20";
             case "form_submission": return "bg-purple-50 border-purple-100";
-            case "status_change": return "bg-gray-50 border-gray-100";
-            case "note": return "bg-yellow-50 border-yellow-100";
-            default: return "bg-gray-50 border-gray-100";
+            case "status_change": return "bg-slate-50 border-slate-200";
+            case "note": return "bg-amber-50 border-amber-100";
+            default: return "bg-slate-50 border-slate-200";
         }
     };
 
@@ -78,7 +78,7 @@ export default function ActivityTimeline({ activities }: ActivityTimelineProps) 
                                             href={ev.url || "#"}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="inline-flex items-center gap-1 px-2 py-1 bg-indigo-50 text-indigo-700 rounded text-[10px] font-medium hover:bg-indigo-100 transition-colors border border-indigo-100"
+                                            className="inline-flex items-center gap-1 px-2 py-1 bg-primary/5 text-primary rounded text-[10px] font-black uppercase tracking-widest hover:bg-primary/10 transition-colors border border-primary/10"
                                         >
                                             {ev.type === 'transcript' && <FileText size={10} />}
                                             {ev.type === 'recording' && <Phone size={10} />}
