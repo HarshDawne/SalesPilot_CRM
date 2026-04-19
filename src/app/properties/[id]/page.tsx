@@ -154,8 +154,8 @@ export default function EditPropertyPage() {
             await propertiesAPI.update(id, updates);
 
             if (data.towers) {
-                for (const tower of data.towers) {
-                    await propertiesAPI.updateTower(tower.id, {
+                await Promise.all(data.towers.map((tower: any) => 
+                    propertiesAPI.updateTower(tower.id, {
                         name: tower.name,
                         totalFloors: tower.totalFloors,
                         totalUnits: tower.units.length,
@@ -174,8 +174,8 @@ export default function EditPropertyPage() {
                             totalPrice: u.totalPrice
                         })),
                         updatedAt: new Date().toISOString()
-                    } as any);
-                }
+                    } as any)
+                ));
             }
 
             showToast("Property updated successfully!", "success");

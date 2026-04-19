@@ -55,14 +55,9 @@ export async function PUT(
         
         console.log(`📡 [API] PUT /api/properties/${id} | Body keys:`, Object.keys(body));
 
-        /* 
-        DEBUG: Temporarily bypassing Zod validation to isolate persistent 500 errors.
-        We will rely on manual data sanity check for this step.
-        */
-        const validatedData = body; 
-        
-        /*
+        // Use safeParse to prevent unexpected crashes and get detailed reporting
         const result = propertySchema.partial().safeParse(body);
+        
         if (!result.success) {
             console.error('❌ Schema Validation Error:', JSON.stringify(result.error.issues, null, 2));
             return NextResponse.json(
@@ -75,8 +70,8 @@ export async function PUT(
                 { status: 400 }
             );
         }
+
         const validatedData = result.data;
-        */
 
         const property = await propertyService.update(id, validatedData as any);
         if (!property) {

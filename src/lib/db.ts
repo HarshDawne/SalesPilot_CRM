@@ -1221,6 +1221,37 @@ export const db = {
             writeDb(data);
             return data.units[index];
         },
+        updateBulk: (towerId: string, units: any[]) => {
+            const data = readDb();
+            if (!data.units) data.units = [];
+            
+            const updatedUnits = [];
+            for (const u of units) {
+                const index = data.units.findIndex(ex => ex.unitNumber === u.unitNumber || ex.id === u.id);
+                if (index !== -1) {
+                    data.units[index] = { 
+                        ...data.units[index], 
+                        ...u, 
+                        towerId, // Ensure towerId is correct
+                        updatedAt: new Date().toISOString() 
+                    };
+                    updatedUnits.push(data.units[index]);
+                } else {
+                    const newUnit = {
+                        ...u,
+                        id: u.id || `unit-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+                        towerId,
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString()
+                    };
+                    data.units.push(newUnit);
+                    updatedUnits.push(newUnit);
+                }
+            }
+            
+            writeDb(data);
+            return updatedUnits;
+        },
         delete: (id: string) => {
             const data = readDb();
             if (!data.units) return false;

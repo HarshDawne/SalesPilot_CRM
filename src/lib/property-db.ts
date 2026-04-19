@@ -248,6 +248,20 @@ export const unitService = {
         return updated;
     },
 
+    // Bulk update units for a tower
+    async updateBulk(towerId: string, units: any[]): Promise<any[]> {
+        const updated = await firebasePropertyDb.updateUnitsBulk(towerId, units);
+        
+        // After bulk update, refresh tower and property inventory once
+        const unit = updated[0];
+        if (unit) {
+            await towerService.updateInventory(towerId);
+            await propertyService.updateInventory(unit.propertyId);
+        }
+        
+        return updated;
+    },
+
     // Delete unit
     async delete(id: string): Promise<boolean> {
         const unit = await firebasePropertyDb.getUnitById(id);
