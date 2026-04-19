@@ -7,7 +7,10 @@ export function TopBar() {
         <header className="h-14 border-b border-border-subtle bg-white/80 backdrop-blur-md sticky top-0 z-20 px-6 flex items-center justify-between">
             <div className="flex items-center gap-4 flex-1">
                 {/* Global Command Trigger */}
-                <button className="flex items-center gap-3 px-3 py-1.5 bg-slate-100/50 hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-500 transition-all w-full max-w-md group">
+                <button 
+                    onClick={() => window.dispatchEvent(new Event('openCommandCenter'))}
+                    className="flex items-center gap-3 px-3 py-1.5 bg-slate-100/50 hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-500 transition-all w-full max-w-md group"
+                >
                     <Search size={16} className="group-hover:text-primary transition-colors" />
                     <span className="text-xs font-medium">Search anything or trigger action...</span>
                     <div className="ml-auto flex items-center gap-1 px-1.5 py-0.5 bg-white border border-slate-200 rounded text-[10px] font-bold text-slate-400">

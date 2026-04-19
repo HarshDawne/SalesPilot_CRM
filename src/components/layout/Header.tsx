@@ -14,15 +14,14 @@ export function Header({ onMenuClick }: { onMenuClick?: () => void }) {
                 </button>
 
                 {/* Global Search */}
-                <div className="hidden md:flex items-center bg-slate-100 rounded-lg px-3 py-2 w-96 border border-transparent focus-within:border-indigo-500 focus-within:bg-white transition-all">
+                <button 
+                    onClick={() => window.dispatchEvent(new Event('openCommandCenter'))}
+                    className="hidden md:flex items-center bg-slate-100/50 hover:bg-slate-100 rounded-lg px-3 py-2 w-96 border border-slate-200 transition-all text-left"
+                >
                     <Search size={18} className="text-slate-400 mr-2" />
-                    <input
-                        type="text"
-                        placeholder="Search leads, inventory, or campaigns..."
-                        className="bg-transparent border-none outline-none text-sm w-full text-slate-700 placeholder:text-slate-400"
-                    />
-                    <span className="text-xs text-slate-400 border border-slate-200 rounded px-1.5 py-0.5">⌘K</span>
-                </div>
+                    <span className="text-sm w-full text-slate-500">Search leads, inventory, or campaigns...</span>
+                    <span className="text-xs font-bold text-slate-400 bg-white border border-slate-200 rounded px-1.5 py-0.5 ml-auto">⌘K</span>
+                </button>
             </div>
 
             <div className="flex items-center gap-4">

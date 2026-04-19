@@ -63,8 +63,13 @@ export function CommandCenter() {
     }, []);
 
     useEffect(() => {
+        const handleCustomEvent = () => setIsOpen(true);
+        window.addEventListener('openCommandCenter', handleCustomEvent);
         window.addEventListener("keydown", handleKeyDown);
-        return () => window.removeEventListener("keydown", handleKeyDown);
+        return () => {
+            window.removeEventListener('openCommandCenter', handleCustomEvent);
+            window.removeEventListener("keydown", handleKeyDown);
+        };
     }, [handleKeyDown]);
 
     useEffect(() => {
