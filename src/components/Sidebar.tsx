@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { 
-    LayoutDashboard, Users, Calendar, Settings, LogOut, 
+    LayoutDashboard, Users, Calendar, LogOut, 
     Menu, Building2, TrendingUp, Phone, Sparkles, Search, Bell
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -44,12 +44,6 @@ export function Sidebar() {
                 </div>
                 <NavLink href="/properties" icon={<Building2 size={18} />} label="PropCatalog" />
 
-                <div className="pt-6 pb-2">
-                    <div className="text-[10px] uppercase tracking-widest text-[#475569] font-bold px-3 mb-4">
-                        Configuration
-                    </div>
-                </div>
-                <NavLink href="/settings" icon={<Settings size={18} />} label="Settings" />
             </nav>
 
             <div className="p-4 border-t border-white/5 bg-black/10 backdrop-blur-sm relative z-10">
@@ -61,7 +55,6 @@ export function Sidebar() {
                         <p className="text-xs font-bold text-white truncate">Admin User</p>
                         <p className="text-[9px] text-secondary font-bold uppercase tracking-wider">Strategic Admin</p>
                     </div>
-                    <Settings size={12} className="text-slate-500 group-hover:text-white transition-colors" />
                 </Link>
 
                 <button 

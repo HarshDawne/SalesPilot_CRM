@@ -8,7 +8,6 @@ import {
     Phone,
     Building2,
     ClipboardCheck,
-    Settings,
     LogOut,
     LayoutDashboard,
     Megaphone
@@ -65,16 +64,6 @@ export function Sidebar() {
                     );
                 })}
 
-                <div className="mt-8 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 px-3">
-                    System
-                </div>
-                <Link
-                    href="/settings"
-                    className="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors"
-                >
-                    <Settings className="mr-3 h-5 w-5 text-slate-400 group-hover:text-white" />
-                    Settings
-                </Link>
             </nav>
 
             {/* User Footer */}
