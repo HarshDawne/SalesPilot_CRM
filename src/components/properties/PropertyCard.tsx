@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Property } from '@/types/property';
 import { StatusBadge } from './StatusBadge';
-import { Building2, MapPin, Pencil, Trash2, Zap, ArrowUpRight, TrendingUp } from 'lucide-react';
+import { Building2, MapPin, Eye, Trash2, Zap, ArrowUpRight, TrendingUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface PropertyCardProps {
@@ -50,10 +50,10 @@ export function PropertyCard({ property, onDelete }: PropertyCardProps) {
                      <Link
                         href={`/properties/${property.id}`}
                         className="p-3 bg-white text-primary rounded-xl hover:bg-ai-accent transition-all shadow-xl hover:scale-110"
-                        title="Modify Node"
+                        title="View Node"
                         onClick={(e) => e.stopPropagation()} 
                      >
-                        <Pencil size={20} />
+                        <Eye size={20} />
                      </Link>
                 </div>
             </div>
