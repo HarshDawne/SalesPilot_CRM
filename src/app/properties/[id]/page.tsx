@@ -133,6 +133,7 @@ export default function EditPropertyPage() {
             const updates: any = {
                 name: data.name,
                 developerName: data.developer,
+                status: data.status, // Also sync the main status field
                 location: {
                     area: data.address,
                     locality: data.address,

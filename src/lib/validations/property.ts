@@ -22,20 +22,21 @@ const intString = z.preprocess(
 export const propertySchema = z.object({
     // REQUIRED FIELDS
     name: z.string().min(1, "Name is required"),
-    developerName: z.string().optional().default("Unknown Developer"), // Made optional with default
-    status: z.enum(["ACTIVE", "UNDER_CONSTRUCTION", "COMPLETED", "ON_HOLD", "PLANNING"]).default("PLANNING"),
-    projectType: z.string().default("RESIDENTIAL"), // Relaxed from enum to string for flexibility
+    developerName: z.string().optional().default("Unknown Developer"),
+    status: z.string().default("PLANNING"), // Relaxed from strict enum to handle UI variations
+    projectType: z.string().default("RESIDENTIAL"),
     constructionStatus: z.string().optional(),
     
-    // OPTIONAL FIELDS (Must not block save)
+    // OPTIONAL FIELDS
     code: z.string().optional().nullable(),
     tagline: z.string().optional().nullable(),
     description: z.string().optional().nullable(),
 
-    // Location - All optional
+    // Location
     location: z.object({
         city: z.string().optional().default(""),
         locality: z.string().optional().default(""),
+        area: z.string().optional().default(""), // Added area
         fullAddress: z.string().optional().default(""),
         pincode: z.string().optional().default(""),
         landmark: z.string().optional().nullable(),
@@ -49,7 +50,7 @@ export const propertySchema = z.object({
         pincode: ""
     }),
 
-    // Inventory - All optional
+    // Inventory
     totalTowers: z.coerce.number().int().optional().default(1),
     totalUnits: z.coerce.number().int().optional().default(0),
     defaultFloorsPerTower: intString.nullable(),
@@ -58,17 +59,17 @@ export const propertySchema = z.object({
     minAreaSqft: numericString.nullable(),
     maxAreaSqft: numericString.nullable(),
 
-    // Regulatory - All optional
+    // Regulatory
     reraId: z.string().optional().default(""),
     reraUrl: z.string().optional().nullable(),
     reraExpiryDate: z.string().optional().nullable(),
 
-    // Dates - All optional
+    // Dates
     launchDate: z.string().optional().default(new Date().toISOString()),
     expectedCompletion: z.string().optional().default(new Date().toISOString()),
     possessionFrom: z.string().optional().nullable(),
 
-    // Pricing - All optional
+    // Pricing
     startingPrice: numericString.nullable(),
     pricePerSqftFrom: numericString.nullable(),
     pricePerSqftTo: numericString.nullable(),
@@ -77,14 +78,15 @@ export const propertySchema = z.object({
     gstIncluded: z.boolean().default(true),
     paymentPlanType: z.preprocess(
         (val) => val === "" ? null : val,
-        z.string().nullable() // Relaxed from enum
+        z.string().nullable()
     ).optional(),
 
-    // Marketing - All optional
+    // Marketing - Relaxed amenities to allow objects (from DB) or strings
     primaryImageUrl: z.string().optional().nullable(),
     brochureUrl: z.string().optional().nullable(),
     highlights: z.array(z.string()).default([]),
-    amenities: z.array(z.string()).default([]),
+    amenities: z.array(z.union([z.string(), z.record(z.any())])).default([]),
+    documents: z.array(z.any()).optional().default([]), // Added documents
 
     // Flags
     isActive: z.boolean().default(true),
