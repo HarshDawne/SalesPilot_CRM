@@ -145,7 +145,9 @@ export default function LeadProfile() {
                     </button>
                     <div>
                         <div className="flex items-center gap-3">
-                            <h1 className="text-3xl font-black text-text-main tracking-tighter uppercase">{lead.name}</h1>
+                            <h1 className="text-3xl font-black text-text-main tracking-tighter uppercase">
+                                {lead.name || `${lead.firstName || ''} ${lead.lastName || ''}`.trim() || 'Anonymous Node'}
+                            </h1>
                             <div className="relative">
                                 <button
                                     onClick={() => setIsStatusOpen(!isStatusOpen)}

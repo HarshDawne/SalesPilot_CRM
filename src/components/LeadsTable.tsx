@@ -388,10 +388,12 @@ export default function LeadsTable() {
                                                     "w-10 h-10 rounded-xl flex items-center justify-center text-sm font-black transition-all border",
                                                     isSelected ? "bg-primary text-white border-primary" : "bg-slate-50 text-text-secondary border-slate-100 group-hover:bg-white group-hover:shadow-sm"
                                                 )}>
-                                                    {(lead.name && lead.name.length > 0) ? lead.name[0].toUpperCase() : '?'}
+                                                    {(lead.name || lead.firstName) ? (lead.name || lead.firstName || '?')[0].toUpperCase() : '?'}
                                                 </div>
                                                 <div>
-                                                    <div className="font-bold text-text-main text-base uppercase tracking-tight leading-loose mb-1">{lead.name || 'Anonymous Node'}</div>
+                                                    <div className="font-bold text-text-main text-base uppercase tracking-tight leading-loose mb-1">
+                                                        {lead.name || `${lead.firstName || ''} ${lead.lastName || ''}`.trim() || 'Anonymous Node'}
+                                                    </div>
                                                     {lead.qualification?.budgetMin ? (
                                                         <div className="text-[10px] font-black text-emerald-600 uppercase tracking-tighter bg-emerald-50 px-1.5 py-0.5 inline-block rounded-xs">
                                                             Cap: ₹{(lead.qualification.budgetMin / 100000).toFixed(1)}L+
