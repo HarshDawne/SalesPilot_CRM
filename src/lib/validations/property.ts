@@ -91,6 +91,6 @@ export const propertySchema = z.object({
     // Flags
     isActive: z.boolean().default(true),
     priorityRank: numericString.nullable(),
-});
+}).passthrough();
 
 export type PropertyFormData = z.infer<typeof propertySchema>;

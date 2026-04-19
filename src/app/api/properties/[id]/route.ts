@@ -74,9 +74,13 @@ export async function PUT(
             );
         }
 
-        console.error('Error updating property:', error);
+        console.error('❌ Error updating property:', error);
         return NextResponse.json(
-            { success: false, error: 'Failed to update property' },
+            { 
+                success: false, 
+                error: 'Failed to update property', 
+                message: error instanceof Error ? error.message : 'Unknown error'
+            },
             { status: 500 }
         );
     }

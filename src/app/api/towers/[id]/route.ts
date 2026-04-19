@@ -48,12 +48,10 @@ export async function PUT(
             const existingUnitIds = new Set<string>(existingUnits.map(u => u.id));
             
             for (const u of body.units) {
-                // Determine unit ID. If UI sets a generic short string, it might not be a real ID
-                // But if it's updating, we might match by unitNumber or id.
                 const matchingUnit = existingUnits.find(ex => ex.unitNumber === u.unitNumber || ex.id === u.id);
                 
                 if (matchingUnit) {
-                    unitService.update(matchingUnit.id, {
+                    await unitService.update(matchingUnit.id, {
                         floor: u.floor || matchingUnit.floor,
                         type: u.type || matchingUnit.type,
                         configuration: u.configuration || matchingUnit.configuration,
@@ -68,7 +66,7 @@ export async function PUT(
                     });
                     existingUnitIds.delete(matchingUnit.id);
                 } else {
-                    unitService.create({
+                    await unitService.create({
                         propertyId: tower.propertyId,
                         towerId: tower.id,
                         unitNumber: u.unitNumber || u.id,
@@ -87,9 +85,8 @@ export async function PUT(
                 }
             }
             
-            // Optionally: delete units that are no longer in the payload
             for (const deletedId of existingUnitIds) {
-                unitService.delete(deletedId);
+                await unitService.delete(deletedId);
             }
         }
 
