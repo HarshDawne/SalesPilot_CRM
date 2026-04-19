@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { LiveCallStatusModal } from "@/components/communication/LiveCallStatusModal";
 import { CreateCampaignModal, CampaignConfig } from "@/components/campaign/CreateCampaignModal";
+import InitiateCallModal from "@/components/calls/InitiateCallModal";
 import { cn } from "@/lib/utils";
 
 const STAGES: { key: LeadStage; label: string; color: string; bgColor: string; icon: LucideIcon }[] = [
@@ -56,6 +57,7 @@ export default function LeadsTable() {
     const [showCampaignModal, setShowCampaignModal] = useState(false);
     const [showConfigModal, setShowConfigModal] = useState(false);
     const [showFilterDropdown, setShowFilterDropdown] = useState(false);
+    const [activeCallLead, setActiveCallLead] = useState<Lead | null>(null);
 
     useEffect(() => {
         fetchLeads();
@@ -427,7 +429,17 @@ export default function LeadsTable() {
                                         <td className="p-4">
                                             <div className="space-y-1.5">
                                                 <div className="flex items-center gap-2 text-sm font-bold text-text-main">
-                                                    <Phone size={14} className="text-slate-400" />
+                                                    <button
+                                                        onClick={(e) => { e.stopPropagation(); setActiveCallLead(lead); }}
+                                                        className="group/btn relative flex items-center justify-center w-6 h-6 rounded bg-violet-50 text-violet-600 hover:bg-violet-100 hover:text-violet-700 transition-colors"
+                                                        title="Initiate Bolna AI Call"
+                                                    >
+                                                        <Phone size={12} />
+                                                        <span className="absolute -top-1 -right-1 flex h-2 w-2">
+                                                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
+                                                            <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-500"></span>
+                                                        </span>
+                                                    </button>
                                                     {lead.primaryPhone}
                                                 </div>
                                                 {lead.email && (
@@ -475,6 +487,17 @@ export default function LeadsTable() {
                     onClose={() => {
                         setShowCampaignModal(false);
                         setActiveCampaignId(null);
+                        fetchLeads();
+                    }}
+                />
+            )}
+
+            {activeCallLead && (
+                <InitiateCallModal
+                    lead={activeCallLead as any}
+                    onClose={() => setActiveCallLead(null)}
+                    onSuccess={() => {
+                        setActiveCallLead(null);
                         fetchLeads();
                     }}
                 />
