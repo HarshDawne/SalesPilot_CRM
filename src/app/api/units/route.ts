@@ -25,3 +25,20 @@ export async function GET(request: NextRequest) {
         );
     }
 }
+
+export async function POST(request: NextRequest) {
+    try {
+        const body = await request.json();
+        const unit = await unitService.create({
+            ...body,
+            status: body.status || 'AVAILABLE'
+        });
+        
+        return NextResponse.json({
+            success: true,
+            data: unit
+        }, { status: 201 });
+    } catch (error) {
+        return NextResponse.json({ success: false, error: "Failed to create unit" }, { status: 500 });
+    }
+}

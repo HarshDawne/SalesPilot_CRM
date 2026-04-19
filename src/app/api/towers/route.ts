@@ -20,3 +20,20 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ error: "Failed to fetch towers" }, { status: 500 });
     }
 }
+
+export async function POST(request: NextRequest) {
+    try {
+        const body = await request.json();
+        const tower = await towerService.create({
+            ...body,
+            status: body.status || 'PLANNING'
+        });
+        
+        return NextResponse.json({
+            success: true,
+            data: tower
+        }, { status: 201 });
+    } catch (error) {
+        return NextResponse.json({ success: false, error: "Failed to create tower" }, { status: 500 });
+    }
+}

@@ -1115,7 +1115,12 @@ export const db = {
         create: (property: PropertyManagement) => {
             const data = readDb();
             if (!data.propertyManagement) data.propertyManagement = [];
-            data.propertyManagement.push(property);
+            const index = data.propertyManagement.findIndex(p => p.id === property.id);
+            if (index !== -1) {
+                data.propertyManagement[index] = property;
+            } else {
+                data.propertyManagement.push(property);
+            }
             writeDb(data);
             return property;
         },
@@ -1145,7 +1150,12 @@ export const db = {
         create: (tower: Tower) => {
             const data = readDb();
             if (!data.towers) data.towers = [];
-            data.towers.push(tower);
+            const index = data.towers.findIndex(t => t.id === tower.id);
+            if (index !== -1) {
+                data.towers[index] = tower;
+            } else {
+                data.towers.push(tower);
+            }
             writeDb(data);
             return tower;
         },
@@ -1181,7 +1191,12 @@ export const db = {
         create: (unit: Unit) => {
             const data = readDb();
             if (!data.units) data.units = [];
-            data.units.push(unit);
+            const index = data.units.findIndex(u => u.id === unit.id);
+            if (index !== -1) {
+                data.units[index] = unit;
+            } else {
+                data.units.push(unit);
+            }
             writeDb(data);
             return unit;
         },

@@ -78,11 +78,16 @@ export const propertiesAPI = {
 
     // Towers
     createTower: async (propertyId: string, tower: any) => {
-        // Fallback or explicit tower creation
-        // If the backend had a dedicated POST /api/towers route we would use it.
-        // For now, this might not be needed if PUT /api/properties handles it,
-        // but adding it safely here just in case.
-        throw new Error("createTower not independently implemented. Update via Property update.");
+        const res = await fetch(`/api/towers`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ...tower, propertyId })
+        });
+        const data = await res.json();
+        
+        if (!res.ok) throw new Error(data.error || 'Failed to create tower');
+        
+        return data;
     },
 
     getTowers: async (propertyId: string) => {
@@ -113,7 +118,16 @@ export const propertiesAPI = {
 
     // Units
     createUnit: async (towerId: string, unit: any) => {
-        throw new Error("createUnit not independently implemented. Update via Tower update.");
+        const res = await fetch(`/api/units`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ...unit, towerId })
+        });
+        const data = await res.json();
+        
+        if (!res.ok) throw new Error(data.error || 'Failed to create unit');
+        
+        return data;
     },
 
     // Deprecated alias for list (backward compatibility)

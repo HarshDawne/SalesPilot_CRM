@@ -30,6 +30,14 @@ export default function RevenueCommandCenter() {
   const [loading, setLoading] = useState(true);
   const [recentactivities, setRecentActivities] = useState<any[]>([]);
 
+  const [viewPeriod, setViewPeriod] = useState("Today");
+  const periods = ["Today", "This Week", "This Month", "This Year"];
+
+  const toggleViewPeriod = () => {
+    const currentIndex = periods.indexOf(viewPeriod);
+    setViewPeriod(periods[(currentIndex + 1) % periods.length]);
+  };
+
   useEffect(() => {
     // 1. Fetch Real Stats
     const fetchStats = async () => {
@@ -136,9 +144,12 @@ export default function RevenueCommandCenter() {
         </div>
         
         <div className="flex items-center gap-3">
-           <button className="px-5 py-2.5 bg-white border border-border-subtle rounded-lg text-xs font-bold text-text-secondary hover:text-primary hover:border-primary transition-all flex items-center gap-2">
+           <button 
+             onClick={toggleViewPeriod}
+             className="px-5 py-2.5 bg-white border border-border-subtle rounded-lg text-xs font-bold text-text-secondary hover:text-primary hover:border-primary transition-all flex items-center gap-2"
+           >
               <Clock size={14} />
-              Viewing: Today
+              Viewing: {viewPeriod}
            </button>
         </div>
       </header>
@@ -240,7 +251,6 @@ export default function RevenueCommandCenter() {
                     <Activity size={16} className="text-primary animate-pulse" />
                     <h3 className="text-sm font-bold text-text-main uppercase tracking-widest">Live Ops Pulse</h3>
                 </div>
-                <button className="text-[10px] font-black text-secondary hover:underline transition-all">REPLAY FEED</button>
             </div>
 
             <div className="flex-1 p-5 space-y-4">
@@ -274,10 +284,6 @@ export default function RevenueCommandCenter() {
                     </div>
                 ))}
             </div>
-
-            <button className="p-4 bg-slate-50 border-t border-border-subtle text-center text-[10px] font-bold text-text-secondary hover:text-primary hover:bg-white transition-all">
-                VIEW GLOBAL LOG
-            </button>
         </div>
 
       </div>
