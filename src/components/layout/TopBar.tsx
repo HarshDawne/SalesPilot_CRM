@@ -1,15 +1,29 @@
 "use client";
 
-import { Search, Bell, Sparkles, Command } from "lucide-react";
+import { Search, Bell, Sparkles, Command, ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export function TopBar() {
+    const router = useRouter();
+
     return (
         <header className="h-14 border-b border-border-subtle bg-white/80 backdrop-blur-md sticky top-0 z-20 px-6 flex items-center justify-between">
-            <div className="flex items-center gap-4 flex-1">
+            {/* Left Nav */}
+            <div className="flex items-center gap-2 flex-1">
+                <button 
+                    onClick={() => router.back()}
+                    className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-100 text-slate-500 transition-colors"
+                >
+                    <ArrowLeft size={16} />
+                </button>
+            </div>
+
+            {/* Center Search */}
+            <div className="flex-none w-full max-w-md">
                 {/* Global Command Trigger */}
                 <button 
                     onClick={() => window.dispatchEvent(new Event('openCommandCenter'))}
-                    className="flex items-center gap-3 px-3 py-1.5 bg-slate-100/50 hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-500 transition-all w-full max-w-md group"
+                    className="flex items-center gap-3 px-3 py-1.5 bg-slate-100/50 hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-500 transition-all w-full group"
                 >
                     <Search size={16} className="group-hover:text-primary transition-colors" />
                     <span className="text-xs font-medium">Search anything or trigger action...</span>
@@ -20,7 +34,8 @@ export function TopBar() {
                 </button>
             </div>
 
-            <div className="flex items-center gap-3">
+            {/* Right Profile */}
+            <div className="flex items-center justify-end gap-3 flex-1">
                 <div className="h-8 w-[1px] bg-slate-200 mx-2"></div>
 
                 <div className="flex items-center gap-2 group">

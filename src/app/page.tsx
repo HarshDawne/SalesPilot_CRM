@@ -245,7 +245,7 @@ export default function RevenueCommandCenter() {
         </div>
 
         {/* Live Ops Pulse */}
-        <div className="xl:col-span-4 card-premium p-0 flex flex-col bg-white self-start">
+        <div className="xl:col-span-4 card-premium p-0 flex flex-col bg-white">
             <div className="p-6 border-b border-border-subtle flex items-center justify-between">
                 <div className="flex items-center gap-2">
                     <Activity size={16} className="text-primary animate-pulse" />
@@ -253,7 +253,7 @@ export default function RevenueCommandCenter() {
                 </div>
             </div>
 
-            <div className="flex-1 px-5 pt-5 pb-3 space-y-4 overflow-y-auto max-h-[400px] xl:max-h-[450px]">
+            <div className="flex-1 px-5 pt-5 pb-3 space-y-4 overflow-y-auto min-h-0">
                 {recentactivities.map((activity, idx) => (
                     <div key={activity.id} className={cn(
                         "p-4 rounded-xl border transition-all duration-300 flex items-start gap-4 cursor-pointer",
@@ -283,6 +283,13 @@ export default function RevenueCommandCenter() {
                         </div>
                     </div>
                 ))}
+            </div>
+
+            <div className="p-3 border-t border-border-subtle bg-slate-50 mt-auto flex justify-center items-center">
+                <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                    <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Feed synced in real-time</span>
+                </div>
             </div>
         </div>
 
