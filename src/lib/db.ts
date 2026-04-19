@@ -741,6 +741,32 @@ function writeDb(data: DatabaseSchema) {
     }
 }
 
+// Lead Normalization Helper
+function normalizeLead(lead: any): Lead {
+    if (!lead) return lead;
+    
+    // Fallbacks for names
+    const name = lead.name || `${lead.firstName || ''} ${lead.lastName || ''}`.trim() || 'Anonymous Node';
+    const firstName = lead.firstName || name.split(' ')[0] || 'Anonymous';
+    const lastName = lead.lastName || name.split(' ').slice(1).join(' ') || '';
+    
+    // Fallbacks for phone
+    const primaryPhone = lead.primaryPhone || lead.phone || '';
+    
+    return {
+        ...lead,
+        id: String(lead.id || ''), // Ensure ID is a string
+        name,
+        firstName,
+        lastName,
+        primaryPhone,
+        currentStage: lead.currentStage || "New",
+        createdAt: lead.createdAt || new Date().toISOString(),
+        updatedAt: lead.updatedAt || new Date().toISOString(),
+        version: lead.version || 1
+    };
+}
+
 export const db = {
     users: {
         findAll: () => readDb().users,
@@ -755,12 +781,16 @@ export const db = {
         },
     },
     leads: {
-        findAll: () => readDb().leads,
-        findById: (id: string) => readDb().leads.find((l) => l.id === id),
-        findByStage: (stage: LeadStage) => readDb().leads.filter(l => l.currentStage === stage),
+        findAll: () => readDb().leads.map(normalizeLead),
+        findById: (id: string) => {
+            const lead = readDb().leads.find((l) => l.id === id);
+            return lead ? normalizeLead(lead) : null;
+        },
+        findByStage: (stage: LeadStage) => readDb().leads.filter(l => l.currentStage === stage).map(normalizeLead),
         findByPhoneOrEmail: (phone: string, email?: string) => {
             const leads = readDb().leads;
-            return leads.find(l => l.primaryPhone === phone || (email && l.email === email));
+            const lead = leads.find(l => l.primaryPhone === phone || (email && l.email === email));
+            return lead ? normalizeLead(lead) : null;
         },
         create: (lead: Lead) => {
             const data = readDb();

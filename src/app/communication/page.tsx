@@ -20,7 +20,8 @@ import {
     Clock,
     Sparkles,
     ChevronRight,
-    MessageSquare
+    MessageSquare,
+    Trash2
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { CallDetailsModal } from "@/components/communication/CallDetailsModal";
@@ -57,57 +58,43 @@ export default function CommunicationPage() {
     }, []);
 
     const fetchData = async () => {
-        // High-velocity mock data for presentation
-        const mockCampaigns: Campaign[] = [
-            {
-                id: "c1",
-                name: "Q4 Luxury Outreach",
-                status: "RUNNING",
-                targetLeadCount: 1250,
-                processed: 980,
-                metrics: { attempts: 980, connected: 750, qualified: 420, visitsBooked: 85 },
-                createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
-            },
-            {
-                id: "c2",
-                name: "NRI Follow-up Sequence",
-                status: "RUNNING",
-                targetLeadCount: 400,
-                processed: 145,
-                metrics: { attempts: 145, connected: 90, qualified: 35, visitsBooked: 8 },
-                createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
-            },
-            {
-                id: "c3",
-                name: "Weekend Site Visit Drops",
-                status: "COMPLETED",
-                targetLeadCount: 180,
-                processed: 180,
-                metrics: { attempts: 180, connected: 145, qualified: 60, visitsBooked: 45 },
-                createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString()
-            }
-        ];
+        try {
+            // 1. Fetch real campaigns
+            const campRes = await fetch('/api/campaigns');
+            const campData = await campRes.json();
+            
+            // Map API data to UI structure if needed
+            const realCampaigns = (campData.campaigns || []).map((c: any) => ({
+                ...c,
+                status: c.status.toUpperCase(),
+                // Use existing metrics or fallback to 0
+                metrics: c.metrics || { 
+                    attempts: c.completedCalls || 0, 
+                    connected: c.successfulCalls || 0, 
+                    qualified: c.qualifiedLeads || 0, 
+                    visitsBooked: c.visitsBooked || 0 
+                }
+            }));
 
-        const mockStats = {
-            totalCalls: 1305,
-            activeCalls: 24,
-            successRate: 58,
-            completedCalls: 138
-        };
+            // 2. Fetch real pulse activity
+            const pulseRes = await fetch('/api/communication/pulse');
+            const pulseData = await pulseRes.json();
 
-        const mockActivity = [
-            { id: "a1", leadName: "Rahul Desai", status: "COMPLETED", outcome: "High Intent - Seeking 3BHK", createdAt: new Date(Date.now() - 32000).toISOString() },
-            { id: "a2", leadName: "Priya Verma", status: "IN_PROGRESS", outcome: "Engaging context...", createdAt: new Date(Date.now() - 115000).toISOString() },
-            { id: "a3", leadName: "Amit Singh", status: "COMPLETED", outcome: "Budget mismatch - Archived", createdAt: new Date(Date.now() - 145000).toISOString() },
-            { id: "a4", leadName: "Sneha Patil", status: "COMPLETED", outcome: "Site Visit Scheduled Tomorrow", createdAt: new Date(Date.now() - 320000).toISOString() },
-            { id: "a5", leadName: "Vikram Malhotra", status: "IN_PROGRESS", outcome: "Initiating node...", createdAt: new Date(Date.now() - 400000).toISOString() },
-            { id: "a6", leadName: "Neha Sharma", status: "COMPLETED", outcome: "Callback requested in 2 hours", createdAt: new Date(Date.now() - 600000).toISOString() }
-        ];
+            const mockStats = {
+                totalCalls: realCampaigns.reduce((sum: number, c: any) => sum + (c.metrics?.attempts || 0), 0),
+                activeCalls: realCampaigns.filter((c: any) => c.status === 'RUNNING').length * 4, // Simulated load
+                successRate: realCampaigns.length > 0 ? Math.round((realCampaigns.reduce((sum: number, c: any) => sum + (c.metrics?.qualified || 0), 0) / (realCampaigns.reduce((sum: number, c: any) => sum + (c.metrics?.attempts || 1), 0))) * 100) : 0,
+                completedCalls: pulseData.activity?.length || 0
+            };
 
-        setCampaigns(mockCampaigns);
-        setStats(mockStats);
-        setRecentActivity(mockActivity);
-        setLoading(false);
+            setCampaigns(realCampaigns);
+            setStats(mockStats);
+            setRecentActivity(pulseData.activity || []);
+        } catch (error) {
+            console.error('Error fetching real campaign data:', error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const getStatusStyles = (status: string) => {
@@ -149,12 +136,12 @@ export default function CommunicationPage() {
                 <div className="space-y-1">
                     <div className="flex items-center gap-2 text-primary font-bold text-[10px] uppercase tracking-[0.2em]">
                         <MessageSquare size={12} className="text-secondary" />
-                        Strategic Comm Hub // Multi-Agent
+                        Campaign Logistics
                     </div>
                     <h1 className="text-3xl font-black text-text-main tracking-tighter">
-                        Communication <span className="text-secondary">Engine</span>
+                        Sales <span className="text-secondary">Operations</span>
                     </h1>
-                    <p className="text-sm text-text-secondary font-medium">AI-driven outbound sequences and lead nurturing orchestration.</p>
+                    <p className="text-sm text-text-secondary font-medium italic">High-intent outreach orchestration and human-agent synchronization.</p>
                 </div>
 
                 <div className="flex items-center gap-3 w-full md:w-auto">
@@ -173,7 +160,7 @@ export default function CommunicationPage() {
                         className="btn-primary flex items-center gap-2 text-xs py-2"
                     >
                         <Plus size={16} />
-                        Launch Strategy
+                        Create Campaign
                     </button>
                 </div>
             </div>
@@ -181,31 +168,31 @@ export default function CommunicationPage() {
             {/* 2. Global Strategy KPI Grid */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <CommStatCard
-                    label="Total Daily Sessions"
+                    label="Volume Today"
                     value={stats?.totalCalls || 0}
                     icon={<Phone size={18} />}
                     delta="+12%"
                     color="primary"
                 />
                 <CommStatCard
-                    label="AI Agent Load"
+                    label="Active Line Load"
                     value={stats?.activeCalls || 0}
-                    icon={<Activity size={18} className="text-ai-accent animate-pulse" />}
-                    delta="Active"
+                    icon={<Activity size={18} className="text-secondary animate-pulse" />}
+                    delta="Real-time"
                     color="ai"
                 />
                 <CommStatCard
-                    label="Qualification Yield"
+                    label="Qualification Rate"
                     value={`${stats?.successRate || 0}%`}
                     icon={<CheckCircle size={18} />}
                     delta="Exemplary"
                     color="secondary"
                 />
                 <CommStatCard
-                    label="Visits Synchronized"
+                    label="Closures / Visits"
                     value={stats?.completedCalls || 0}
                     icon={<BarChart3 size={18} />}
-                    delta="High Velocity"
+                    delta="Target Met"
                     color="success"
                 />
             </div>
@@ -242,9 +229,9 @@ export default function CommunicationPage() {
                             <div className="h-16 w-16 bg-slate-50 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-border-subtle">
                                 <Activity size={32} className="text-slate-300" />
                             </div>
-                            <h3 className="text-xl font-black text-text-main tracking-tight">Strategy Void</h3>
+                            <h3 className="text-xl font-black text-text-main tracking-tight">No Campaigns Found</h3>
                             <p className="text-sm text-text-secondary font-medium mt-2 max-w-sm mx-auto">
-                                No {activeTab} campaigns are globally active in the current quadrant. Initialize a new strategy to begin data harvesting.
+                                There are no {activeTab} campaigns at the moment. Start a new campaign to begin outreach.
                             </p>
                         </div>
                     ) : (
@@ -253,6 +240,30 @@ export default function CommunicationPage() {
                                 <CampaignNode
                                     key={campaign.id}
                                     campaign={campaign}
+                                    onRename={async (newName: string) => {
+                                        try {
+                                            await fetch(`/api/campaigns/${campaign.id}`, {
+                                                method: 'PATCH',
+                                                headers: { 'Content-Type': 'application/json' },
+                                                body: JSON.stringify({ name: newName })
+                                            });
+                                            fetchData(); // Sync all containers
+                                        } catch (error) {
+                                            console.error('Rename failed:', error);
+                                        }
+                                    }}
+                                    onDelete={async () => {
+                                        if (confirm(`Are you sure you want to delete "${campaign.name}"? This action is permanent.`)) {
+                                            try {
+                                                const res = await fetch(`/api/campaigns/${campaign.id}`, { method: 'DELETE' });
+                                                if (res.ok) {
+                                                    await fetchData();
+                                                }
+                                            } catch (error) {
+                                                console.error('Delete failed:', error);
+                                            }
+                                        }
+                                    }}
                                     onClick={() => router.push(`/communication/${campaign.id}`)}
                                     styles={getStatusStyles(campaign.status)}
                                 />
@@ -265,11 +276,7 @@ export default function CommunicationPage() {
                 <div className="xl:col-span-4 flex flex-col gap-6">
                     <div className="flex items-center justify-between">
                         <h2 className="text-xs font-black text-text-main uppercase tracking-[0.2em] flex items-center gap-2 px-1">
-                            <span className="relative flex h-2 w-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-ai-accent opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-ai-accent"></span>
-                            </span>
-                            Live Intelligence Pulse
+                            Recent Activity
                         </h2>
                         <Filter size={14} className="text-slate-400 hover:text-primary cursor-pointer transition-colors" />
                     </div>
@@ -292,7 +299,7 @@ export default function CommunicationPage() {
                             )}
                         </div>
                         <button className="p-4 bg-slate-50 border-t border-border-subtle text-center text-[10px] font-black text-text-secondary hover:text-primary hover:bg-white transition-all uppercase tracking-widest">
-                            Access Global Transmission Log
+                            View All Activity
                         </button>
                     </div>
                 </div>
@@ -325,73 +332,132 @@ export default function CommunicationPage() {
 
 function CommStatCard({ label, value, icon, delta, color }: any) {
     return (
-        <div className="card-premium p-6 group hover:border-primary/30 bg-white relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:scale-125 transition-all text-primary">
+        <div className="bg-white rounded-3xl p-6 border border-border-subtle shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all group relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-8 opacity-[0.02] group-hover:scale-125 transition-all text-primary">
                 {icon}
             </div>
             <div className="flex items-start justify-between mb-4">
                 <div className={cn(
-                    "p-2.5 rounded-xl border border-border-subtle group-hover:bg-primary/5 transition-colors",
-                    color === 'ai' && "border-ai-accent/20 bg-ai-accent/5",
+                    "p-3 rounded-2xl border border-border-subtle group-hover:bg-primary/5 transition-colors",
+                    color === 'ai' && "border-secondary/20 bg-secondary/5",
                     color === 'primary' && "border-primary/20",
                     color === 'secondary' && "border-secondary/20"
                 )}>
                     {icon}
                 </div>
                 <div className={cn(
-                    "px-2 py-0.5 text-[10px] font-bold rounded-full border",
-                    delta === 'Active' ? "bg-ai-accent/10 text-ai-accent border-ai-accent/20" :
+                    "px-2.5 py-0.5 text-[9px] font-black uppercase tracking-tighter rounded-full border shadow-xs",
+                    delta === 'Active' || delta === 'Real-time' ? "bg-secondary/10 text-secondary border-secondary/20" :
                     delta.includes('+') ? "bg-emerald-50 text-emerald-600 border-emerald-100" : "bg-blue-50 text-primary border-blue-100"
                 )}>
                     {delta}
                 </div>
             </div>
             <div>
-                <p className="text-[10px] font-black text-text-secondary uppercase tracking-widest mb-1">{label}</p>
-                <div className="text-3xl font-black text-text-main tracking-tighter leading-none">{value}</div>
+                <p className="text-[10px] font-black text-text-secondary uppercase tracking-widest mb-1 opacity-70">{label}</p>
+                <div className="text-4xl font-black text-text-main tracking-tighter leading-none">{value}</div>
             </div>
         </div>
     );
 }
 
-function CampaignNode({ campaign, onClick, styles }: any) {
+function CampaignNode({ campaign, onClick, onRename, onDelete, styles }: any) {
+    const [isEditing, setIsEditing] = useState(false);
+    const [newName, setNewName] = useState(campaign.name);
     const progress = Math.round((campaign.processed / campaign.targetLeadCount) * 100) || 0;
+
+    const handleSave = (e: React.MouseEvent | React.KeyboardEvent) => {
+        e.stopPropagation();
+        if (newName.trim() && newName !== campaign.name) {
+            onRename(newName);
+        }
+        setIsEditing(false);
+    };
 
     return (
         <div
-            onClick={onClick}
-            className="card-premium p-6 group cursor-pointer bg-white"
+            onClick={isEditing ? undefined : onClick}
+            className={cn(
+                "bg-white rounded-[2.5rem] p-8 border border-border-subtle shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] group cursor-pointer transition-all duration-500",
+                isEditing && "ring-2 ring-primary border-transparent shadow-2xl"
+            )}
         >
             <div className="flex justify-between items-start mb-6">
-                <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                        <h3 className="font-black text-text-main text-lg group-hover:text-primary transition-colors tracking-tight uppercase">
-                            {campaign.name}
-                        </h3>
+                <div className="space-y-1 flex-1 mr-4 min-w-0">
+                    <div className="flex items-center gap-2 min-w-0">
+                        {isEditing ? (
+                            <div className="flex items-center gap-2 w-full" onClick={e => e.stopPropagation()}>
+                                <input
+                                    autoFocus
+                                    type="text"
+                                    value={newName}
+                                    onChange={(e) => setNewName(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') handleSave(e);
+                                        if (e.key === 'Escape') {
+                                            setIsEditing(false);
+                                            setNewName(campaign.name);
+                                        }
+                                    }}
+                                    className="text-lg font-black text-text-main border-b-2 border-primary outline-none bg-transparent w-full uppercase"
+                                />
+                                <button 
+                                    onClick={handleSave}
+                                    className="p-1 hover:text-primary transition-colors shrink-0"
+                                >
+                                    <CheckCircle size={18} />
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="flex items-center gap-2 group/title w-full min-w-0">
+                                <h3 className="font-black text-text-main text-lg group-hover:text-primary transition-colors tracking-tight uppercase truncate">
+                                    {campaign.name}
+                                </h3>
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setIsEditing(true);
+                                    }}
+                                    className="opacity-0 group-hover/title:opacity-100 p-1 text-slate-400 hover:text-primary transition-all shrink-0"
+                                >
+                                    <Plus size={14} className="rotate-45" /> {/* Using Plus rotated as a small x/pencil cross */}
+                                </button>
+                            </div>
+                        )}
                     </div>
                     <p className="text-[10px] text-text-secondary font-bold uppercase tracking-widest flex items-center gap-2">
-                        <Clock size={12} /> Init: {new Date(campaign.createdAt).toLocaleDateString()}
+                        <Clock size={12} /> Started: {new Date(campaign.createdAt).toLocaleDateString()}
                     </p>
                 </div>
-                <div className={cn("px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border", styles)}>
+                <div className={cn("px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border shrink-0", styles)}>
                     {campaign.status}
                 </div>
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onDelete();
+                    }}
+                    className="p-2 text-slate-300 hover:text-rose-500 hover:bg-rose-50 rounded-xl transition-all shrink-0 ml-1"
+                    title="Delete Campaign"
+                >
+                    <Trash2 size={16} />
+                </button>
             </div>
 
             <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="bg-slate-50/50 rounded-xl p-3 border border-border-subtle">
-                    <p className="text-[9px] text-text-secondary font-black uppercase mb-1 tracking-tighter">Transmission</p>
+                    <p className="text-[9px] text-text-secondary font-black uppercase mb-1 tracking-tighter">Calls Made</p>
                     <p className="text-lg font-black text-text-main leading-none">{campaign.metrics?.attempts || 0}</p>
                 </div>
                 <div className="bg-primary/5 rounded-xl p-3 border border-primary/10">
-                    <p className="text-[9px] text-primary font-black uppercase mb-1 tracking-tighter">Harvest</p>
+                    <p className="text-[9px] text-primary font-black uppercase mb-1 tracking-tighter">Leads Qualified</p>
                     <p className="text-lg font-black text-primary leading-none">{campaign.metrics?.qualified || 0}</p>
                 </div>
             </div>
 
             <div className="space-y-2">
                 <div className="flex justify-between items-end">
-                    <span className="text-[10px] font-black text-text-secondary uppercase tracking-widest">Strategy Reach</span>
+                    <span className="text-[10px] font-black text-text-secondary uppercase tracking-widest">Progress</span>
                     <span className="text-xs font-black text-text-main tracking-tighter">{progress}%</span>
                 </div>
                 <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
@@ -401,8 +467,8 @@ function CampaignNode({ campaign, onClick, styles }: any) {
                     ></div>
                 </div>
                 <div className="flex justify-between text-[9px] font-bold text-slate-400">
-                    <span>{campaign.processed} Processed</span>
-                    <span className="flex items-center gap-1 group-hover:text-primary transition-colors uppercase">Drill Down <ChevronRight size={10} /></span>
+                    <span>{campaign.processed} Contacted</span>
+                    <span className="flex items-center gap-1 group-hover:text-primary transition-colors uppercase">View Details <ChevronRight size={10} /></span>
                 </div>
             </div>
         </div>
@@ -431,7 +497,7 @@ function PulseActivityItem({ job, onClick }: any) {
                     <p className="text-xs font-black text-text-main truncate uppercase tracking-tight">{job.leadName || 'System Process'}</p>
                     <span className="text-[10px] font-bold text-slate-400">{new Date(job.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                 </div>
-                <p className="text-[11px] text-text-secondary font-medium truncate italic">{job.outcome || (isRunning ? 'Engaging context...' : 'Initiating node...')}</p>
+                <p className="text-[11px] text-text-secondary font-medium truncate italic">{job.outcome || (isRunning ? 'On call...' : 'Starting call...')}</p>
             </div>
 
             <ChevronRight size={14} className="text-slate-200 group-hover:text-primary transition-colors" />

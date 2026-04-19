@@ -34,31 +34,45 @@ export class FirebasePropertyService {
   }
 
   private async fetchFromFirebase(path: string): Promise<any> {
-    if (!this.baseUrl) return null;
+    if (!this.baseUrl || this.isUnauthorized) return null;
     try {
-      const response = await fetch(`${this.baseUrl}/${path}.json`);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3000); // 3s timeout
+
+      const response = await fetch(`${this.baseUrl}/${path}.json`, { signal: controller.signal });
+      clearTimeout(timeoutId);
+      
       if (!response.ok) throw new Error(`Firebase fetch failed: ${response.statusText}`);
       return await response.json();
     } catch (error) {
-      console.error(`Error fetching from Firebase (${path}):`, error);
+      if (!this.isUnauthorized) {
+        console.error(`Error fetching from Firebase (${path}):`, error);
+        this.isUnauthorized = true;
+      }
       return null;
     }
   }
 
   private async writeToFirebase(path: string, data: any, method: 'PUT' | 'POST' | 'PATCH' | 'DELETE' = 'PUT'): Promise<any> {
-    if (!this.baseUrl) return data;
+    if (!this.baseUrl || this.isUnauthorized) return data;
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout
+
       const response = await fetch(`${this.baseUrl}/${path}.json`, {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: method !== 'DELETE' ? JSON.stringify(data) : undefined,
+        signal: controller.signal,
       });
+      clearTimeout(timeoutId);
+
       if (!response.ok) {
           if (!this.isUnauthorized) {
               console.warn(`Firebase write failed: ${response.statusText} (${response.status}). Resorting to local store fallback.`);
               this.isUnauthorized = true;
           }
-          return data; // Return successfully so mock DB takes over
+          return data;
       }
       return await response.json();
     } catch (error) {
@@ -66,7 +80,7 @@ export class FirebasePropertyService {
           console.warn(`Firebase write error (${path}):`, error instanceof Error ? error.message : String(error));
           this.isUnauthorized = true;
       }
-      return data; // Return successfully so mock DB takes over
+      return data;
     }
   }
 

@@ -34,15 +34,16 @@ export function CommandCenter() {
     const router = useRouter();
 
     const commands: CommandItem[] = [
-        { id: 'dash', label: 'Go to Dashboard', description: 'Real-time performance metrics', icon: LayoutDashboard, category: 'Navigation', action: () => router.push('/') },
-        { id: 'leads', label: 'Manage Pipeline', description: 'Access all lead nodes', icon: Users, category: 'Navigation', action: () => router.push('/leads') },
-        { id: 'props', label: 'Inventory Nexus', description: 'View property portfolio', icon: Building2, category: 'Navigation', action: () => router.push('/properties') },
-        { id: 'comm', label: 'Comms Engine', description: 'Trigger agent sequences', icon: MessageSquare, category: 'Navigation', action: () => router.push('/communication') },
-        { id: 'cal', label: 'Temporal Hub', description: 'Visit scheduling & calendar', icon: Calendar, category: 'Navigation', action: () => router.push('/calendar') },
+        { id: 'dash', label: 'Dashboard', description: 'Real-time performance metrics', icon: LayoutDashboard, category: 'Navigation', action: () => router.push('/') },
+        { id: 'leads', label: 'Leads', description: 'View and manage all leads', icon: Users, category: 'Navigation', action: () => router.push('/leads') },
+        { id: 'props', label: 'Properties', description: 'View all property listings', icon: Building2, category: 'Navigation', action: () => router.push('/properties') },
+        { id: 'comm', label: 'Communication', description: 'Contact leads & campaigns', icon: MessageSquare, category: 'Navigation', action: () => router.push('/communication') },
+        { id: 'cal', label: 'Calendar', description: 'View your schedule & visits', icon: Calendar, category: 'Navigation', action: () => router.push('/calendar') },
         
-        { id: 'add-lead', label: 'Ingest New Lead', description: 'Create a lead node manually', icon: Plus, category: 'Actions', action: () => router.push('/leads/create') },
-        { id: 'add-prop', label: 'Register Property', description: 'Add new asset to nexus', icon: Plus, category: 'Actions', action: () => router.push('/properties/create') },
-        { id: 'ai-audit', label: 'Trigger AI Audit', description: 'Analyze global lead intent', icon: Sparkles, category: 'Actions', action: () => console.log('Audit triggered') },
+        { id: 'add-lead', label: 'Add New Lead', description: 'Manually add a new lead', icon: Plus, category: 'Actions', action: () => router.push('/leads/new') },
+        { id: 'add-prop', label: 'Add New Property', description: 'Add a new property listing', icon: Plus, category: 'Actions', action: () => router.push('/properties/new') },
+        { id: 'ai-audit', label: 'AI Inventory Analysis', description: 'View AI-powered sales insights', icon: Sparkles, category: 'Actions', action: () => router.push('/properties/intelligence') },
+        { id: 'sales-dash', label: 'Sales Reports', description: 'View regional performance', icon: Zap, category: 'Navigation', action: () => router.push('/sales') },
     ];
 
     const filteredCommands = query === "" 
@@ -108,6 +109,8 @@ export function CommandCenter() {
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         onKeyDown={(e) => {
+                            if (filteredCommands.length === 0) return;
+                            
                             if (e.key === "ArrowDown") {
                                 e.preventDefault();
                                 setSelectedIndex((prev) => (prev + 1) % filteredCommands.length);
@@ -115,7 +118,9 @@ export function CommandCenter() {
                                 e.preventDefault();
                                 setSelectedIndex((prev) => (prev - 1 + filteredCommands.length) % filteredCommands.length);
                             } else if (e.key === "Enter") {
-                                executeCommand(filteredCommands[selectedIndex]);
+                                if (filteredCommands[selectedIndex]) {
+                                    executeCommand(filteredCommands[selectedIndex]);
+                                }
                             }
                         }}
                     />

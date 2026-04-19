@@ -34,7 +34,8 @@ const STAGES: { key: LeadStage; label: string; color: string; bgColor: string; i
     { key: "Visit_Completed", label: "Visit Completed", color: "text-indigo-600", bgColor: "bg-indigo-50", icon: CheckSquare },
     { key: "Booking_Done", label: "Booking Done", color: "text-emerald-700", bgColor: "bg-emerald-100", icon: Target },
     { key: "Disqualified", label: "Disqualified", color: "text-rose-600", bgColor: "bg-rose-50", icon: X },
-    { key: "Negotiation", label: "Negotiation", color: "text-amber-600", bgColor: "bg-amber-50", icon: Activity }
+    { key: "Negotiation", label: "Negotiation", color: "text-amber-600", bgColor: "bg-amber-50", icon: Activity },
+    { key: "Discovery" as any, label: "Discovery", color: "text-blue-600", bgColor: "bg-blue-50", icon: Search }
 ];
 
 type SortField = 'name' | 'createdAt' | 'aiScore' | 'currentStage';

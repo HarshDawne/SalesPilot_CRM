@@ -1,262 +1,112 @@
 {
   "campaigns": [
     {
-      "campaignId": "camp_1763892794065",
-      "name": "2BHK Warm Leads - Weekend Drive",
-      "status": "COMPLETED",
-      "targetLeadCount": 100,
-      "processed": 100,
-      "filterSpec": {
-        "leadSources": [
-          "website",
-          "portal"
-        ],
-        "budgetMin": 5000000,
-        "budgetMax": 15000000,
-        "locations": [
-          "Andheri",
-          "Powai"
-        ],
-        "propertyTypes": [
-          "2BHK",
-          "3BHK"
-        ]
-      },
-      "callingWindow": {
-        "start": "10:00",
-        "end": "18:00",
-        "timezone": "Asia/Kolkata"
-      },
-      "attemptPolicy": {
-        "maxAttempts": 3,
-        "retryDelayMins": 30
-      },
-      "scriptId": "2bhk_qualify_v1",
-      "visitAutoBooking": true,
-      "visitSettings": {
-        "projectId": "proj_lakefront",
-        "assignedAgentId": "agent_77",
-        "meetingPoint": "Clubhouse Entrance"
-      },
-      "fallbackChannels": [
-        "whatsapp",
-        "sms"
-      ],
+      "id": "camp-live-001",
+      "name": "Godrej Woods - Priority Outreach",
+      "status": "running",
+      "type": "launch",
+      "targetLeadCount": 1500,
+      "completedCalls": 1240,
+      "successfulCalls": 1050,
+      "qualifiedLeads": 820,
+      "totalCost": 12500,
       "metrics": {
-        "attempts": 100,
-        "connected": 73,
-        "qualified": 44,
-        "visitsBooked": 37
+        "attempts": 1240,
+        "connected": 1050,
+        "qualified": 820,
+        "visitsBooked": 145
       },
-      "createdAt": "2025-11-23T10:13:14.065Z",
-      "updatedAt": "2025-11-23T10:14:15.250Z"
+      "createdAt": "2026-04-14T21:34:08.851Z"
     },
     {
-      "campaignId": "camp_1763880000001",
-      "name": "NRI Re-engagement Campaign",
-      "status": "RUNNING",
-      "targetLeadCount": 250,
-      "processed": 142,
-      "filterSpec": {
-        "leadSources": [
-          "whatsapp",
-          "referral"
-        ],
-        "budgetMin": 10000000,
-        "budgetMax": 25000000,
-        "locations": [
-          "Bandra",
-          "Juhu"
-        ],
-        "propertyTypes": [
-          "3BHK",
-          "4BHK",
-          "Penthouse"
-        ]
-      },
-      "callingWindow": {
-        "start": "09:00",
-        "end": "20:00",
-        "timezone": "Asia/Kolkata"
-      },
-      "attemptPolicy": {
-        "maxAttempts": 5,
-        "retryDelayMins": 60
-      },
-      "scriptId": "nri_premium_v2",
-      "visitAutoBooking": true,
-      "visitSettings": {
-        "projectId": "proj_seaside_towers",
-        "assignedAgentId": "agent_88",
-        "meetingPoint": "Reception Lobby"
-      },
-      "fallbackChannels": [
-        "whatsapp",
-        "sms",
-        "email"
-      ],
+      "id": "camp-live-002",
+      "name": "Prestige Falcon City - Phase 3 Exclusive",
+      "status": "running",
+      "type": "launch",
+      "targetLeadCount": 1000,
+      "completedCalls": 450,
+      "successfulCalls": 380,
+      "qualifiedLeads": 120,
+      "totalCost": 4800,
       "metrics": {
-        "attempts": 142,
-        "connected": 98,
-        "qualified": 67,
-        "visitsBooked": 52
+        "attempts": 450,
+        "connected": 380,
+        "qualified": 120,
+        "visitsBooked": 22
       },
-      "createdAt": "2025-11-22T14:30:00.000Z",
-      "updatedAt": "2025-11-23T15:45:00.000Z"
+      "createdAt": "2026-04-17T21:34:08.852Z"
     },
     {
-      "campaignId": "camp_1763870000002",
-      "name": "Luxury Villa Prospects",
-      "status": "COMPLETED",
+      "id": "camp-live-003",
+      "name": "DLF Cyber City - Corporate Follow-up",
+      "status": "running",
+      "type": "follow-up",
+      "targetLeadCount": 500,
+      "completedCalls": 120,
+      "successfulCalls": 110,
+      "qualifiedLeads": 45,
+      "totalCost": 2100,
+      "metrics": {
+        "attempts": 120,
+        "connected": 110,
+        "qualified": 45,
+        "visitsBooked": 15
+      },
+      "createdAt": "2026-04-18T21:34:08.852Z"
+    },
+    {
+      "id": "camp-done-001",
+      "name": "Skyline Residency - Completed",
+      "status": "completed",
+      "type": "launch",
+      "targetLeadCount": 200,
+      "completedCalls": 200,
+      "successfulCalls": 180,
+      "qualifiedLeads": 95,
+      "totalCost": 1800,
+      "metrics": {
+        "attempts": 200,
+        "connected": 180,
+        "qualified": 95,
+        "visitsBooked": 30
+      },
+      "createdAt": "2026-02-18T21:34:08.852Z"
+    },
+    {
+      "id": "camp-done-002",
+      "name": "Hiranandani Estate - Pilot",
+      "status": "completed",
+      "type": "demo",
       "targetLeadCount": 50,
-      "processed": 50,
-      "filterSpec": {
-        "leadSources": [
-          "website",
-          "events"
-        ],
-        "budgetMin": 50000000,
-        "budgetMax": 150000000,
-        "locations": [
-          "Lonavala",
-          "Alibaug"
-        ],
-        "propertyTypes": [
-          "Villa",
-          "Farmhouse"
-        ]
-      },
-      "callingWindow": {
-        "start": "11:00",
-        "end": "17:00",
-        "timezone": "Asia/Kolkata"
-      },
-      "attemptPolicy": {
-        "maxAttempts": 3,
-        "retryDelayMins": 120
-      },
-      "scriptId": "luxury_villa_v1",
-      "visitAutoBooking": true,
-      "visitSettings": {
-        "projectId": "proj_green_valley",
-        "assignedAgentId": "agent_99",
-        "meetingPoint": "Site Office"
-      },
-      "fallbackChannels": [
-        "whatsapp",
-        "email"
-      ],
+      "completedCalls": 50,
+      "successfulCalls": 45,
+      "qualifiedLeads": 22,
+      "totalCost": 450,
       "metrics": {
         "attempts": 50,
-        "connected": 42,
-        "qualified": 31,
-        "visitsBooked": 28
+        "connected": 45,
+        "qualified": 22,
+        "visitsBooked": 5
       },
-      "createdAt": "2025-11-20T09:00:00.000Z",
-      "updatedAt": "2025-11-21T16:30:00.000Z"
+      "createdAt": "2026-01-19T21:34:08.852Z"
     },
     {
-      "campaignId": "camp_1763860000003",
-      "name": "First-Time Buyers - Affordable Housing",
-      "status": "PAUSED",
-      "targetLeadCount": 500,
-      "processed": 287,
-      "filterSpec": {
-        "leadSources": [
-          "portal",
-          "social_media"
-        ],
-        "budgetMin": 2500000,
-        "budgetMax": 5000000,
-        "locations": [
-          "Thane",
-          "Navi Mumbai",
-          "Kalyan"
-        ],
-        "propertyTypes": [
-          "1BHK",
-          "2BHK"
-        ]
-      },
-      "callingWindow": {
-        "start": "10:00",
-        "end": "19:00",
-        "timezone": "Asia/Kolkata"
-      },
-      "attemptPolicy": {
-        "maxAttempts": 4,
-        "retryDelayMins": 45
-      },
-      "scriptId": "affordable_housing_v3",
-      "visitAutoBooking": true,
-      "visitSettings": {
-        "projectId": "proj_smart_homes",
-        "assignedAgentId": "agent_55",
-        "meetingPoint": "Sample Flat"
-      },
-      "fallbackChannels": [
-        "whatsapp",
-        "sms"
-      ],
+      "id": "camp-up-001",
+      "name": "Sobha Windsor - Phase 1 Launch",
+      "status": "draft",
+      "type": "launch",
+      "targetLeadCount": 3000,
+      "completedCalls": 0,
+      "successfulCalls": 0,
+      "qualifiedLeads": 0,
+      "totalCost": 0,
       "metrics": {
-        "attempts": 287,
-        "connected": 189,
-        "qualified": 112,
-        "visitsBooked": 78
+        "attempts": 0,
+        "connected": 0,
+        "qualified": 0,
+        "visitsBooked": 0
       },
-      "createdAt": "2025-11-19T08:00:00.000Z",
-      "updatedAt": "2025-11-23T12:00:00.000Z"
-    },
-    {
-      "campaignId": "camp_1763850000004",
-      "name": "Weekend Open House Drive",
-      "status": "COMPLETED",
-      "targetLeadCount": 150,
-      "processed": 150,
-      "filterSpec": {
-        "leadSources": [
-          "website",
-          "walk-in"
-        ],
-        "budgetMin": 6000000,
-        "budgetMax": 12000000,
-        "locations": [
-          "Andheri",
-          "Goregaon",
-          "Malad"
-        ],
-        "propertyTypes": [
-          "2BHK",
-          "3BHK"
-        ]
-      },
-      "callingWindow": {
-        "start": "10:00",
-        "end": "18:00",
-        "timezone": "Asia/Kolkata"
-      },
-      "attemptPolicy": {
-        "maxAttempts": 2,
-        "retryDelayMins": 30
-      },
-      "scriptId": "open_house_invite_v1",
-      "visitAutoBooking": true,
-      "visitSettings": {
-        "projectId": "proj_skyline_residency",
-        "assignedAgentId": "agent_66",
-        "meetingPoint": "Main Gate"
-      },
-      "fallbackChannels": [
-        "whatsapp"
-      ],
-      "metrics": {
-        "attempts": 150,
-        "connected": 112,
-        "qualified": 89,
-        "visitsBooked": 71
-      },
-      "createdAt": "2025-11-18T07:00:00.000Z",
-      "updatedAt": "2025-11-18T20:00:00.000Z"
+      "createdAt": "2026-04-19T21:34:08.852Z"
     }
   ]
 }

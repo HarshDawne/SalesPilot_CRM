@@ -58,8 +58,6 @@ export function CallDetailsModal({ isOpen, onClose, job: initialJob }: CallDetai
                                 </h2>
                                 <div className="flex items-center gap-3 mt-1">
                                     <span className="text-sm font-bold text-indigo-600">{job.phoneNumber}</span>
-                                    <div className="h-1 w-1 rounded-full bg-slate-300" />
-                                    <span className="text-xs font-medium text-slate-400">Execution ID: #{(job.executionId || job.id || 'exec').slice(-8)}</span>
                                 </div>
                             </div>
                         </div>
@@ -108,7 +106,7 @@ export function CallDetailsModal({ isOpen, onClose, job: initialJob }: CallDetai
                                 </div>
                             )}
                             <div className="bg-white border border-slate-200 rounded-3xl p-6 text-sm text-slate-700 leading-relaxed font-mono whitespace-pre-wrap shadow-sm min-h-[300px]">
-                                {job.metadata?.transcript || "Awaiting transcript from Voice AI stream..."}
+                                {job.metadata?.transcript || "Transcript is being processed..."}
                             </div>
                         </div>
                     ) : activeTab === 'summary' ? (
@@ -117,7 +115,7 @@ export function CallDetailsModal({ isOpen, onClose, job: initialJob }: CallDetai
                                 <Zap size={20} className="fill-indigo-600 text-indigo-600" /> AI Insights
                             </h3>
                             <p className="text-slate-700 leading-relaxed">
-                                {job.metadata?.summary || "Voice AI is currently processing the emotional and factual context of this call..."}
+                                {job.metadata?.summary || "AI is preparing a summary of this conversation..."}
                             </p>
                         </div>
                     ) : (

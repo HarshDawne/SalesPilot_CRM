@@ -175,7 +175,7 @@ export default function LeadProfile() {
                             </div>
                         </div>
                         <div className="flex items-center gap-4 mt-1">
-                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Subscriber Node: {lead.id.slice(-6).toUpperCase()}</span>
+                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Subscriber Node: {(lead.id || '').slice(-6).toUpperCase()}</span>
                             <div className="w-1 h-1 rounded-full bg-slate-300" />
                             <span className="text-[10px] font-bold text-primary uppercase tracking-widest">Source: {lead.source || lead.createdVia || "Direct Channel"}</span>
                         </div>
@@ -191,12 +191,12 @@ export default function LeadProfile() {
                     <div className="relative group">
                         <div className="flex items-center gap-3 p-1.5 bg-white border border-border-subtle rounded-2xl shadow-sm hover:border-primary/20 transition-all cursor-pointer" onClick={() => setIsAgentMenuOpen(!isAgentMenuOpen)}>
                             <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center font-black text-xs text-slate-400">
-                                {lead.assignedAgentId ? lead.assignedAgentId.charAt(0).toUpperCase() : "?"}
+                                {lead.assignedAgentId ? (String(lead.assignedAgentId).charAt(0).toUpperCase()) : "?"}
                             </div>
                             <div className="pr-4">
                                 <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Assigned Agent</p>
                                 {lead.assignedAgentId ? (
-                                    <p className="text-xs font-bold text-text-main uppercase tracking-tight">Agent {lead.assignedAgentId.slice(0, 8)}</p>
+                                    <p className="text-xs font-bold text-text-main uppercase tracking-tight">Agent {String(lead.assignedAgentId).slice(0, 8)}</p>
                                 ) : (
                                     <button className="text-xs font-black text-rose-500 hover:text-rose-600 uppercase tracking-tighter flex items-center gap-1 group">
                                         UNASSIGNED

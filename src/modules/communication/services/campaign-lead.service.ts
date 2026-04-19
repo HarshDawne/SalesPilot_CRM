@@ -44,7 +44,11 @@ export class CampaignLeadService {
             if (!data || data.trim() === '') {
                 return { leads: [], transitions: [] };
             }
-            return JSON.parse(data);
+            const parsed = JSON.parse(data);
+            return {
+                leads: parsed.leads || [],
+                transitions: parsed.transitions || []
+            };
         } catch (error) {
             console.error('[CampaignLeadService] Critical error reading data:', error);
             // Don't return empty if file existed but was locked - this prevents "Lead not found" errors

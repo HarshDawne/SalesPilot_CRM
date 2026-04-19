@@ -142,8 +142,8 @@ export default function CampaignDashboard() {
                     <AnalyticsCard
                         label="Conversion Funnel"
                         value={(() => {
-                            const connected = campaign.metrics?.connected || 0;
-                            const qualified = campaign.metrics?.qualified || 0;
+                            const connected = campaign.metrics?.connected || campaign.successfulCalls || 0;
+                            const qualified = campaign.metrics?.qualified || campaign.qualifiedLeads || 0;
                             if (connected === 0) return "0.0%";
                             return `${((qualified / connected) * 100).toFixed(1)}%`;
                         })()}
@@ -155,8 +155,8 @@ export default function CampaignDashboard() {
                     <AnalyticsCard
                         label="Engagement Rate"
                         value={(() => {
-                            const attempted = campaign.metrics?.attempted || campaign.metrics?.attempts || 0;
-                            const connected = campaign.metrics?.connected || 0;
+                            const attempted = campaign.metrics?.attempted || campaign.metrics?.attempts || campaign.completedCalls || 0;
+                            const connected = campaign.metrics?.connected || campaign.successfulCalls || 0;
                             if (attempted === 0) return "0.0%";
                             return `${((connected / attempted) * 100).toFixed(1)}%`;
                         })()}
@@ -168,8 +168,8 @@ export default function CampaignDashboard() {
                     <AnalyticsCard
                         label="Operational Cost"
                         value={(() => {
-                            const cost = campaign.metrics?.cost || 0;
-                            const connected = campaign.metrics?.connected || 0;
+                            const cost = campaign.metrics?.cost || campaign.totalCost || 0;
+                            const connected = campaign.metrics?.connected || campaign.successfulCalls || 0;
                             if (connected === 0) return `₹${(cost).toFixed(0)}`;
                             return `₹${(cost / connected).toFixed(1)}`;
                         })()}
@@ -200,9 +200,9 @@ export default function CampaignDashboard() {
                             </h3>
 
                             <div className="space-y-8">
-                                <ProgressMetric label="Total Leads Dialed" current={campaign.metrics?.attempted || 0} target={campaign.targetLeadCount || 0} />
-                                <ProgressMetric label="Successful Connections" current={campaign.metrics?.connected || 0} target={campaign.metrics?.attempted || 0} color="cyan" />
-                                <ProgressMetric label="Qualified Opportunities" current={campaign.metrics?.qualified || 0} target={campaign.metrics?.connected || 0} color="emerald" />
+                                <ProgressMetric label="Total Leads Dialed" current={campaign.metrics?.attempts || campaign.completedCalls || 0} target={campaign.targetLeadCount || 0} />
+                                <ProgressMetric label="Successful Connections" current={campaign.metrics?.connected || campaign.successfulCalls || 0} target={campaign.metrics?.attempts || campaign.completedCalls || 0} color="cyan" />
+                                <ProgressMetric label="Qualified Opportunities" current={campaign.metrics?.qualified || campaign.qualifiedLeads || 0} target={campaign.metrics?.connected || campaign.successfulCalls || 0} color="emerald" />
                             </div>
 
                             <div className="pt-8 border-t border-slate-50 space-y-5">
