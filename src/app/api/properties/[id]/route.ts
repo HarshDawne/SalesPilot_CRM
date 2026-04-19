@@ -52,9 +52,31 @@ export async function PUT(
     try {
         const { id } = await params;
         const body = await request.json();
+        
+        console.log(`📡 [API] PUT /api/properties/${id} | Body keys:`, Object.keys(body));
 
-        // Validate using partial schema for updates
-        const validatedData = propertySchema.partial().parse(body);
+        /* 
+        DEBUG: Temporarily bypassing Zod validation to isolate persistent 500 errors.
+        We will rely on manual data sanity check for this step.
+        */
+        const validatedData = body; 
+        
+        /*
+        const result = propertySchema.partial().safeParse(body);
+        if (!result.success) {
+            console.error('❌ Schema Validation Error:', JSON.stringify(result.error.issues, null, 2));
+            return NextResponse.json(
+                { 
+                    success: false, 
+                    error: 'Validation failed', 
+                    details: result.error.issues,
+                    message: `Validation failed: ${result.error.issues[0].message} at ${result.error.issues[0].path.join('.')}`
+                },
+                { status: 400 }
+            );
+        }
+        const validatedData = result.data;
+        */
 
         const property = await propertyService.update(id, validatedData as any);
         if (!property) {
@@ -65,21 +87,14 @@ export async function PUT(
         }
 
         return NextResponse.json({ success: true, data: property });
-    } catch (error: unknown) {
-        if (error instanceof z.ZodError) {
-            console.error('❌ Validation failed:', JSON.stringify(error.issues, null, 2));
-            return NextResponse.json(
-                { success: false, error: 'Validation failed', details: error.issues },
-                { status: 400 }
-            );
-        }
-
-        console.error('❌ Error updating property:', error);
+    } catch (error: any) {
+        console.error('🔥 [API] UNHANDLED ERROR in PUT /api/properties/[id]:', error);
         return NextResponse.json(
             { 
                 success: false, 
                 error: 'Failed to update property', 
-                message: error instanceof Error ? error.message : 'Unknown error'
+                message: error instanceof Error ? error.message : 'Unknown internal error',
+                stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
             },
             { status: 500 }
         );

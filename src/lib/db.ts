@@ -722,11 +722,23 @@ function readDb(): DatabaseSchema {
 }
 
 function writeDb(data: DatabaseSchema) {
-    const dir = path.dirname(DB_PATH);
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
+    try {
+        const dir = path.dirname(DB_PATH);
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
+        
+        // Convert to JSON first to catch circular references early
+        const json = JSON.stringify(data, null, 2);
+        
+        // Atomic write: write to temp file then rename
+        const tempPath = `${DB_PATH}.tmp`;
+        fs.writeFileSync(tempPath, json);
+        fs.renameSync(tempPath, DB_PATH);
+    } catch (error) {
+        console.error('❌ CRITICAL: Database write failed!', error);
+        throw error; // Rethrow to let API handle it
     }
-    fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
 }
 
 export const db = {

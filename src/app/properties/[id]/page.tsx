@@ -181,9 +181,10 @@ export default function EditPropertyPage() {
             showToast("Property updated successfully!", "success");
             setMode('view');
             router.refresh(); 
-        } catch (error) {
+        } catch (error: any) {
             console.error("Failed to save property:", error);
-            showToast("Failed to save changes.", "error");
+            const message = error instanceof Error ? error.message : "Failed to save changes.";
+            showToast(message, "error");
         }
     };
 
