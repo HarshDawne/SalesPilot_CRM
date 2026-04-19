@@ -46,6 +46,7 @@ export const propertySchema = z.object({
     }).optional().default({
         city: "",
         locality: "",
+        area: "",
         fullAddress: "",
         pincode: ""
     }),
@@ -63,6 +64,8 @@ export const propertySchema = z.object({
     reraId: z.string().optional().default(""),
     reraUrl: z.string().optional().nullable(),
     reraExpiryDate: z.string().optional().nullable(),
+    reraStatus: z.string().optional().nullable(),
+    reraAuthority: z.string().optional().nullable(),
 
     // Dates
     launchDate: z.string().optional().default(new Date().toISOString()),
@@ -81,12 +84,19 @@ export const propertySchema = z.object({
         z.string().nullable()
     ).optional(),
 
-    // Marketing - Relaxed amenities to allow objects (from DB) or strings
+    // Marketing
     primaryImageUrl: z.string().optional().nullable(),
     brochureUrl: z.string().optional().nullable(),
     highlights: z.array(z.string()).default([]),
-    amenities: z.array(z.union([z.string(), z.record(z.any())])).default([]),
-    documents: z.array(z.any()).optional().default([]), // Added documents
+    amenities: z.array(z.any()).default([]),
+    documents: z.array(z.any()).optional().default([]),
+
+    // Location Intelligence
+    locationIntelligence: z.object({
+        connectivity: z.array(z.object({ name: z.string(), distance: z.string() })).default([]),
+        schools: z.array(z.object({ name: z.string(), distance: z.string() })).default([]),
+        hospitals: z.array(z.object({ name: z.string(), distance: z.string() })).default([]),
+    }).optional(),
 
     // Flags
     isActive: z.boolean().default(true),

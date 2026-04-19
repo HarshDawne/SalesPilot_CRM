@@ -12,7 +12,7 @@ function seedDemoVisits() {
     try {
         const data = fs.readFileSync(DB_PATH, 'utf-8');
         db = JSON.parse(data);
-    } catch (error) {
+    } catch (error: any) {
         console.error('❌ Error reading database:', error.message);
         return;
     }
@@ -75,7 +75,7 @@ function seedDemoVisits() {
         });
 
         // Update lead stage
-        const leadIndex = db.leads.findIndex(l => l.id === lead.id);
+        const leadIndex = db.leads.findIndex((l: any) => l.id === lead.id);
         if (leadIndex !== -1) {
             db.leads[leadIndex].currentStage = 'Visit_Booked';
             db.leads[leadIndex].updatedAt = now.toISOString();
@@ -89,7 +89,7 @@ function seedDemoVisits() {
         fs.writeFileSync(DB_PATH, JSON.stringify(db, null, 2));
         console.log('\n✅ Demo visits seeded successfully!');
         console.log(`📊 Added 15 new bookings to the calendar.`);
-    } catch (error) {
+    } catch (error: any) {
         console.error('❌ Error writing database:', error.message);
     }
 }

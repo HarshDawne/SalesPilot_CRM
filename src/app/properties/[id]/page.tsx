@@ -148,6 +148,10 @@ export default function EditPropertyPage() {
                 amenities: data.amenities,
                 documents: data.documents,
                 reraId: data.legalCompliance?.reraNumber,
+                reraAuthority: data.legalCompliance?.authority,
+                reraStatus: data.legalCompliance?.status,
+                reraExpiryDate: data.legalCompliance?.expiryDate,
+                locationIntelligence: data.locationIntelligence,
                 updatedAt: new Date().toISOString()
             };
 
