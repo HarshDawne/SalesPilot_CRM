@@ -1,4 +1,5 @@
 import { VOICE_CONFIG } from "@/lib/voice-config";
+import { normalizePhone, isValidPhone } from "@/lib/phone-utils";
 import type { Lead } from "@/lib/db";
 import type { Property as PropertyManagement } from "@/types/property";
 
@@ -38,14 +39,8 @@ export interface BolnaCallVariables {
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-function formatPhone(raw: string): string {
-    if (!raw) return "";
-    let clean = raw.replace(/[^\d+]/g, "");
-    if (clean.startsWith("+")) return clean;
-    if (clean.length === 10) return `+91${clean}`;
-    if (clean.length === 12 && clean.startsWith("91")) return `+${clean}`;
-    return clean;
-}
+// Phone formatting is now handled by the shared normalizePhone utility
+// in @/lib/phone-utils.ts which supports all Indian number formats.
 
 function formatBudget(min?: number | null, max?: number | null): string {
     const fmt = (n: number) => {
@@ -81,7 +76,7 @@ export function buildBolnaVariables(
     return {
         // Lead
         lead_name: lead.name || "there",
-        lead_phone: formatPhone(lead.primaryPhone || lead.phone || ""),
+        lead_phone: normalizePhone(lead.primaryPhone || lead.phone || ""),
         lead_budget: formatBudget(
             q?.budgetMin ?? lead.budgetMin,
             q?.budgetMax ?? lead.budgetMax
@@ -134,9 +129,9 @@ export const BolnaService = {
         property: PropertyManagement,
         options?: { agentId?: string; campaignId?: string }
     ): Promise<BolnaCallResult> {
-        const phone = formatPhone(lead.primaryPhone || lead.phone || "");
+        const phone = normalizePhone(lead.primaryPhone || lead.phone || "");
 
-        if (!phone || phone.length < 12) {
+        if (!isValidPhone(phone)) {
             console.warn(`[BolnaService] Invalid phone for lead ${lead.id}: ${phone}`);
             return { success: false, error: "Invalid phone number" };
         }

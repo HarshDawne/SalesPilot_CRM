@@ -1,0 +1,117 @@
+{
+  "id": "1aa37dd4-abfe-4499-a550-8937af99ff61",
+  "agent_id": "7fae9ac6-de4f-4642-a7b4-3efe35bc7f51",
+  "batch_id": null,
+  "scheduled_at": "2025-12-14T07:58:26.195728",
+  "answered_by_voice_mail": null,
+  "conversation_duration": 0,
+  "total_cost": 0,
+  "transcript": null,
+  "usage_breakdown": {
+    "llmModel": {
+      "gpt-4.1-mini": {
+        "input": 0,
+        "output": 0
+      }
+    },
+    "llmTokens": 0,
+    "synthesizer_model": "eleven_turbo_v2_5",
+    "transcriber_model": "saarika:v2.5",
+    "llm_usage_breakdown": {
+      "hangup": null,
+      "analytics": null,
+      "extraction": null,
+      "conversation": {
+        "input": 0,
+        "model": "gpt-4.1-mini",
+        "output": 0,
+        "provider": "openai",
+        "provider_connected": false
+      },
+      "summarization": null
+    },
+    "synthesizer_provider": "elevenlabs",
+    "transcriber_duration": 0,
+    "transcriber_provider": "sarvam",
+    "synthesizer_characters": 0,
+    "synthesizer_usage_breakdown": {
+      "provider_connected": false,
+      "welcome_message_cache": true,
+      "conversation_characters": 0,
+      "welcome_message_characters": 0
+    },
+    "transcriber_usage_breakdown": {
+      "provider_connected": false,
+      "transcriber_duration": 0
+    }
+  },
+  "cost_breakdown": {
+    "llm": 0,
+    "network": 0,
+    "platform": 0,
+    "synthesizer": 0,
+    "transcriber": 0,
+    "llm_breakdown": {
+      "hangup": 0,
+      "analytics": 0,
+      "extraction": 0,
+      "conversation": 0,
+      "summarization": 0
+    },
+    "synthesizer_breakdown": {
+      "conversation": 0,
+      "welcome_message": 0
+    },
+    "transcriber_breakdown": {
+      "analytics": 0,
+      "conversation": 0
+    }
+  },
+  "extracted_data": null,
+  "summary": null,
+  "error_message": null,
+  "status": "busy",
+  "agent_extraction": null,
+  "workflow_retries": null,
+  "rescheduled_at": null,
+  "custom_extractions": null,
+  "campaign_id": null,
+  "smart_status": null,
+  "user_number": "+918657654711",
+  "agent_number": "+918035735856",
+  "initiated_at": null,
+  "retry_config": null,
+  "retry_count": 0,
+  "retry_history": null,
+  "created_at": "2025-12-14T07:58:26.195749+00:00",
+  "updated_at": "2025-12-14T07:58:58.366853+00:00",
+  "telephony_data": {
+    "duration": "0.0",
+    "to_number": "+918657654711",
+    "from_number": "+918035735856",
+    "recording_url": null,
+    "hosted_telephony": true,
+    "provider_call_id": "c49d777b-7c2f-452f-984b-8082dcfb3d52",
+    "call_type": "outbound",
+    "provider": "plivo",
+    "hangup_by": "Carrier",
+    "hangup_reason": "Call recipient was busy",
+    "hangup_provider_code": 3010,
+    "ring_duration": null,
+    "post_dial_delay": null,
+    "to_number_carrier": null
+  },
+  "transfer_call_data": null,
+  "context_details": {
+    "recipient_data": {
+      "interest": "General",
+      "lead_name": "Harsh Dawne",
+      "lead_source": "manual"
+    },
+    "recipient_phone_number": "+918657654711"
+  },
+  "agent_context_details": null,
+  "batch_run_details": null,
+  "provider": "plivo",
+  "latency_data": null
+}

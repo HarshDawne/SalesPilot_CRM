@@ -36,8 +36,9 @@ export function CallDetailsModal({ isOpen, onClose, job: initialJob }: CallDetai
     if (!isOpen || !job) return null;
 
     const formatDuration = (seconds: number) => {
-        const mins = Math.floor(seconds / 60);
-        const secs = seconds % 60;
+        const total = Math.round(seconds || 0);
+        const mins = Math.floor(total / 60);
+        const secs = total % 60;
         return `${mins}:${secs.toString().padStart(2, '0')}`;
     };
 

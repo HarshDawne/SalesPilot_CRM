@@ -8174,6 +8174,72 @@
         "disqualifiedAt": "2026-04-10T23:44:59.576Z"
       },
       "version": 1
+    },
+    {
+      "id": "be06a194-c97d-459c-abaa-4dfeb8abe5ea",
+      "createdAt": "2026-04-19T23:10:56.756Z",
+      "updatedAt": "2026-04-19T23:10:56.756Z",
+      "createdVia": "manual",
+      "name": "Arsh Shaikh",
+      "firstName": "Arsh",
+      "lastName": "Shaikh",
+      "primaryPhone": "+917304190805",
+      "email": "arsh.rs@gmail.com",
+      "preferredContactMethod": "whatsapp",
+      "preferredLanguage": "en",
+      "leadTags": [
+        "New Lead",
+        "cold"
+      ],
+      "currentStage": "New",
+      "aiScore": 40,
+      "dedupe_keys": [
+        "phone:917304190805",
+        "email:arsh.rs@gmail.com"
+      ],
+      "captureDetails": {
+        "formData": {
+          "firstName": "Arsh",
+          "lastName": "Shaikh",
+          "phone": "+917304190805",
+          "email": "arsh.rs@gmail.com",
+          "budgetMin": 5,
+          "budgetMax": 8500000,
+          "source": "Manual",
+          "status": "New",
+          "tags": [
+            "New Lead",
+            "cold"
+          ],
+          "score": 10,
+          "timelineToBuy": "Immediate",
+          "preferredLocation": ""
+        }
+      },
+      "source": "Manual",
+      "budgetMin": 5,
+      "budgetMax": 8500000,
+      "preferredLocation": "",
+      "version": 1,
+      "scoreBreakdown": {
+        "demographics": 20,
+        "behavior": 10,
+        "engagement": 5,
+        "aiAdjustment": 5
+      },
+      "preferenceProfile": {
+        "budgetCurrency": "INR",
+        "propertyType": [
+          "1BHK"
+        ],
+        "preferredLocations": [],
+        "intentLevel": "medium",
+        "qualifier": "ai",
+        "qualifiedAt": "2026-04-19T23:10:56.761Z"
+      },
+      "qualification": {
+        "propertyType": "1BHK"
+      }
     }
   ],
   "activities": [
@@ -8736,6 +8802,18 @@
       "createdAt": "2025-12-21T08:15:35.679Z",
       "metadata": {
         "job_id": "d4cab086-8fc2-45bf-bc6f-3106fa3c61fc",
+        "attempt": 1
+      },
+      "immutable": true
+    },
+    {
+      "id": "3ca38721-0e0d-4b47-9753-e58a9c5181f4",
+      "leadId": "be06a194-c97d-459c-abaa-4dfeb8abe5ea",
+      "type": "call_initiated",
+      "summary": "Call initiated to undefined",
+      "createdAt": "2026-04-19T23:10:56.933Z",
+      "metadata": {
+        "job_id": "0776725f-32b8-4489-a51a-64885f34824d",
         "attempt": 1
       },
       "immutable": true
@@ -26963,6 +27041,128 @@
         "bookingId": "1825304c-5e4d-4351-8145-8d0865075c05"
       },
       "immutable": true
+    },
+    {
+      "id": "0582e5d5-7fde-4a9e-ab9f-3e9d1e0c6e3c",
+      "leadId": "be06a194-c97d-459c-abaa-4dfeb8abe5ea",
+      "type": "lead_created",
+      "timestamp": "2026-04-19T23:10:56.784Z",
+      "actor": "system",
+      "summary": "Lead created from manual",
+      "payload": {
+        "source": "Manual"
+      },
+      "visibleTo": "all",
+      "immutable": true,
+      "metadata": {}
+    },
+    {
+      "id": "8e345db7-fd34-4a39-9d30-82cf54281c0c",
+      "leadId": "be06a194-c97d-459c-abaa-4dfeb8abe5ea",
+      "type": "ai_call_attempt",
+      "timestamp": "2026-04-19T23:10:56.810Z",
+      "actor": "system",
+      "summary": "AI call queued (attempt #1)",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3
+      },
+      "visibleTo": "all",
+      "immutable": true,
+      "metadata": {}
+    },
+    {
+      "id": "eed7516a-4d3a-4617-a93f-0d0fb2d03b0e",
+      "leadId": "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1",
+      "type": "note_added",
+      "timestamp": "2026-04-19T23:11:59.193Z",
+      "actor": "system",
+      "summary": "Soft duplicate lead submission (phone match)",
+      "payload": {
+        "source": "Manual",
+        "formData": {
+          "firstName": "Harsh",
+          "lastName": "Ranmale",
+          "phone": "+91 8657654711",
+          "email": "harshdawne@gmail.com",
+          "budgetMin": 500000,
+          "budgetMax": 5000000,
+          "source": "Manual",
+          "status": "New",
+          "tags": [
+            "New Lead"
+          ],
+          "score": 10,
+          "timelineToBuy": "Immediate",
+          "preferredLocation": ""
+        },
+        "note": "soft_dedupe"
+      },
+      "visibleTo": "all",
+      "immutable": true,
+      "metadata": {}
+    },
+    {
+      "id": "1b2a2633-dbfd-43a3-abb3-b1d830617da1",
+      "leadId": "be06a194-c97d-459c-abaa-4dfeb8abe5ea",
+      "type": "note_added",
+      "timestamp": "2026-04-19T23:24:24.456Z",
+      "actor": "system",
+      "summary": "Soft duplicate lead submission (phone match)",
+      "payload": {
+        "source": "Manual",
+        "formData": {
+          "firstName": "Adarsh",
+          "lastName": "Gajula",
+          "phone": "07304190805",
+          "email": "",
+          "budgetMin": 500000,
+          "budgetMax": 5000000,
+          "source": "Manual",
+          "status": "New",
+          "tags": [
+            "New Lead"
+          ],
+          "score": 10,
+          "timelineToBuy": "Immediate",
+          "preferredLocation": ""
+        },
+        "note": "soft_dedupe"
+      },
+      "visibleTo": "all",
+      "immutable": true,
+      "metadata": {}
+    },
+    {
+      "id": "b707b643-9618-45e4-8b57-bdf47949847a",
+      "leadId": "be06a194-c97d-459c-abaa-4dfeb8abe5ea",
+      "type": "note_added",
+      "timestamp": "2026-04-19T23:25:29.701Z",
+      "actor": "system",
+      "summary": "Soft duplicate lead submission (phone match)",
+      "payload": {
+        "source": "Manual",
+        "formData": {
+          "firstName": "Adarsh",
+          "lastName": "Gajula",
+          "phone": "07304190805",
+          "email": "",
+          "budgetMin": 60000,
+          "budgetMax": 5000000,
+          "source": "Manual",
+          "status": "New",
+          "tags": [
+            "New Lead"
+          ],
+          "score": 10,
+          "timelineToBuy": "Immediate",
+          "preferredLocation": ""
+        },
+        "note": "soft_dedupe"
+      },
+      "visibleTo": "all",
+      "immutable": true,
+      "metadata": {}
     }
   ],
   "campaigns": [

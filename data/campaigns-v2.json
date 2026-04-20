@@ -107,6 +107,100 @@
         "visitsBooked": 0
       },
       "createdAt": "2026-04-19T22:07:57.274Z"
+    },
+    {
+      "id": "camp_1776641203197",
+      "name": "Camppaign_1",
+      "type": "launch",
+      "status": "running",
+      "propertyIds": [
+        "901c075d-4731-4bfb-992d-fc64d6c900e6",
+        "prop-001"
+      ],
+      "leadIds": [
+        "be06a194-c97d-459c-abaa-4dfeb8abe5ea",
+        "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1"
+      ],
+      "totalLeads": 2,
+      "queuedLeads": 1,
+      "callingLeads": 1,
+      "completedCalls": 0,
+      "successfulCalls": 0,
+      "qualifiedLeads": 0,
+      "failedCalls": 0,
+      "retryCount": 0,
+      "totalCost": 0,
+      "rules": {
+        "maxRetries": 1
+      },
+      "createdAt": "2026-04-19T23:26:43.199Z",
+      "updatedAt": "2026-04-19T23:26:50.539Z",
+      "startedAt": "2026-04-19T23:26:44.227Z"
+    },
+    {
+      "id": "camp-real-bolna-001",
+      "name": "Bolna AI Live Demo - Harsh & Rajat",
+      "status": "completed",
+      "createdAt": "2025-12-14T07:50:00.000Z",
+      "updatedAt": "2025-12-14T15:30:00.000Z",
+      "leadIds": [
+        "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1",
+        "c1dd3988-56d0-44a5-9db8-9e355e121cba"
+      ],
+      "propertyIds": [],
+      "targetLeadCount": 2,
+      "rules": {
+        "maxRetries": 3,
+        "callWindow": {
+          "start": "09:00",
+          "end": "18:00"
+        }
+      },
+      "completedCalls": 8,
+      "successfulCalls": 8,
+      "failedCalls": 0,
+      "totalCost": 287.93,
+      "qualifiedLeads": 2,
+      "callingLeads": 0,
+      "queuedLeads": 0,
+      "metrics": {
+        "attempted": 8,
+        "connected": 8,
+        "qualified": 8,
+        "cost": 287.93,
+        "visitsBooked": 1
+      },
+      "context": {}
+    },
+    {
+      "id": "camp_1776658799246",
+      "name": "ok",
+      "type": "launch",
+      "status": "completed",
+      "propertyIds": [
+        "prop-001",
+        "901c075d-4731-4bfb-992d-fc64d6c900e6"
+      ],
+      "leadIds": [
+        "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1"
+      ],
+      "totalLeads": 1,
+      "queuedLeads": 0,
+      "callingLeads": 0,
+      "completedCalls": 1,
+      "successfulCalls": 1,
+      "qualifiedLeads": 0,
+      "failedCalls": 0,
+      "retryCount": 0,
+      "totalCost": 0,
+      "rules": {
+        "maxRetries": 1
+      },
+      "createdAt": "2026-04-20T04:19:59.246Z",
+      "updatedAt": "2026-04-20T04:23:45.833Z",
+      "startedAt": "2026-04-20T04:20:03.998Z",
+      "pausedAt": "2026-04-20T04:23:45.820Z",
+      "completedAt": "2026-04-20T04:23:45.825Z"
     }
   ]
 }

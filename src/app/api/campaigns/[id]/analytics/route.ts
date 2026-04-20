@@ -110,6 +110,12 @@ export async function GET(
             campaignName: campaign.name,
         });
 
+        // Calculate total cost
+        const totalCost = callRecords.reduce((sum, r) => sum + (r.cost || 0), 0);
+        const totalDuration = callRecords.reduce((sum, r) => sum + (r.duration || 0), 0);
+        const withTranscript = callRecords.filter(r => r.transcript && r.transcript.length > 10).length;
+        const withRecording = callRecords.filter(r => r.recordingUrl).length;
+
         return NextResponse.json({
             success: true,
             analytics: {
@@ -120,6 +126,10 @@ export async function GET(
                 outcomes,
                 avgDuration,
                 intents,
+                totalCost: Math.round(totalCost * 100) / 100,
+                totalDuration,
+                withTranscript,
+                withRecording,
             },
             insights,
         });

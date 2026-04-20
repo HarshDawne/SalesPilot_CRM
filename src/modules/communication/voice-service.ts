@@ -1,30 +1,17 @@
 import { VOICE_CONFIG } from "@/lib/voice-config";
 import { Lead } from "@/modules/leads/types";
+import { normalizePhone } from "@/lib/phone-utils";
 
 export class VoiceService {
     static async triggerCall(lead: Lead, context: Record<string, any> = {}, options?: { agentId?: string, maxDuration?: number }) {
         try {
             const phoneNumber = lead.phone || lead.primaryPhone || "";
-            // Validate Phone Number
-            if (!phoneNumber || phoneNumber.length < 10) {
+            // Use shared normalizePhone for consistent formatting
+            const formattedPhone = normalizePhone(phoneNumber);
+
+            if (!formattedPhone || formattedPhone.length < 12) {
                 console.warn(`[Voice Service] Invalid phone for lead ${lead.id}: ${phoneNumber}`);
                 return { success: false, error: "Invalid Phone" };
-            }
-
-            // Normalize Phone Number for India (User Request)
-            let formattedPhone = phoneNumber.replace(/\s+/g, '').replace(/-/g, '');
-
-            // Case 1: Already has +91 (e.g., +919999999999) - Keep as is
-            if (formattedPhone.startsWith('+91') && formattedPhone.length === 13) {
-                // Keep as is
-            }
-            // Case 2: 12 digits starting with 91 but missing + (e.g., 919999999999) - Add +
-            else if (formattedPhone.startsWith('91') && formattedPhone.length === 12) {
-                formattedPhone = '+' + formattedPhone;
-            }
-            // Case 3: 10 digits (e.g., 9999999999) - Add +91
-            else if (formattedPhone.length === 10) {
-                formattedPhone = '+91' + formattedPhone;
             }
 
             console.log(`[Voice Service] Normalized Phone: ${phoneNumber} -> ${formattedPhone}`);
@@ -70,44 +57,153 @@ export class VoiceService {
             return { success: false, error: String(error) };
         }
     }
-    static async getCallDetails(executionId: string) {
+
+    /**
+     * Fetch call execution details from Bolna API.
+     *
+     * Bolna exposes multiple possible endpoints depending on the version:
+     *   - GET {origin}/call/details/{execution_id}
+     *   - GET {origin}/execution/{execution_id}
+     *   - GET {origin}/executions/{execution_id}
+     *
+     * We try all of them in order so we're resilient to API changes.
+     */
+    static async getCallDetails(executionId: string): Promise<any | null> {
+        if (!executionId) return null;
+
         try {
             console.log(`[Voice Service] Fetching details for execution: ${executionId}`);
 
-            // API Execution endpoint - Start
-            // Robustly extract origin to handle different config URLs (e.g. /call vs /calls/make)
             let baseUrl = "";
             try {
                 const urlObj = new URL(VOICE_CONFIG.API_URL);
                 baseUrl = urlObj.origin;
-            } catch (e) {
-                // Fallback if invalid URL in config
-                baseUrl = "https://api.bolna.ai";
+            } catch (_) {
+                baseUrl = "https://api.bolna.dev";
             }
 
-            const url = `${baseUrl}/executions/${executionId}`;
-            console.log(`[Voice Service] Fetching call details from: ${url}`);
+            const headers = {
+                "Authorization": `Bearer ${VOICE_CONFIG.API_KEY}`,
+                "Content-Type": "application/json"
+            };
 
-            const response = await fetch(url, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${VOICE_CONFIG.API_KEY}`,
-                    "Content-Type": "application/json"
+            // Try multiple endpoint patterns used by Bolna API
+            const endpoints = [
+                `${baseUrl}/call/details/${executionId}`,
+                `${baseUrl}/execution/${executionId}`,
+                `${baseUrl}/executions/${executionId}`,
+            ];
+
+            for (const url of endpoints) {
+                try {
+                    console.log(`[Voice Service] Trying: ${url}`);
+                    const response = await fetch(url, {
+                        method: "GET",
+                        headers,
+                        signal: AbortSignal.timeout(10000), // 10s timeout per attempt
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log(`[Voice Service] ✓ Got details from: ${url}`);
+
+                        // Normalize the response into a consistent shape
+                        return this.normalizeBolnaResponse(data);
+                    }
+
+                    if (response.status === 404) {
+                        console.log(`[Voice Service] 404 at ${url}, trying next…`);
+                        continue;
+                    }
+
+                    console.warn(`[Voice Service] ${response.status} at ${url}`);
+                } catch (fetchErr: any) {
+                    if (fetchErr.name === 'TimeoutError' || fetchErr.name === 'AbortError') {
+                        console.warn(`[Voice Service] Timeout at ${url}`);
+                    } else {
+                        console.warn(`[Voice Service] Fetch error at ${url}:`, fetchErr.message);
+                    }
+                    continue;
                 }
-            });
-
-            if (!response.ok) {
-                console.warn(`[Voice Service] Failed to fetch details: ${response.status}`);
-                return null;
             }
 
-            const data = await response.json();
-            return data;
+            console.warn(`[Voice Service] All endpoints failed for ${executionId}`);
+            return null;
 
         } catch (error) {
             console.error(`[Voice Service] Error fetching details:`, error);
             return null;
         }
     }
-}
 
+    /**
+     * Normalize the various Bolna API response shapes into a single consistent format.
+     * Bolna returns different field names depending on the API version.
+     */
+    private static normalizeBolnaResponse(raw: any): any {
+        if (!raw) return null;
+
+        return {
+            // Status
+            status: raw.status || raw.call_status || "unknown",
+
+            // Duration (seconds)
+            duration:
+                raw.conversation_time ??
+                raw.conversation_duration ??
+                raw.call_duration ??
+                raw.duration ??
+                raw.telephony_data?.duration ??
+                0,
+
+            // Cost
+            total_cost:
+                raw.total_cost ??
+                raw.cost ??
+                raw.usage_cost ??
+                0,
+
+            cost_breakdown: raw.cost_breakdown || null,
+
+            // Transcript
+            transcript:
+                raw.transcript ??
+                raw.conversation_text ??
+                "",
+
+            // Recording
+            recording_url:
+                raw.recording_url ??
+                raw.telephony_data?.recording_url ??
+                raw.audio_url ??
+                "",
+
+            // Summary / Analysis
+            summary:
+                raw.summary ??
+                raw.call_summary ??
+                "",
+
+            // Intent / Extracted data
+            intent:
+                raw.intent ??
+                raw.detected_intent ??
+                raw.extracted_data?.intent ??
+                "",
+
+            extracted_data: raw.extracted_data || null,
+
+            // Telephony metadata
+            telephony_data: raw.telephony_data || null,
+
+            // Hangup reason
+            hangup_reason:
+                raw.hangup_reason ??
+                raw.telephony_data?.hangup_reason ??
+                "",
+
+            // Keep raw for debugging
+            _raw: raw,
+        };
+    }
+}

@@ -20,7 +20,8 @@ import {
     Zap,
     ChevronRight,
     LucideIcon,
-    Activity
+    Activity,
+    ListOrdered
 } from "lucide-react";
 import { LiveCallStatusModal } from "@/components/communication/LiveCallStatusModal";
 import { CreateCampaignModal, CampaignConfig } from "@/components/campaign/CreateCampaignModal";
@@ -58,6 +59,7 @@ export default function LeadsTable() {
     const [showConfigModal, setShowConfigModal] = useState(false);
     const [showFilterDropdown, setShowFilterDropdown] = useState(false);
     const [activeCallLead, setActiveCallLead] = useState<Lead | null>(null);
+    const [showQueueModal, setShowQueueModal] = useState(false);
 
     useEffect(() => {
         fetchLeads();
@@ -196,6 +198,7 @@ export default function LeadsTable() {
                         <Zap size={14} />
                         Trigger Strategic Campaign
                     </button>
+
                 </div>
             )}
 
@@ -494,12 +497,24 @@ export default function LeadsTable() {
                 />
             )}
 
-            {activeCallLead && (
+            {activeCallLead && !showQueueModal && (
                 <InitiateCallModal
                     lead={activeCallLead as any}
                     onClose={() => setActiveCallLead(null)}
                     onSuccess={() => {
                         setActiveCallLead(null);
+                        fetchLeads();
+                    }}
+                />
+            )}
+
+            {showQueueModal && selectedLeads.size > 0 && (
+                <InitiateCallModal
+                    leads={leads.filter(l => selectedLeads.has(l.id)) as any[]}
+                    onClose={() => setShowQueueModal(false)}
+                    onQueueComplete={() => {
+                        setShowQueueModal(false);
+                        setSelectedLeads(new Set());
                         fetchLeads();
                     }}
                 />

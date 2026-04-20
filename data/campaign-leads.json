@@ -319,6 +319,161 @@
       "state": "completed",
       "createdAt": "2026-01-19T22:07:57.274Z",
       "updatedAt": "2026-04-19T22:07:57.275Z"
+    },
+    {
+      "id": "cl_camp_1776640392072_be06a194-c97d-459c-abaa-4dfeb8abe5ea_o7cp90g7",
+      "campaignId": "camp_1776640392072",
+      "leadId": "be06a194-c97d-459c-abaa-4dfeb8abe5ea",
+      "state": "retry_scheduled",
+      "attemptCount": 1,
+      "createdAt": "2026-04-19T23:13:14.762Z",
+      "updatedAt": "2026-04-19T23:13:17.674Z",
+      "previousState": "queued",
+      "lastCallId": "none",
+      "scheduledRetryAt": "2026-04-19T23:43:17.673Z"
+    },
+    {
+      "id": "cl_camp_1776640392072_eea250f3-99b8-4332-8d5f-2f5d1d06b0d1_qw528b19",
+      "campaignId": "camp_1776640392072",
+      "leadId": "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1",
+      "state": "calling",
+      "attemptCount": 1,
+      "createdAt": "2026-04-19T23:13:14.762Z",
+      "updatedAt": "2026-04-19T23:13:21.490Z",
+      "previousState": "queued",
+      "lastExecutionId": "fd4c2720-d42c-4acf-b5a6-19618c7f6434"
+    },
+    {
+      "id": "cl_camp_1776640799933_be06a194-c97d-459c-abaa-4dfeb8abe5ea_ed7b6qxp",
+      "campaignId": "camp_1776640799933",
+      "leadId": "be06a194-c97d-459c-abaa-4dfeb8abe5ea",
+      "state": "retry_scheduled",
+      "attemptCount": 1,
+      "createdAt": "2026-04-19T23:20:04.090Z",
+      "updatedAt": "2026-04-19T23:20:08.010Z",
+      "previousState": "queued",
+      "lastCallId": "none",
+      "scheduledRetryAt": "2026-04-19T23:50:08.005Z"
+    },
+    {
+      "id": "cl_camp_1776640943639_be06a194-c97d-459c-abaa-4dfeb8abe5ea_53dy8n2j",
+      "campaignId": "camp_1776640943639",
+      "leadId": "be06a194-c97d-459c-abaa-4dfeb8abe5ea",
+      "state": "retry_scheduled",
+      "attemptCount": 1,
+      "createdAt": "2026-04-19T23:22:24.612Z",
+      "updatedAt": "2026-04-19T23:22:27.486Z",
+      "previousState": "queued",
+      "lastCallId": "none",
+      "scheduledRetryAt": "2026-04-19T23:52:27.484Z"
+    },
+    {
+      "id": "cl_camp_1776641203197_be06a194-c97d-459c-abaa-4dfeb8abe5ea_594wrt41",
+      "campaignId": "camp_1776641203197",
+      "leadId": "be06a194-c97d-459c-abaa-4dfeb8abe5ea",
+      "state": "retry_scheduled",
+      "attemptCount": 1,
+      "createdAt": "2026-04-19T23:26:44.222Z",
+      "updatedAt": "2026-04-19T23:26:48.033Z",
+      "previousState": "queued",
+      "lastCallId": "none",
+      "scheduledRetryAt": "2026-04-19T23:56:48.032Z"
+    },
+    {
+      "id": "cl_camp_1776641203197_eea250f3-99b8-4332-8d5f-2f5d1d06b0d1_td9jsquu",
+      "campaignId": "camp_1776641203197",
+      "leadId": "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1",
+      "state": "calling",
+      "attemptCount": 1,
+      "createdAt": "2026-04-19T23:26:44.222Z",
+      "updatedAt": "2026-04-19T23:26:50.537Z",
+      "previousState": "queued",
+      "lastExecutionId": "4b111f4e-d37e-4709-a145-e931e2bb1a5c"
+    },
+    {
+      "id": "cl_camp-real-bolna-001_eea250f3",
+      "campaignId": "camp-real-bolna-001",
+      "leadId": "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1",
+      "state": "completed",
+      "attemptCount": 5,
+      "lastExecutionId": "30256a1a-bb11-4ef4-a018-c3342dda0918",
+      "lastCallRecordId": "call_real_30256a1a",
+      "createdAt": "2026-04-19T23:26:51.054882+00:00",
+      "updatedAt": "2025-12-14T07:20:21.287826+00:00"
+    },
+    {
+      "id": "cl_camp-real-bolna-001_c1dd3988",
+      "campaignId": "camp-real-bolna-001",
+      "leadId": "c1dd3988-56d0-44a5-9db8-9e355e121cba",
+      "state": "completed",
+      "attemptCount": 3,
+      "lastExecutionId": "6b7a7658-eeca-4c8a-9fd9-13c38550557c",
+      "lastCallRecordId": "call_real_6b7a7658",
+      "createdAt": "2025-12-22T11:11:36.313076+00:00",
+      "updatedAt": "2025-12-21T11:58:47.647610+00:00"
+    },
+    {
+      "id": "cl_camp_1776658799246_eea250f3-99b8-4332-8d5f-2f5d1d06b0d1_wwper5nd",
+      "campaignId": "camp_1776658799246",
+      "leadId": "eea250f3-99b8-4332-8d5f-2f5d1d06b0d1",
+      "state": "completed",
+      "attemptCount": 1,
+      "createdAt": "2026-04-20T04:20:03.993Z",
+      "updatedAt": "2026-04-20T04:23:44.038Z",
+      "previousState": "calling",
+      "lastExecutionId": "bacffb22-a1ae-4fd2-b7a7-42ba86bbc780",
+      "lastCallId": "call_1776658807372_vvykms9",
+      "completedAt": "2026-04-20T04:23:44.038Z"
+    }
+  ],
+  "transitions": [
+    {
+      "from": "queued",
+      "to": "retry_scheduled",
+      "reason": "Call failed, will retry",
+      "timestamp": "2026-04-19T23:13:17.674Z"
+    },
+    {
+      "from": "queued",
+      "to": "calling",
+      "reason": "Call initiated with Bolna",
+      "timestamp": "2026-04-19T23:13:21.490Z"
+    },
+    {
+      "from": "queued",
+      "to": "retry_scheduled",
+      "reason": "Call failed, will retry",
+      "timestamp": "2026-04-19T23:20:08.010Z"
+    },
+    {
+      "from": "queued",
+      "to": "retry_scheduled",
+      "reason": "Call failed, will retry",
+      "timestamp": "2026-04-19T23:22:27.486Z"
+    },
+    {
+      "from": "queued",
+      "to": "retry_scheduled",
+      "reason": "Call failed, will retry",
+      "timestamp": "2026-04-19T23:26:48.033Z"
+    },
+    {
+      "from": "queued",
+      "to": "calling",
+      "reason": "Call initiated with Bolna",
+      "timestamp": "2026-04-19T23:26:50.537Z"
+    },
+    {
+      "from": "queued",
+      "to": "calling",
+      "reason": "Call initiated with Bolna",
+      "timestamp": "2026-04-20T04:20:07.383Z"
+    },
+    {
+      "from": "calling",
+      "to": "completed",
+      "reason": "Call completed successfully",
+      "timestamp": "2026-04-20T04:23:44.038Z"
     }
   ]
 }

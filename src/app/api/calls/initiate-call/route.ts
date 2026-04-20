@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { BolnaService } from "@/modules/communication/bolna-service";
+import { normalizePhone, isValidPhone } from "@/lib/phone-utils";
 
 /**
  * POST /api/calls/initiate-call
@@ -42,8 +43,8 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const phone = lead.primaryPhone || (lead as any).phone || "";
-        if (!phone) {
+        const phone = normalizePhone(lead.primaryPhone || (lead as any).phone || "");
+        if (!isValidPhone(phone)) {
             return NextResponse.json(
                 { error: "Lead has no phone number" },
                 { status: 422 }

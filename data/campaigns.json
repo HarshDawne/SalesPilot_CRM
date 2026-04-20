@@ -107,6 +107,30 @@
         "visitsBooked": 0
       },
       "createdAt": "2026-04-19T22:07:57.274Z"
+    },
+    {
+      "id": "camp-real-bolna-001",
+      "name": "Bolna AI Live Demo - Harsh & Rajat",
+      "type": "outbound_call",
+      "status": "COMPLETED",
+      "targetLeadCount": 2,
+      "completedCalls": 8,
+      "successfulCalls": 8,
+      "failedCalls": 0,
+      "totalCost": 287.93,
+      "qualifiedLeads": 2,
+      "agentName": "AISHA_V3",
+      "createdAt": "2025-12-14T07:50:00.000Z",
+      "updatedAt": "2025-12-14T15:30:00.000Z",
+      "metrics": {
+        "attempts": 8,
+        "connected": 8,
+        "qualified": 8,
+        "cost": 287.93,
+        "visitsBooked": 1,
+        "completedCalls": 8,
+        "successfulCalls": 8
+      }
     }
   ]
 }

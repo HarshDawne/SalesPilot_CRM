@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { BolnaService } from '@/modules/communication/bolna-service';
 import { db } from '@/lib/db';
+import { normalizePhone } from '@/lib/phone-utils';
 
 export async function POST(request: NextRequest) {
     try {
@@ -26,32 +27,11 @@ export async function POST(request: NextRequest) {
         // Simple ID generator for this demo
         const generateId = () => `job_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
-        // Helper to format phone number to E.164 (defaulting to Indian +91)
-        const formatPhoneNumber = (phone: string) => {
-            if (!phone) return "";
-            // Remove all non-numeric chars except leading +
-            let clean = phone.replace(/[^\d+]/g, "");
-
-            // If it starts with +, assume it's already attempting E.164
-            if (clean.startsWith("+")) return clean;
-
-            // If 10 digits, assume Indian local number -> add +91
-            if (clean.length === 10) {
-                return `+91${clean}`;
-            }
-
-            // If 12 digits and starts with 91, assume missing + -> add +
-            if (clean.length === 12 && clean.startsWith("91")) {
-                return `+${clean}`;
-            }
-
-            // Fallback: Use as is, or maybe add + if usually International
-            return clean; // bolster Bolna to handle or fail
-        };
+        // Phone formatting handled by the shared normalizePhone utility
 
         for (const lead of targetLeads) {
             // Map db Lead to Bolna Lead
-            const formattedPhone = formatPhoneNumber(lead.primaryPhone || (lead as any).phone);
+            const formattedPhone = normalizePhone(lead.primaryPhone || (lead as any).phone);
 
             const bolnaLead: any = {
                 ...lead,
